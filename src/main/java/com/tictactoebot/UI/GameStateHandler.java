@@ -24,6 +24,7 @@ public class GameStateHandler {
 
         if (x < Frame.cornerCoords[0].x && y < Frame.cornerCoords[0].y){
             //Top left
+            new DrawX(50, 50);
             System.out.println("Top Left");
         } else if (x < Frame.cornerCoords[1].x && y < Frame.cornerCoords[0].y){
             //Top middle

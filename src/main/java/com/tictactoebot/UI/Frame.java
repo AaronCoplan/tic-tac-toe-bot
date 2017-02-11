@@ -66,19 +66,10 @@ class DrawBoard extends JComponent{
     }
 }
 
-class drawX extends JComponent{
-    int margin = Frame.MARGIN;
-
-    public Dimension getPreferredSize(){
-        return new Dimension(Frame.WIDTH, Frame.HEIGHT);
-    }
-
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        g.setColor(Color.black);
-        g.fillRect((Frame.WIDTH + margin)/3, margin, 10, Frame.HEIGHT - 2 * margin);
-        g.fillRect((2 * Frame.WIDTH - margin)/3, margin, 10, Frame.HEIGHT - 2 * margin);
-        g.fillRect(margin, (Frame.HEIGHT + margin)/3, Frame.WIDTH - 2 * margin, 10);
-        g.fillRect(margin, (2 * Frame.HEIGHT - margin)/3, Frame.WIDTH - 2 * margin, 10);
-    }
+public class drawX extends JLabel{
+   public drawX(int x, int y){
+      setIcon(new ImageIcon(".\\assets\\" + x.png));
+      Frame.add(this);
+      setLocation(x, y);
+   }
 }
