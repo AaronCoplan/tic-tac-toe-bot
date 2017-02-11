@@ -24,7 +24,7 @@ This project is built using Gradle.  To build and run, follow these instructions
 1. Ensure you are in the root directory of the project (the directory containing the **build.gradle** file and this **README** file)
 2. Build the software into a runnable jar file:
   * On Mac or Linux, run the following command: `./gradlew clean build`
-  * On Windows, run the following command: `./gradlew.bat clean build`
+  * On Windows, run the following command: `gradlew.bat clean build`
 3. Run the jar file we've just created: `java -jar build/libs/tictactoebot-v0.0.1.jar`
 
 ## Major Components
