@@ -28,7 +28,6 @@ public class Frame {
     }
 
     public static void createFrame(){
-        System.out.println("Creating new game");
         frame = new JFrame();
         panel = new JPanel();
         panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -66,9 +65,6 @@ public class Frame {
     public static void add(JComponent c){
         panel.add(c);
     }
-
-
-
 }
 
 class DrawBoard extends JComponent{

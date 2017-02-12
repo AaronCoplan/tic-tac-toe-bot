@@ -1,10 +1,10 @@
 package com.tictactoebot.UI;
 
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.Hashtable;
 
 import static com.tictactoebot.UI.Frame.*;
+import static com.tictactoebot.UI.Utils.*;
 
 /**
  * Created by Devin on 2/11/2017.
@@ -16,26 +16,50 @@ public class GameStateHandler {
     public static char[] boardState = new char[9];
     public static int numMoves = 0;
     public static boolean gameOver = false;
-    public static Thread computerPlayer;
+    private static Thread gameLoop;
+    private static boolean randomTrainerOn = false;
+    private static boolean noGUI = false;
+    private static boolean resetOnGameEnd = false;
     private static Hashtable<Integer, Position> moveLocations = new Hashtable<>();
 
 
     private GameStateHandler(){
     }
 
-    public static void createGame(){
-        createFrame();
+    public static void createGame(boolean randomTrainerOn, boolean resetOnGameEnd, boolean noGUI){
+        GameStateHandler.randomTrainerOn = randomTrainerOn;
+        GameStateHandler.resetOnGameEnd = resetOnGameEnd;
+        GameStateHandler.noGUI = noGUI;
+
+        if(!noGUI) {
+            createFrame();
+        }
+
         createMoveLocations();
 
         startNewGame();
     }
 
-    public static void startRandomTrainer(){
-        while(!gameOver){
-            if(playerTurn){
-                trainerRandomMove();
-            }
+    private static void startNewGame(){
+        gameOver = false;
+        numMoves = 0;
+
+        for (int i = 0; i < 9; i++){
+            boardState[i] = '_';
         }
+
+        if((int)(2 * Math.random() + 1) == 1){
+            playerTurn = true;
+            playerNum = 0;
+            computerNum = 1;
+        } else {
+            playerTurn = false;
+            playerNum = 1;
+            computerNum = 0;
+        }
+
+        gameLoop = new Thread(new GameLoop());
+        gameLoop.start();
     }
 
     private static void createMoveLocations(){
@@ -58,41 +82,11 @@ public class GameStateHandler {
         moveLocations.put(8, new Position(cornerCoords[1].x + midPoint, cornerCoords[2].y + midPoint));
     }
 
-    private static void startNewGame(){
-        gameOver = false;
-        numMoves = 0;
-
-        for (int i = 0; i < 9; i++){
-            boardState[i] = '_';
-        }
-
-        if((int)(2 * Math.random() + 1) == 1){
-            playerTurn = true;
-            playerNum = 0;
-            computerNum = 1;
-        } else {
-            playerTurn = false;
-            playerNum = 1;
-            computerNum = 0;
-        }
-
-        computerPlayer = new Thread(new ComputerPlayer());
-        computerPlayer.start();
-    }
 
     public static void restartGame(){
-        gameOver = true;
-
-        try {
-            computerPlayer.join();
-        } catch (InterruptedException e){
-            e.printStackTrace();
-        }
-
-        recreatePanel();
-        startNewGame();
+        Thread t = new Thread(new GameRestarter());
+        t.start();
     }
-
 
     private static boolean doMove(int location, int playerNum){ //player num is 0 if X, 1 if O
         if (boardState[location] != '_')
@@ -100,24 +94,36 @@ public class GameStateHandler {
         //TODO: Store move info after move is completed.
         if (playerNum == 0) {
             boardState[location] = 'x';
-            try {
-                new DrawMove('x', moveLocations.get(location));
-            } catch (IOException e){
-                e.printStackTrace();
+            if(!noGUI) {
+                try {
+                    new DrawMove('x', moveLocations.get(location));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         } else {
             boardState[location] = 'o';
-            try {
-                new DrawMove('o', moveLocations.get(location));
-            } catch (IOException e){
-                e.printStackTrace();
+            if(!noGUI) {
+                try {
+                    new DrawMove('o', moveLocations.get(location));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
+
+        printBoardState();
 
         if(++numMoves >= 5)
             checkForWin();
 
-        printBoardState();
+        if(!gameOver){
+            if (playerTurn) {
+                playerTurn = false;
+            } else {
+                playerTurn = true;
+            }
+        }
 
         return true;
     }
@@ -131,41 +137,32 @@ public class GameStateHandler {
     public static void onUserInput(int x, int y){
 
         if (x < Frame.cornerCoords[0].x && y < Frame.cornerCoords[0].y){
-            if(doMove(0, playerNum))
-                playerTurn = false;
+            doMove(0, playerNum);
         } else if (x < Frame.cornerCoords[1].x && y < Frame.cornerCoords[0].y){
-            if(doMove(1, playerNum))
-                playerTurn = false;
+            doMove(1, playerNum);
         } else if (x > Frame.cornerCoords[1].x && y < Frame.cornerCoords[0].y){
-            if(doMove(2, playerNum))
-                playerTurn = false;
+            doMove(2, playerNum);
         } else if (x < Frame.cornerCoords[2].x && y < Frame.cornerCoords[2].y) {
-            if(doMove(3, playerNum))
-                playerTurn = false;
+            doMove(3, playerNum);
         } else if (x < Frame.cornerCoords[3].x && y < Frame.cornerCoords[3].y){
-            if(doMove(4, playerNum))
-                playerTurn = false;
+            doMove(4, playerNum);
         } else if (x > Frame.cornerCoords[3].x && y < Frame.cornerCoords[3].y){
-            if(doMove(5, playerNum))
-                playerTurn = false;
+            doMove(5, playerNum);
         } else if (x < Frame.cornerCoords[2].x && y > Frame.cornerCoords[3].y){
-            if(doMove(6, playerNum))
-                playerTurn = false;
+            doMove(6, playerNum);
         } else if (x < Frame.cornerCoords[3].x && y > Frame.cornerCoords[3].y){
-            if(doMove(7, playerNum))
-                playerTurn = false;
+            doMove(7, playerNum);
         } else {
-            if(doMove(8, playerNum))
-                playerTurn = false;
+            doMove(8, playerNum);
         }
      }
 
-    public static void randomComputerMove(){
-        int location = (int)(9 * Math.random());
-        while(!doMove(location, computerNum) && !gameOver){
-            location = (int)(9 * Math.random());
+    public static void randomComputerMove() {
+        int location = (int) (9 * Math.random());
+
+        while (!doMove(location, computerNum) && !gameOver) {
+            location = (int) (9 * Math.random());
         }
-        playerTurn = true;
     }
 
     public static void realComputerMove(){
@@ -181,8 +178,8 @@ public class GameStateHandler {
     private static void checkForWin(){
         int result;
 
-        for (int i = 0; i < 6; i += 3){
-            result = isEqual(i, i+1, i+2);
+        for (int i = 0; i < 3; i++){
+            result = isEqual(3*i, 3*i+1, 3*i+2);
             if (result != -1){
                 onGameOver(result);
                 return;
@@ -200,7 +197,7 @@ public class GameStateHandler {
         if ((result = isEqual(0, 4, 8)) != -1){
             onGameOver(result);
             return;
-        } else if ((result = isEqual(2, 4, 6))!= -1){
+        } else if ((result = isEqual(2, 4, 6)) != -1){
             onGameOver(result);
             return;
         }
@@ -214,7 +211,7 @@ public class GameStateHandler {
         if (boardState[i1] == boardState[i2] && boardState[i2] == boardState[i3]){
             if(boardState[i1] == 'x'){
                 return 0;
-            } else if(boardState[i1] == 'o'){
+            } else if (boardState[i1] == 'o'){
                 return 1;
             }
         }
@@ -228,33 +225,50 @@ public class GameStateHandler {
             System.out.println("Player: " + (playerNum == 0 ? 'X' : 'O') + " wins!");
         }
         gameOver = true;
+
+        if(resetOnGameEnd) {
+            restartGame();
+        }
     }
 
-    private static void trainerMove(int location){  //Call this if you want the trainer to move to a specific location.
+    public static void trainerMove(int location){  //Call this if you want the trainer to move to a specific location.
         if(doMove(location, playerNum)){
             playerTurn = false;
         }
     }
 
-    private static void trainerRandomMove(){
+    private static void randomTrainerMove(){
         int location = (int)(9 * Math.random());
 
-        while(!doMove(location, playerNum)){
-            location = (int)(9 * Math.random());
+        while (!doMove(location, playerNum) && !gameOver) {
+            location = (int) (9 * Math.random());
         }
-        playerTurn = false;
     }
-    static class ComputerPlayer implements Runnable{
+
+    static class GameLoop implements Runnable{
         public void run(){
             while(!gameOver){
-                if(!playerTurn)
+                if(playerTurn){
+                    if(randomTrainerOn)
+                        randomTrainerMove();
+                } else {
                     randomComputerMove();
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e){
-                    e.printStackTrace();
                 }
+
+                sleep(1);
             }
+        }
+    }
+
+    static class GameRestarter implements Runnable{
+        public void run(){
+            join(gameLoop);
+
+            if(!noGUI) {
+                recreatePanel();
+            }
+
+            startNewGame();
         }
     }
 
