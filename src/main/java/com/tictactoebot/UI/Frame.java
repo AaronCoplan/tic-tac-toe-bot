@@ -28,6 +28,7 @@ public class Frame {
     }
 
     public static void createFrame(){
+        System.out.println("Creating new game");
         frame = new JFrame();
         panel = new JPanel();
         panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -46,11 +47,28 @@ public class Frame {
         frame.pack();
 
         frame.addMouseListener(input);
+        frame.addKeyListener(input);
+    }
+
+    public static void recreatePanel(){
+        frame.remove(panel);
+        panel = new JPanel();
+        panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        panel.setBackground(Color.WHITE);
+        panel.setOpaque(true);
+
+        frame.add(panel);
+        panel.add(new DrawBoard());
+
+        frame.pack();
     }
 
     public static void add(JComponent c){
         panel.add(c);
     }
+
+
+
 }
 
 class DrawBoard extends JComponent{

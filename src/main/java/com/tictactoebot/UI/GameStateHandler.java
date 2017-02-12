@@ -16,6 +16,7 @@ public class GameStateHandler {
     public static char[] boardState = new char[9];
     public static int numMoves = 0;
     public static boolean gameOver = false;
+    public static Thread computerPlayer;
     private static Hashtable<Integer, Position> moveLocations = new Hashtable<>();
 
 
@@ -24,9 +25,9 @@ public class GameStateHandler {
 
     public static void createGame(){
         createFrame();
-        initializeBoard();
-        Thread t = new Thread(new ComputerPlayer());
-        t.start();
+        createMoveLocations();
+
+        startNewGame();
     }
 
     public static void startRandomTrainer(){
@@ -37,11 +38,7 @@ public class GameStateHandler {
         }
     }
 
-    private static void initializeBoard(){
-        for (int i = 0; i < 9; i++){
-            boardState[i] = '_';
-        }
-
+    private static void createMoveLocations(){
         int distance = cornerCoords[1].x - cornerCoords[0].x;
         int midPoint = distance/2;
 
@@ -59,6 +56,15 @@ public class GameStateHandler {
         moveLocations.put(6, new Position(cornerCoords[0].x - midPoint, cornerCoords[2].y + midPoint));
         moveLocations.put(7, new Position(cornerCoords[1].x - midPoint, cornerCoords[2].y + midPoint));
         moveLocations.put(8, new Position(cornerCoords[1].x + midPoint, cornerCoords[2].y + midPoint));
+    }
+
+    private static void startNewGame(){
+        gameOver = false;
+        numMoves = 0;
+
+        for (int i = 0; i < 9; i++){
+            boardState[i] = '_';
+        }
 
         if((int)(2 * Math.random() + 1) == 1){
             playerTurn = true;
@@ -69,6 +75,22 @@ public class GameStateHandler {
             playerNum = 1;
             computerNum = 0;
         }
+
+        computerPlayer = new Thread(new ComputerPlayer());
+        computerPlayer.start();
+    }
+
+    public static void restartGame(){
+        gameOver = true;
+
+        try {
+            computerPlayer.join();
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
+
+        recreatePanel();
+        startNewGame();
     }
 
 
@@ -106,9 +128,7 @@ public class GameStateHandler {
         }
     }
 
-    public static void onUserInput(MouseEvent e){
-        int x = e.getX();
-        int y = e.getY();
+    public static void onUserInput(int x, int y){
 
         if (x < Frame.cornerCoords[0].x && y < Frame.cornerCoords[0].y){
             if(doMove(0, playerNum))
