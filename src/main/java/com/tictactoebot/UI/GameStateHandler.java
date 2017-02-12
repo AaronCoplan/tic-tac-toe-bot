@@ -70,6 +70,8 @@ public class GameStateHandler {
             } else {
                 randomComputerMove();
             }
+
+            sleep(1);
         }
     }
 
