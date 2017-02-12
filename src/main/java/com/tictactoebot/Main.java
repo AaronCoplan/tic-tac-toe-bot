@@ -7,6 +7,7 @@ public class Main {
     public static void main(String[] args){
 
         createGame();
+        //startRandomTrainer();
 
         System.out.println("Hello.");
     }
