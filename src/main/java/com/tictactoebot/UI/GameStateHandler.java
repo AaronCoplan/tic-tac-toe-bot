@@ -1,5 +1,6 @@
 package com.tictactoebot.UI;
 
+import javax.annotation.processing.SupportedSourceVersion;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.Hashtable;
@@ -34,6 +35,11 @@ public class GameStateHandler {
         int distance = cornerCoords[1].x - cornerCoords[0].x;
         int midPoint = distance/2;
 
+        //Locations are laid out like this:
+        //0, 1, 2
+        //3, 4, 5
+        //6, 7, 8
+
         moveLocations.put(0, new Position(cornerCoords[0].x - midPoint, cornerCoords[0].y - midPoint)); //Locations of where to put the X's and O's.
         moveLocations.put(1, new Position(cornerCoords[1].x - midPoint, cornerCoords[0].y - midPoint));
         moveLocations.put(2, new Position(cornerCoords[1].x + midPoint, cornerCoords[0].y - midPoint));
@@ -58,6 +64,7 @@ public class GameStateHandler {
     private static boolean doMove(int location, int playerNum){ //player num is 0 if X, 1 if O
         if (boardState[location] != '_')
             return false;
+        //TODO: Store move info after move is completed.
         if (playerNum == 0) {
             boardState[location] = 'x';
             try {
@@ -74,8 +81,10 @@ public class GameStateHandler {
             }
         }
 
-        if(numMoves++ == 8)
-            gameOver = true;
+        if (numMoves == 8){
+            onGameOver(-1);
+        } else if(numMoves++ >= 5 )
+            checkForWin();
         printBoardState();
 
         return true;
@@ -133,6 +142,51 @@ public class GameStateHandler {
             location = (int)(8 * Math.random() + 1);
         }
         playerTurn = true;
+    }
+
+    private static void checkForWin(){
+        int result;
+        for (int i = 0; i < 6; i += 3){
+            result = isEqual(i, i+1, i+2);
+            if (result != -1){
+                onGameOver(result);
+                return;
+            }
+        }
+
+        for (int j = 0; j < 3; j++){
+            result = isEqual(j, j+3, j+6);
+            if(result != -1){
+                onGameOver(result);
+                return;
+            }
+        }
+
+
+        if ((result = isEqual(0, 4, 8)) != -1){
+            onGameOver(result);
+        } else if ((result = isEqual(2, 4, 6) )!= -1){
+            onGameOver(result);
+        }
+
+
+    }
+
+    private static int isEqual(int i1, int i2, int i3){
+        if (boardState[i1] == boardState[i2] && boardState[i2] == boardState[i3]){
+            return boardState[i1] == 'x' ? 0 : 1;
+        }
+        return -1;
+    }
+
+    private static void onGameOver(int playerNum){  //0 for X, 1 for O victory, -1 for tie.
+        //TODO: Store who wins
+        if(playerNum == -1){
+            System.out.println("Tie!");
+        } else {
+            System.out.println("Player: " + (playerNum == 0 ? 'X' : 'O') + " wins!");
+        }
+        gameOver = true;
     }
 
 }
