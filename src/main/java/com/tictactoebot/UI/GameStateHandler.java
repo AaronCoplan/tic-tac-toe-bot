@@ -16,7 +16,6 @@ public class GameStateHandler {
     public static char[] boardState = new char[9];
     public static int numMoves = 0;
     public static boolean gameOver = false;
-    private static Thread gameLoop;
     private static boolean randomTrainerOn = false;
     private static boolean noGUI = false;
     private static boolean resetOnGameEnd = false;
@@ -34,6 +33,8 @@ public class GameStateHandler {
         if(!noGUI) {
             createFrame();
         }
+
+        new Thread(new GameOverHandler()).start();
 
         createMoveLocations();
 
@@ -58,8 +59,18 @@ public class GameStateHandler {
             computerNum = 0;
         }
 
-        gameLoop = new Thread(new GameLoop());
-        gameLoop.start();
+        gameLoop();
+    }
+
+    private static void gameLoop(){
+        while(!gameOver){
+            if(playerTurn){
+                if(randomTrainerOn)
+                    randomTrainerMove();
+            } else {
+                randomComputerMove();
+            }
+        }
     }
 
     private static void createMoveLocations(){
@@ -84,8 +95,11 @@ public class GameStateHandler {
 
 
     public static void restartGame(){
-        Thread t = new Thread(new GameRestarter());
-        t.start();
+        if(!noGUI) {
+            recreatePanel();
+        }
+
+        startNewGame();
     }
 
     private static boolean doMove(int location, int playerNum){ //player num is 0 if X, 1 if O
@@ -225,10 +239,6 @@ public class GameStateHandler {
             System.out.println("Player: " + (playerNum == 0 ? 'X' : 'O') + " wins!");
         }
         gameOver = true;
-
-        if(resetOnGameEnd) {
-            restartGame();
-        }
     }
 
     public static void trainerMove(int location){  //Call this if you want the trainer to move to a specific location.
@@ -245,30 +255,14 @@ public class GameStateHandler {
         }
     }
 
-    static class GameLoop implements Runnable{
+    static class GameOverHandler implements Runnable{
         public void run(){
-            while(!gameOver){
-                if(playerTurn){
-                    if(randomTrainerOn)
-                        randomTrainerMove();
-                } else {
-                    randomComputerMove();
+            while(true){
+                sleep(2);
+                if(gameOver && resetOnGameEnd){
+                    restartGame();
                 }
-
-                sleep(1);
             }
-        }
-    }
-
-    static class GameRestarter implements Runnable{
-        public void run(){
-            join(gameLoop);
-
-            if(!noGUI) {
-                recreatePanel();
-            }
-
-            startNewGame();
         }
     }
 
