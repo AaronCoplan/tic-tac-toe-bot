@@ -5,6 +5,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import static com.tictactoebot.UI.Utils.sleep;
+
 /**
  * Created by Devin on 2/11/2017.
  */
@@ -20,7 +22,7 @@ public class Input implements MouseListener, KeyListener {    //Class created to
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_SPACE){
-            GameStateHandler.restartGame();
+            GameStateHandler.restartGame = true;
         }
     }
 

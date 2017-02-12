@@ -18,7 +18,8 @@ public class GameStateHandler {
     public static boolean gameOver = false;
     private static boolean randomTrainerOn = false;
     private static boolean noGUI = false;
-    private static boolean resetOnGameEnd = false;
+    public static boolean resetOnGameEnd = false;
+    public static boolean restartGame = false;
     private static Hashtable<Integer, Position> moveLocations = new Hashtable<>();
 
 
@@ -63,15 +64,15 @@ public class GameStateHandler {
     }
 
     private static void gameLoop(){
+
         while(!gameOver){
+            sleep(1);
             if(playerTurn){
                 if(randomTrainerOn)
                     randomTrainerMove();
             } else {
                 randomComputerMove();
             }
-
-            sleep(1);
         }
     }
 
@@ -261,7 +262,8 @@ public class GameStateHandler {
         public void run(){
             while(true){
                 sleep(2);
-                if(gameOver && resetOnGameEnd){
+                if(gameOver && resetOnGameEnd || restartGame){
+                    restartGame = false;
                     restartGame();
                 }
             }
