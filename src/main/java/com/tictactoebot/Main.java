@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args){
 
-        createGame(true, true, false);
+        createGame(false, false, false);
 
         System.out.println("Hello.");
     }
