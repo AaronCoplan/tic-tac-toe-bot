@@ -1,8 +1,12 @@
 package com.tictactoebot.UI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by Devin on 2/11/2017.
@@ -36,10 +40,12 @@ public class Frame {
         frame.setTitle("Tic-tac-toe");
         //frame.setLocationRelativeTo(null);
 
+        panel.setBackground(Color.WHITE);
+        panel.setOpaque(true);
+
         frame.add(panel);
-        frame.add(new DrawBoard());
+        panel.add(new DrawBoard());
         frame.pack();
-        frame.setMinimumSize(frame.getSize());
 
         frame.addMouseListener(input);
     }
@@ -66,10 +72,11 @@ class DrawBoard extends JComponent{
     }
 }
 
-public class drawX extends JLabel{
-   public drawX(int x, int y){
-      setIcon(new ImageIcon(".\\assets\\" + x.png));
-      Frame.add(this);
-      setLocation(x, y);
-   }
+class DrawMove extends JLabel {
+    public DrawMove(char XorY, Position p) throws IOException {
+        super(new ImageIcon(ImageIO.read(new File(".\\assets\\" + XorY + ".png"))));
+        setSize(getIcon().getIconWidth(), getIcon().getIconHeight());
+        Frame.add(this);
+        setLocation(p.x - getWidth() / 2, p.y - getHeight() / 2);
+    }
 }

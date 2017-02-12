@@ -13,7 +13,7 @@ public class Input implements MouseListener {    //Class created to abstract mou
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if(GameStateHandler.playerTurn){
+        if(GameStateHandler.playerTurn && !GameStateHandler.gameOver){
             GameStateHandler.onUserInput(e);
         }
     }

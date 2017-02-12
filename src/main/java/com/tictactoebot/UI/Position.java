@@ -11,4 +11,9 @@ public class Position {
         this.x = x;
         this.y = y;
     }
+
+    public Position(){
+        x = 0;
+        y = 0;
+    }
 }
