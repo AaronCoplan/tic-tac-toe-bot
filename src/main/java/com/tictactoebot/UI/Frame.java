@@ -86,7 +86,7 @@ class DrawBoard extends JComponent{
 
 class DrawMove extends JLabel {
     public DrawMove(char XorY, Position p) throws IOException {
-        super(new ImageIcon(ImageIO.read(new File(".\\assets\\" + XorY + ".png"))));
+        super(new ImageIcon(ImageIO.read(new File("./assets/" + XorY + ".png"))));
         setSize(getIcon().getIconWidth(), getIcon().getIconHeight());
         Frame.add(this);
         setLocation(p.x - getWidth() / 2, p.y - getHeight() / 2);
