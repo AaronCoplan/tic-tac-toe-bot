@@ -3,8 +3,6 @@ package com.tictactoebot.UI;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -13,13 +11,13 @@ import java.io.IOException;
  */
 
 public class Frame {
-    public static JFrame frame;
-    public static JPanel panel;
+    private static JFrame frame;
+    private static JPanel panel;
     public static final int WIDTH = 800;
     public static final int HEIGHT = 800;
     public static final int MARGIN = 50;
-    public static Input input = new Input();
-    public static Position[] cornerCoords = new Position[] {
+    private static Input input = new Input();
+    public static Position[] cornerCoords = new Position[] {    //Coordinates where the lines in the board cross
             new Position((WIDTH + MARGIN)/3, (HEIGHT + MARGIN)/3),
             new Position((2 * WIDTH - MARGIN)/3, (HEIGHT + MARGIN)/3),
             new Position((WIDTH + MARGIN)/3, (2 * HEIGHT - MARGIN)/3),

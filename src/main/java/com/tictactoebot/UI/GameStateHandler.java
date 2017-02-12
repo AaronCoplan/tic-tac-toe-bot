@@ -11,11 +11,11 @@ import static com.tictactoebot.UI.Frame.*;
  */
 public class GameStateHandler {
     public static boolean playerTurn = true;
-    public static boolean playerWentFirst = true;    //Char to keep track of whether the user went first or second.
+    private static boolean playerWentFirst = true;    //Char to keep track of whether the user went first or second.
     public static char[] boardState = new char[9];
     public static int numMoves = 0;
     public static boolean gameOver = false;
-    public static Hashtable<Integer, Position> moveLocations = new Hashtable<>();
+    private static Hashtable<Integer, Position> moveLocations = new Hashtable<>();
 
 
     private GameStateHandler(){
@@ -26,7 +26,7 @@ public class GameStateHandler {
         initializeBoard();
     }
 
-    public static void initializeBoard(){
+    private static void initializeBoard(){
         for (int i = 0; i < 9; i++){
             boardState[i] = '_';
         }
@@ -44,6 +44,14 @@ public class GameStateHandler {
         moveLocations.put(7, new Position(cornerCoords[1].x - midPoint, cornerCoords[2].y + midPoint));
         moveLocations.put(8, new Position(cornerCoords[1].x + midPoint, cornerCoords[2].y + midPoint));
 
+        if((int)(2 * Math.random() + 1) == 1){
+            playerTurn = true;
+            playerWentFirst = true;
+        } else {
+            playerTurn = false;
+            playerWentFirst = false;
+            randomComputerMove();
+        }
     }
 
 
@@ -115,11 +123,12 @@ public class GameStateHandler {
         }
 
         if(!playerTurn) {
-            computerMove((int)(8 * Math.random() + 1));
+            randomComputerMove();
         }
      }
 
-    public static void computerMove(int location){
+    public static void randomComputerMove(){
+        int location = (int)(8 * Math.random() + 1);
         while(!doMove(location, playerWentFirst? 1 : 0) && !gameOver){
             location = (int)(8 * Math.random() + 1);
         }
