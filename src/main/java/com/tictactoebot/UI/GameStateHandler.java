@@ -20,7 +20,7 @@ public class GameStateHandler {
     public static int numMoves = 0;
     public static boolean gameOver = false;
     private static boolean randomTrainerOn = false;
-    private static boolean noGUI = false;
+    public static boolean noGUI = false;
     public static boolean resetOnGameEnd = false;
     public static boolean restartGame = false;
     public static int winnerNum = 0;
@@ -107,7 +107,9 @@ public class GameStateHandler {
             } else {
                 randomComputerMove();
             }
-            sleep(1);
+            //sleep(1);
+            if(!noGUI)
+                smallSleep();
         }
 
         //System.out.println("returning from game loop");
@@ -167,7 +169,7 @@ public class GameStateHandler {
             }
         }
 
-        //printBoardState();
+        printBoardState();
 
         if(++numMoves >= 5)
             checkForWin();
@@ -270,12 +272,6 @@ public class GameStateHandler {
             panel.repaint(0,0, WIDTH, HEIGHT);
     }
 
-    public static void trainerMove(int location){  //Call this if you want the trainer to move to a specific location.
-        if(doMove(location, playerNum)){
-            playerTurn = false;
-        }
-    }
-
     private static void randomTrainerMove(){
         simpleRandomMove(playerNum);
     }
@@ -326,13 +322,15 @@ public class GameStateHandler {
 class GameOverHandler implements Runnable{
     public void run(){
         while(!((gameOver && resetOnGameEnd)|| restartGame)) {
-            sleep(1);
+            //sleep(1);
+            smallSleep();
         }
         gameOver = true;
         while(!gameLoopReturned){
-            sleep(1);//10
+            //sleep(1);//10
+            smallSleep();
         }
-            restartGame = false;
+        restartGame = false;
         gameLoopReturned = false;
         restartGame();
     }

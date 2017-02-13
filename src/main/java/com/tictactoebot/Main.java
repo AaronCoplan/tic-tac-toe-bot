@@ -8,6 +8,5 @@ public class Main {
 
         createGame(false, false, false);
 
-        System.out.println("Hello.");
     }
 }
