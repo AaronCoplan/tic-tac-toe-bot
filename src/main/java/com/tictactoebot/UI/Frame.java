@@ -3,16 +3,19 @@ package com.tictactoebot.UI;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
+
+import static com.tictactoebot.UI.Frame.MARGIN;
 
 /**
  * Created by Devin on 2/11/2017.
  */
 
 public class Frame {
-    private static JFrame frame;
-    private static JPanel panel;
+    public static JFrame frame;
+    public static JPanel panel;
     public static final int WIDTH = 800;
     public static final int HEIGHT = 800;
     public static final int MARGIN = 50;
@@ -29,12 +32,12 @@ public class Frame {
 
     public static void createFrame(){
         frame = new JFrame();
+        frame.setSize(WIDTH, HEIGHT);
         panel = new JPanel();
         panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setVisible(true);
         frame.setTitle("Tic-tac-toe");
         //frame.setLocationRelativeTo(null);
 
@@ -43,10 +46,15 @@ public class Frame {
 
         frame.add(panel);
         panel.add(new DrawBoard());
+
         frame.pack();
 
         frame.addMouseListener(input);
         frame.addKeyListener(input);
+
+        frame.setVisible(true);
+
+        frame.repaint(0,0,WIDTH, HEIGHT);
     }
 
     public static void recreatePanel(){
@@ -60,6 +68,7 @@ public class Frame {
         panel.add(new DrawBoard());
 
         frame.pack();
+        frame.repaint(0,0,WIDTH, HEIGHT);
     }
 
     public static void add(JComponent c){
@@ -68,7 +77,7 @@ public class Frame {
 }
 
 class DrawBoard extends JComponent{
-    int margin = Frame.MARGIN;
+    int margin = MARGIN;
 
     public Dimension getPreferredSize(){
         return new Dimension(Frame.WIDTH, Frame.HEIGHT);
@@ -81,6 +90,13 @@ class DrawBoard extends JComponent{
         g.fillRect(Frame.cornerCoords[1].x, margin, 10, Frame.HEIGHT - 2 * margin);
         g.fillRect(margin, Frame.cornerCoords[0].y, Frame.WIDTH - 2 * margin, 10);
         g.fillRect(margin, Frame.cornerCoords[2].y, Frame.WIDTH - 2 * margin, 10);
+        if(GameStateHandler.gameOver) {
+            if(GameStateHandler.winnerNum == -1){
+                g.drawString("Tie!",Frame.WIDTH/2 - 10, margin);
+            } else {
+                g.drawString((GameStateHandler.winnerNum == 0 ? 'X' : 'O') + " wins", Frame.WIDTH / 2 - 10, margin);
+            }
+        }
     }
 }
 

@@ -1,9 +1,13 @@
 package com.tictactoebot.UI;
 
+import javax.swing.*;
+import java.awt.image.ImageObserver;
 import java.io.IOException;
 import java.util.Hashtable;
+import java.util.Objects;
 
 import static com.tictactoebot.UI.Frame.*;
+import static com.tictactoebot.UI.GameStateHandler.*;
 import static com.tictactoebot.UI.Utils.*;
 
 /**
@@ -20,6 +24,10 @@ public class GameStateHandler {
     private static boolean noGUI = false;
     public static boolean resetOnGameEnd = false;
     public static boolean restartGame = false;
+    public static int winnerNum = 0;
+    public static boolean gameLoopReturned = false;
+    public static int numPlayed;
+
     private static Hashtable<Integer, Position> moveLocations = new Hashtable<>();
 
 
@@ -31,49 +39,80 @@ public class GameStateHandler {
         GameStateHandler.resetOnGameEnd = resetOnGameEnd;
         GameStateHandler.noGUI = noGUI;
 
+        askXO();
+
         if(!noGUI) {
             createFrame();
         }
-
-        new Thread(new GameOverHandler()).start();
 
         createMoveLocations();
 
         startNewGame();
     }
 
+    public static void askXO(){
+        if(!randomTrainerOn) {
+            Object[] possibleValues = {"X", "O"};
+            Object selectedValue = JOptionPane.showInputDialog(null,
+                    "Do you want to be X or O?", "Tic-tac-toe",
+                    JOptionPane.INFORMATION_MESSAGE, null,
+                    possibleValues, possibleValues[0]);
+
+            if (selectedValue.equals(possibleValues[0])) {
+                playerNum = 0;
+                computerNum = 1;
+            } else {
+                playerNum = 1;
+                computerNum = 0;
+            }
+        }
+    }
+
     private static void startNewGame(){
-        gameOver = false;
+        new Thread(new GameOverHandler()).start();
         numMoves = 0;
+
+        System.out.println(++numPlayed);
 
         for (int i = 0; i < 9; i++){
             boardState[i] = '_';
         }
 
-        if((int)(2 * Math.random() + 1) == 1){
-            playerTurn = true;
-            playerNum = 0;
-            computerNum = 1;
+        if(randomTrainerOn) {
+            if ((int) (2 * Math.random() + 1) == 1) {
+                playerTurn = true;
+                playerNum = 0;
+                computerNum = 1;
+            } else {
+                playerTurn = false;
+                playerNum = 1;
+                computerNum = 0;
+            }
         } else {
-            playerTurn = false;
-            playerNum = 1;
-            computerNum = 0;
+            if(playerNum == 0){
+                playerTurn = true;
+            } else {
+                playerTurn = false;
+            }
         }
 
+        gameOver = false;
         gameLoop();
     }
 
     private static void gameLoop(){
-
         while(!gameOver){
-            sleep(1);
             if(playerTurn){
                 if(randomTrainerOn)
                     randomTrainerMove();
             } else {
                 randomComputerMove();
             }
+            sleep(1);
         }
+
+        //System.out.println("returning from game loop");
+        gameLoopReturned = true;
     }
 
     private static void createMoveLocations(){
@@ -177,7 +216,7 @@ public class GameStateHandler {
     public static void randomComputerMove() {
         int location = (int) (9 * Math.random());
 
-        while (!doMove(location, computerNum) && !gameOver) {
+        while (!gameOver && !doMove(location, computerNum)) {
             location = (int) (9 * Math.random());
         }
     }
@@ -241,7 +280,12 @@ public class GameStateHandler {
         } else {
             System.out.println("Player: " + (playerNum == 0 ? 'X' : 'O') + " wins!");
         }
+
+        winnerNum = playerNum;
         gameOver = true;
+
+        if(!noGUI)
+            panel.repaint(0,0, WIDTH, HEIGHT);
     }
 
     public static void trainerMove(int location){  //Call this if you want the trainer to move to a specific location.
@@ -258,16 +302,23 @@ public class GameStateHandler {
         }
     }
 
-    static class GameOverHandler implements Runnable{
-        public void run(){
-            while(true){
-                sleep(2);
-                if(gameOver && resetOnGameEnd || restartGame){
-                    restartGame = false;
-                    restartGame();
-                }
-            }
-        }
-    }
 
+
+}
+
+class GameOverHandler implements Runnable{
+    public void run(){
+        while(!((gameOver && resetOnGameEnd)|| restartGame)) {
+            sleep(1);
+        }
+        gameOver = true;
+        while(!gameLoopReturned){
+            sleep(1);//10
+        }
+            restartGame = false;
+        gameLoopReturned = false;
+        restartGame();
+
+
+    }
 }
