@@ -47,7 +47,7 @@ public class Board {
     }
 
     // method to get the character knowing the index in the 1D array
-    public char getChar(int index, char value){
+    public char getChar(int index){
         if(index >= BOARD_SIZE || index < 0){
             throw new IndexOutOfBoundsException();
         }

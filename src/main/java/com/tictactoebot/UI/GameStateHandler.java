@@ -1,5 +1,10 @@
 package com.tictactoebot.UI;
 
+import com.tictactoebot.dataHandler.DataHandler;
+import com.tictactoebot.dataHandler.error.IllegalMoveException;
+import com.tictactoebot.dataHandler.model.Board;
+import com.tictactoebot.dataHandler.model.Game;
+
 import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,7 +21,8 @@ public class GameStateHandler {
     public static boolean playerTurn = true;
     private static int playerNum = 0;   //These are 0 if that player is X, 1 if that player is O
     private static int computerNum = 0;
-    public static char[] boardState = new char[9];
+    private static Game game;
+    public static Board board;
     public static int numMoves = 0;
     public static boolean gameOver = false;
     private static boolean randomTrainerOn = false;
@@ -26,7 +32,7 @@ public class GameStateHandler {
     public static int winnerNum = 0;
     public static boolean gameLoopReturned = false;
     public static int numPlayed;
-
+    public static DataHandler dataHandler;
     private static Hashtable<Integer, Position> moveLocations = new Hashtable<>();
 
 
@@ -37,6 +43,8 @@ public class GameStateHandler {
         GameStateHandler.randomTrainerOn = randomTrainerOn;
         GameStateHandler.resetOnGameEnd = resetOnGameEnd;
         GameStateHandler.noGUI = noGUI;
+
+        //dataHandler = ComputeEngine.getDataHandler();
 
         askXO();
 
@@ -71,11 +79,10 @@ public class GameStateHandler {
         new Thread(new GameOverHandler()).start();
         numMoves = 0;
 
-        System.out.println(++numPlayed);
+        ++numPlayed;
 
-        for (int i = 0; i < 9; i++){
-            boardState[i] = '_';
-        }
+        game = new Game();
+        board = new Board();
 
         if(randomTrainerOn) {
             if ((int) (2 * Math.random() + 1) == 1) {
@@ -107,7 +114,6 @@ public class GameStateHandler {
             } else {
                 randomComputerMove();
             }
-            //sleep(1);
             if(!noGUI)
                 smallSleep();
         }
@@ -146,28 +152,37 @@ public class GameStateHandler {
     }
 
     private static boolean doMove(int location, int playerNum){ //player num is 0 if X, 1 if O
-        if (boardState[location] != '_')
+        if (board.getChar(location) != '-')
             return false;
-        //TODO: Store move info after move is completed.
         if (playerNum == 0) {
-            boardState[location] = 'x';
+            try {
+                board.setChar(location, 'X');
+            } catch (IllegalMoveException e){
+                e.printStackTrace();
+            }
             if(!noGUI) {
                 try {
-                    new DrawMove('x', moveLocations.get(location));
+                    new DrawMove('X', moveLocations.get(location));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         } else {
-            boardState[location] = 'o';
+            try {
+                board.setChar(location, 'O');
+            } catch (IllegalMoveException e){
+                e.printStackTrace();
+            }
             if(!noGUI) {
                 try {
-                    new DrawMove('o', moveLocations.get(location));
+                    new DrawMove('O', moveLocations.get(location));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
+
+        game.addMove(board, location);
 
         printBoardState();
 
@@ -175,20 +190,14 @@ public class GameStateHandler {
             checkForWin();
 
         if(!gameOver){
-            if (playerTurn) {
-                playerTurn = false;
-            } else {
-                playerTurn = true;
-            }
+            playerTurn = !playerTurn;
         }
 
         return true;
     }
 
     public static void printBoardState(){
-        for(int i = 0 ; i < boardState.length; i += 3){
-            System.out.println(boardState[i] + " | " + boardState[i + 1] + " | " + boardState[i + 2]);
-        }
+        System.out.println(board);
     }
 
     public static void onUserInput(int x, int y){
@@ -248,10 +257,10 @@ public class GameStateHandler {
     }
 
     private static int isEqual(int i1, int i2, int i3){
-        if (boardState[i1] == boardState[i2] && boardState[i2] == boardState[i3]){
-            if(boardState[i1] == 'x'){
+        if (board.getChar(i1) == board.getChar(i2) && board.getChar(i2) == board.getChar(i3)){
+            if(board.getChar(i1) == 'X'){
                 return 0;
-            } else if (boardState[i1] == 'o'){
+            } else if (board.getChar(i1) == 'O'){
                 return 1;
             }
         }
@@ -261,9 +270,14 @@ public class GameStateHandler {
     private static void onGameOver(int playerNum){  //0 for X, 1 for O victory, -1 for tie.
         if(playerNum == -1){
             System.out.println("Tie!");
+            game.setResult('T');
         } else {
-            System.out.println("Player: " + (playerNum == 0 ? 'X' : 'O') + " wins!");
+            char result = playerNum == 0 ? 'X' : 'O';
+            game.setResult(result);
+            System.out.println("Player: " + result + " wins!");
         }
+
+        //dataHandler.saveGame();
 
         winnerNum = playerNum;
         gameOver = true;
@@ -322,12 +336,10 @@ public class GameStateHandler {
 class GameOverHandler implements Runnable{
     public void run(){
         while(!((gameOver && resetOnGameEnd)|| restartGame)) {
-            //sleep(1);
             smallSleep();
         }
         gameOver = true;
         while(!gameLoopReturned){
-            //sleep(1);//10
             smallSleep();
         }
         restartGame = false;
