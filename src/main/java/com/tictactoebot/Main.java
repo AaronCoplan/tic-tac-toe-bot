@@ -24,6 +24,7 @@ public class Main {
         }
 
         dataHandler.deleteAllMoves();
+        dataHandler.deleteAllResults();
 
         Game game = new Game();
 
@@ -49,6 +50,8 @@ public class Main {
             System.out.println("Error making a move. Test failed.");
         }
 
+        game.setResult('x');
+
 
         boolean success = dataHandler.saveGame(game);
         if(success){
@@ -58,6 +61,7 @@ public class Main {
         }
 
         Game g = dataHandler.findGameByGameNumber(1);
+        System.out.println(g.getResult());
 
         List<Game> games = dataHandler.findGamesByBoardHash("XXX----OO");
         System.out.println(games.size());

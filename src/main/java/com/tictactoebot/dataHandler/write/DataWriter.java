@@ -1,6 +1,7 @@
 package com.tictactoebot.dataHandler.write;
 
 import com.tictactoebot.dataHandler.error.MoveAlreadyWrittenException;
+import com.tictactoebot.dataHandler.error.ResultAlreadyWrittenException;
 import com.tictactoebot.dataHandler.model.Game;
 
 import java.io.File;
@@ -16,7 +17,7 @@ public interface DataWriter {
      *  are not used in any of the decision making.  Should only look at past, complete games as the
      *  current game would not be useful anyways.
      */
-    void writeGame(Game game, List<File> existingFiles) throws MoveAlreadyWrittenException;
+    void writeGame(Game game, List<File> existingFiles) throws MoveAlreadyWrittenException, ResultAlreadyWrittenException;
 
     void deleteAllMoves(List<File> existingFiles);
 }

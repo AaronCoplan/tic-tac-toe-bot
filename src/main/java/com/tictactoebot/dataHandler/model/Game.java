@@ -12,6 +12,7 @@ public class Game {
 
     private List<Move> moves;
     private int moveNumber;
+    private char result;
 
     public Game(){
 
@@ -34,6 +35,14 @@ public class Game {
 
     public void addMove(Board currentBoardState, int rowPlayed, int colPlayed){
         this.addMove(currentBoardState, Board.convert2DIndexTo1D(rowPlayed, colPlayed));
+    }
+
+    public char getResult(){
+        return result;
+    }
+
+    public void setResult(char result){
+        this.result = result;
     }
 
     public List<Move> getMoves(){

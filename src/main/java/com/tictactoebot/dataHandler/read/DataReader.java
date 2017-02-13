@@ -10,4 +10,6 @@ public interface DataReader {
 
     List<File> getMoveFileList();
     List<String> getMoveFileNames();
+    List<String> getResultFileNames();
+    List<File> getResultFileList();
 }

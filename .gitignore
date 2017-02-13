@@ -12,3 +12,4 @@ bin/
 
 # Move and Game Data
 *.move
+*.result

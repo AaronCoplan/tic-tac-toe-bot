@@ -12,8 +12,10 @@ public interface QueryService {
 
     int getNextGameNumber();
     List<File> getMoveFileList();
+    List<File> getResultFileList();
 
     Game findGameByGameNumber(int gameNumber);
 
     List<Game> findGamesByBoardHash(String boardHash);
+
 }

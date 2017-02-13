@@ -15,16 +15,25 @@ import java.util.List;
 public class DataReaderImpl implements DataReader {
 
     private final File storageDirectory;
-    private final FileFilter hiddenFileFilter;
+
+    private final FileFilter moveFileFilter;
+    private final FileFilter resultFileFilter;
 
     public DataReaderImpl() throws StorageAccessException{
 
         // instantiate a filter to ignore hidden files when accessing the data
-        this.hiddenFileFilter = new FileFilter(){
+        this.moveFileFilter = new FileFilter(){
             @Override
             public boolean accept(File file){
                 // both of these conditions are necessary because a hidden file could end with this extension
                 return !file.isHidden() && file.getName().endsWith(DataHandler.FILE_EXTENSION);
+            }
+        };
+
+        this.resultFileFilter = new FileFilter() {
+            @Override
+            public boolean accept(File file){
+                return !file.isHidden() && file.getName().endsWith(DataHandler.RESULT_EXTENSION);
             }
         };
 
@@ -42,7 +51,7 @@ public class DataReaderImpl implements DataReader {
 
     @Override
     public List<File> getMoveFileList(){
-        File[] moveFiles = storageDirectory.listFiles(hiddenFileFilter);
+        File[] moveFiles = storageDirectory.listFiles(moveFileFilter);
         return new ArrayList<File>(Arrays.asList(moveFiles));
     }
 
@@ -56,5 +65,23 @@ public class DataReaderImpl implements DataReader {
         }
 
         return names;
+    }
+
+    @Override
+    public List<String> getResultFileNames(){
+        List<File> resultFiles = this.getResultFileList();
+
+        List<String> names = new ArrayList<String>();
+        for(File f : resultFiles){
+            names.add(f.getName());
+        }
+
+        return names;
+    }
+
+    @Override
+    public List<File> getResultFileList(){
+        File[] resultFiles = storageDirectory.listFiles(resultFileFilter);
+        return new ArrayList<File>(Arrays.asList(resultFiles));
     }
 }

@@ -42,6 +42,22 @@ public class QueryServiceImpl implements QueryService {
     }
 
     @Override
+    public List<File> getResultFileList(){
+        return dataReader.getResultFileList();
+    }
+
+    private char findResultByGameNumber(int gameNumber){
+        final String searchTerm = "result_g" + gameNumber + "_r";
+
+        List<String> resultFileNames = dataReader.getResultFileNames();
+        resultFileNames.removeIf(s -> !s.contains(searchTerm));
+
+        String fileName = resultFileNames.get(0);
+
+        return FileNameParser.parseResult(fileName);
+    }
+
+    @Override
     public Game findGameByGameNumber(int gameNumber){
         final String searchString = "g" + gameNumber + "_";
 
@@ -50,7 +66,10 @@ public class QueryServiceImpl implements QueryService {
 
         Collections.sort(fileNames);
 
-        return FileNameParser.parseGameFromMoveList(fileNames);
+        Game game = FileNameParser.parseGameFromMoveList(fileNames);
+        game.setResult(this.findResultByGameNumber(gameNumber));
+
+        return game;
     }
 
     @Override

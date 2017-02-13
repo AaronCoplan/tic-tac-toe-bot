@@ -57,4 +57,9 @@ public class DataHandlerImpl implements DataHandler {
     public void deleteAllMoves(){
         dataWriter.deleteAllMoves(queryService.getMoveFileList());
     }
+
+    @Override
+    public void deleteAllResults(){
+        dataWriter.deleteAllMoves(queryService.getResultFileList());
+    }
 }

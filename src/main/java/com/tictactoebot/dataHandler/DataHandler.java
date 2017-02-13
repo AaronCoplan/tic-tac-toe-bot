@@ -13,6 +13,7 @@ public interface DataHandler {
 
     String DIRECTORY_PATH = "storage/";
     String FILE_EXTENSION = ".move";
+    String RESULT_EXTENSION = ".result";
 
     /*
      *  DataHandler follows a singleton initialization paradigm. This ensures that
@@ -48,4 +49,9 @@ public interface DataHandler {
      *  Deletes all stored moves
      */
     void deleteAllMoves();
+
+    /*
+     *  Deletes all stored results
+     */
+    void deleteAllResults();
 }

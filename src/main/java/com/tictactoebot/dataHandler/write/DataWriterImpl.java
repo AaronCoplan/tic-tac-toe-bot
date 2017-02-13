@@ -2,6 +2,7 @@ package com.tictactoebot.dataHandler.write;
 
 import com.tictactoebot.dataHandler.DataHandler;
 import com.tictactoebot.dataHandler.error.MoveAlreadyWrittenException;
+import com.tictactoebot.dataHandler.error.ResultAlreadyWrittenException;
 import com.tictactoebot.dataHandler.error.StorageAccessException;
 import com.tictactoebot.dataHandler.model.Game;
 import com.tictactoebot.dataHandler.model.Move;
@@ -30,7 +31,7 @@ public class DataWriterImpl implements DataWriter {
      */
 
     @Override
-    public void writeGame(Game game, List<File> existingFiles) throws MoveAlreadyWrittenException{
+    public void writeGame(Game game, List<File> existingFiles) throws MoveAlreadyWrittenException, ResultAlreadyWrittenException {
         final int gameNumber = game.getGameNumber();
 
         int successCount = 0;
@@ -39,6 +40,9 @@ public class DataWriterImpl implements DataWriter {
             boolean success = writeMove(gameNumber, m, existingFiles);
             if(success) ++successCount;
         }
+
+        boolean success = writeResult(gameNumber, game.getResult(), existingFiles);
+        if(!success) System.out.println("ERROR: failed to save game result!");
 
         // TODO: how should we handle the case where a move from a game fails to save?
         // should we have it delete all of the successful moves since the game is missing some moves?
@@ -61,6 +65,29 @@ public class DataWriterImpl implements DataWriter {
     /*
      *  Helper Methods
      */
+
+    private boolean writeResult(int gameNumber, char result, List<File> existingFiles) throws ResultAlreadyWrittenException {
+        final String fileName = "result_g" + gameNumber + "_r" + result + DataHandler.RESULT_EXTENSION;
+
+        if(existingFiles.contains(fileName)){
+            throw new ResultAlreadyWrittenException(gameNumber);
+        }
+
+        File resultFile = new File(DataHandler.DIRECTORY_PATH + fileName);
+
+        boolean success;
+
+        try{
+            resultFile.createNewFile();
+            success = true;
+        }catch(IOException error){
+            error.printStackTrace();
+            System.out.println("Error saving result.");
+            success = false;
+        }
+
+        return success;
+    }
 
     private boolean writeMove(int gameNumber, Move move, List<File> existingFiles) throws MoveAlreadyWrittenException {
         final String fileName = generateFileName(gameNumber, move.getMoveNumber(), move.getSpotPlayedIndex(), move.getBoardHash());

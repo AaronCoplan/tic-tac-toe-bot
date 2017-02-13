@@ -38,11 +38,15 @@ public class FileNameParser {
         for(int moveNumber = 0; moveNumber < moves.size(); ++moveNumber){
             String moveFileName = moves.get(moveNumber);
 
-            System.out.println(moveFileName);
-
             Move m = new Move(moveNumber, FileNameParser.getBoardHash(moveFileName), FileNameParser.getSpotPlayedIndex(moveFileName));
         }
 
         return game;
+    }
+
+    public static char parseResult(String fileName){
+        String portion = fileName.substring(fileName.lastIndexOf("_r") + 2);
+
+        return portion.charAt(0);
     }
 }
