@@ -5,6 +5,8 @@ import com.tictactoebot.dataHandler.error.IllegalMoveException;
 import com.tictactoebot.dataHandler.model.Board;
 import com.tictactoebot.dataHandler.model.Game;
 
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args){
@@ -53,13 +55,9 @@ public class Main {
             System.out.println("An error occurred when saving the game!");
         }
 
-        Game game2 = new Game();
-
         Game g = dataHandler.findGameByGameNumber(1);
 
-        Game g2 = dataHandler.findGameByGameNumber(5);
-
-        System.out.println(g);
-        System.out.println(g2);
+        List<Game> games = dataHandler.findGamesByBoardHash("XXX----OO");
+        System.out.println(games.size());
     }
 }

@@ -6,6 +6,7 @@ import com.tictactoebot.dataHandler.read.DataReader;
 import com.tictactoebot.dataHandler.read.DataReaderImpl;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,19 +25,10 @@ public class QueryServiceImpl implements QueryService {
     @Override
     public int getNextGameNumber(){
         List<String> moveFileNames = dataReader.getMoveFileNames();
-        for(String s : moveFileNames){
-            System.out.println(s);
-        }
-        System.out.println();
 
         if(moveFileNames.size() == 0) return 1;
 
         Collections.sort(moveFileNames);
-
-        for(String s : moveFileNames){
-            System.out.println(s);
-        }
-        System.out.println();
 
         String fileName  = moveFileNames.get(moveFileNames.size() - 1);
         int gameNumber = FileNameParser.getGameNumber(fileName); // the highest game number currently saved on disk
@@ -59,5 +51,25 @@ public class QueryServiceImpl implements QueryService {
         Collections.sort(fileNames);
 
         return FileNameParser.parseGameFromMoveList(fileNames);
+    }
+
+    @Override
+    public List<Game> findGamesByBoardHash(String boardHash){
+        final String searchString = "_" + boardHash;
+
+        List<String> fileNames = dataReader.getMoveFileNames();
+        fileNames.removeIf(s -> !s.contains(searchString));
+
+        List<Game> games = new ArrayList<Game>();
+
+        for(String fileName : fileNames){
+            int gameNumber = FileNameParser.getGameNumber(fileName);
+
+            Game g = this.findGameByGameNumber(gameNumber);
+
+            games.add(g);
+        }
+
+        return games;
     }
 }

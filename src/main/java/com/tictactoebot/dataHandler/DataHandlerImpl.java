@@ -7,6 +7,8 @@ import com.tictactoebot.dataHandler.query.QueryServiceImpl;
 import com.tictactoebot.dataHandler.write.DataWriter;
 import com.tictactoebot.dataHandler.write.DataWriterImpl;
 
+import java.util.List;
+
 public class DataHandlerImpl implements DataHandler {
 
     private final DataWriter dataWriter;
@@ -42,5 +44,10 @@ public class DataHandlerImpl implements DataHandler {
     @Override
     public Game findGameByGameNumber(int gameNumber){
         return queryService.findGameByGameNumber(gameNumber);
+    }
+
+    @Override
+    public List<Game> findGamesByBoardHash(String boardHash){
+        return queryService.findGamesByBoardHash(boardHash);
     }
 }

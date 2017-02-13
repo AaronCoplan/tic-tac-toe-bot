@@ -14,4 +14,6 @@ public interface QueryService {
     List<File> getMoveFileList();
 
     Game findGameByGameNumber(int gameNumber);
+
+    List<Game> findGamesByBoardHash(String boardHash);
 }
