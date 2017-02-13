@@ -5,10 +5,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import static com.tictactoebot.UI.GameStateHandler.askXO;
-import static com.tictactoebot.UI.GameStateHandler.createGame;
-import static com.tictactoebot.UI.Utils.sleep;
-
 /**
  * Created by Devin on 2/11/2017.
  */

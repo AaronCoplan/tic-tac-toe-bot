@@ -1,10 +1,8 @@
 package com.tictactoebot.UI;
 
 import javax.swing.*;
-import java.awt.image.ImageObserver;
 import java.io.IOException;
 import java.util.Hashtable;
-import java.util.Objects;
 
 import static com.tictactoebot.UI.Frame.*;
 import static com.tictactoebot.UI.GameStateHandler.*;
@@ -301,9 +299,6 @@ public class GameStateHandler {
             location = (int) (9 * Math.random());
         }
     }
-
-
-
 }
 
 class GameOverHandler implements Runnable{
@@ -318,7 +313,5 @@ class GameOverHandler implements Runnable{
             restartGame = false;
         gameLoopReturned = false;
         restartGame();
-
-
     }
 }
