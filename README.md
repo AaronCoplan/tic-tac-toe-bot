@@ -1,6 +1,6 @@
 # Tic Tac Toe Bot
 
-Project to create a Tic Tac Toe Bot which learns from past games and becomes unbeatable at Tic Tac Toe.  
+Project to create a **Tic Tac Toe Bot** which learns from past games and becomes unbeatable at Tic Tac Toe.  
 
 Contributors: [@AaronCoplan](https://github.com/AaronCoplan), [@Arkidillo](https://github.com/Arkidillo), [@apadalian](https://github.com/apadalian)
 
@@ -19,17 +19,18 @@ Once the dependencies are met, simply clone this repository.
 
 **Building and Running:**
 
-This project is built using Gradle.  To build and run, follow these instructions:
+This project is built using **Gradle**.  To build and run, follow these instructions:
 
 1. Ensure you are in the root directory of the project (the directory containing the **build.gradle** file and this **README** file)
 2. Build the software into a runnable jar file:
-  * On Mac or Linux, run the following command: `./gradlew clean build`
-  * On Windows, run the following command: `gradlew.bat clean build`
+  * On **Mac** or **Linux**, run the following command: `./gradlew clean build`
+  * On **Windows**, run the following command: `gradlew.bat clean build`
 3. Run the jar file we've just created: `java -jar build/libs/tictactoebot-v0.0.1.jar`
 
 ## Major Components
 
 * Random Trainer Bot (to rapidly train the bot with N randomized games)
+* Ability for the bot to train against itself?
 * Data Handler (representing moves, storing them, and fetching and filtering them efficiently) - Aaron
 * UI (for a human to play the bot) - Devin
 * Move Selection Engine (the bot itself)
