@@ -20,11 +20,6 @@ public class DataHandlerImpl implements DataHandler {
     }
 
     @Override
-    public int assignGameNumber(){
-        return queryService.getNextGameNumber();
-    }
-
-    @Override
     public boolean saveGame(Game game){
         boolean success;
 

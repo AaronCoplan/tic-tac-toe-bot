@@ -24,11 +24,6 @@ public interface DataHandler {
     }
 
     /*
-     *  This method will determine the next game number in sequence and assign it to the requesting game
-     */
-    int assignGameNumber();
-
-    /*
      *  This method will save a game to the data storage
      */
     boolean saveGame(Game game);
