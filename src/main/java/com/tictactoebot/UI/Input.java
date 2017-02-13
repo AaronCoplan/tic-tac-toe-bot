@@ -20,7 +20,6 @@ public class Input implements MouseListener, KeyListener {    //Class created to
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_SPACE){
-            GameStateHandler.askXO();
             GameStateHandler.restartGame = true;
         }
     }
