@@ -30,7 +30,7 @@ This project is built using Gradle.  To build and run, follow these instructions
 ## Major Components
 
 * Random Trainer Bot (to rapidly train the bot with N randomized games)
-* Ability for the bot to train against itself
+* Ability for the bot to train against itself?
 * Data Handler (representing moves, storing them, and fetching and filtering them efficiently) - Aaron
 * UI (for a human to play the bot) - Devin
 * Move Selection Engine (the bot itself)
