@@ -1,17 +1,26 @@
 package com.tictactoebot;
 
 
+import com.tictactoebot.dataHandler.DataHandler;
+import com.tictactoebot.dataHandler.error.IllegalMoveException;
+import com.tictactoebot.dataHandler.model.Board;
+import com.tictactoebot.dataHandler.model.Game;
+
+import java.util.List;
+
 import static com.tictactoebot.UI.GameStateHandler.createGame;
 
 public class Main {
 
     public static void main(String[] args){
 
+        testDataHandler();
+
         createGame(false, false, false);
 
     }
 
-    public static void test(){
+    public static void testDataHandler(){
         DataHandler dataHandler = DataHandler.getInstance();
         if(dataHandler == null){
             System.out.println("Error instantiating data handler!");
