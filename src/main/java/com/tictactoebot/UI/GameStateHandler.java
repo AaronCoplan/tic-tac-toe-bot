@@ -2,6 +2,7 @@ package com.tictactoebot.UI;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import static com.tictactoebot.UI.Frame.*;
@@ -166,7 +167,7 @@ public class GameStateHandler {
             }
         }
 
-        printBoardState();
+        //printBoardState();
 
         if(++numMoves >= 5)
             checkForWin();
@@ -211,23 +212,6 @@ public class GameStateHandler {
         }
      }
 
-    public static void randomComputerMove() {
-        int location = (int) (9 * Math.random());
-
-        while (!gameOver && !doMove(location, computerNum)) {
-            location = (int) (9 * Math.random());
-        }
-    }
-
-    public static void realComputerMove(){
-        //Call Andrew/Aaron's function which will give a location back (0 - 8)
-
-        //if(!gameOver){
-        //  int location = callFunction();
-        //  doMove(location, computerNum)
-        //}
-        //playerTurn = true;
-    }
 
     private static void checkForWin(){
         int result;
@@ -293,6 +277,44 @@ public class GameStateHandler {
     }
 
     private static void randomTrainerMove(){
+        simpleRandomMove(playerNum);
+    }
+
+    public static void randomComputerMove() {
+        simpleRandomMove(computerNum);
+    }
+
+    public static void realComputerMove(){
+        //Call Andrew/Aaron's function which will give a location back (0 - 8)
+
+        //if(!gameOver){
+        //  int location = callFunction();
+        //  doMove(location, computerNum)
+        //}
+        //
+    }
+
+    private static void chooseRandomLocation(int playerNum){
+        ArrayList<Integer> possibleLocations = new ArrayList<>();
+
+        for(int i = 0; i < 9; i++){
+            possibleLocations.add(i);
+        }
+
+        int j = 9;
+        int index = (int)(j * Math.random());
+        int location = possibleLocations.get(index);
+
+
+        while(!doMove(location, playerNum) && !gameOver){
+            possibleLocations.remove(index);
+
+            index = (int)(--j * Math.random());
+            location = possibleLocations.get(index);
+        }
+    }
+
+    private static void simpleRandomMove(int playerNum){
         int location = (int)(9 * Math.random());
 
         while (!doMove(location, playerNum) && !gameOver) {
