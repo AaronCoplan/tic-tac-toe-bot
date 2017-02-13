@@ -23,6 +23,8 @@ public class Main {
             System.exit(-1);
         }
 
+        dataHandler.deleteAllMoves();
+
         Game game = new Game();
 
         Board board = new Board();

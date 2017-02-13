@@ -37,4 +37,9 @@ public interface DataHandler {
      *  Returns a list of full game objects containing the designated hash
      */
     List<Game> findGamesByBoardHash(String boardHash);
+
+    /*
+     *  Deletes all stored moves
+     */
+    void deleteAllMoves();
 }

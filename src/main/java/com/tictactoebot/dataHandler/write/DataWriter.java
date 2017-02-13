@@ -17,4 +17,6 @@ public interface DataWriter {
      *  current game would not be useful anyways.
      */
     void writeGame(Game game, List<File> existingFiles) throws MoveAlreadyWrittenException;
+
+    void deleteAllMoves(List<File> existingFiles);
 }

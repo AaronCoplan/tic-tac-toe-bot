@@ -49,6 +49,17 @@ public class DataWriterImpl implements DataWriter {
 
     }
 
+    @Override
+    public void deleteAllMoves(List<File> existingFiles){
+        int successCount = 0;
+
+        for(File f : existingFiles){
+            if(f.delete()) ++successCount;
+        }
+
+        if(successCount != existingFiles.size()) System.out.println("ERROR DELETING ALL MOVES!");
+    }
+
     /*
      *  Helper Methods
      */
