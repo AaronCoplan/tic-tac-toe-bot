@@ -1,19 +1,14 @@
 package com.tictactoebot;
 
-import com.tictactoebot.dataHandler.DataHandler;
-import com.tictactoebot.dataHandler.error.IllegalMoveException;
-import com.tictactoebot.dataHandler.model.Board;
-import com.tictactoebot.dataHandler.model.Game;
 
-import java.util.List;
+import static com.tictactoebot.UI.GameStateHandler.createGame;
 
 public class Main {
 
     public static void main(String[] args){
 
-        test();
+        createGame(false, false, false);
 
-        System.out.println("Hello.");
     }
 
     public static void test(){
