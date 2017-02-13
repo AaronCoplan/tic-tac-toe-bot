@@ -19,8 +19,7 @@ public class DataHandlerImpl implements DataHandler {
 
     @Override
     public int assignGameNumber(){
-        int numGames = queryService.getGameCount();
-        return numGames + 1;
+        return queryService.getNextGameNumber();
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.tictactoebot.dataHandler.read.DataReader;
 import com.tictactoebot.dataHandler.read.DataReaderImpl;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -20,14 +21,26 @@ public class QueryServiceImpl implements QueryService {
     }
 
     @Override
-    public int getGameCount(){
-        List<File> files = dataReader.getMoveFileList();
+    public int getNextGameNumber(){
+        List<String> moveFileNames = dataReader.getMoveFileNames();
+        for(String s : moveFileNames){
+            System.out.println(s);
+        }
+        System.out.println();
 
-        System.out.println(files.size());
+        if(moveFileNames.size() == 0) return 1;
 
-        // TODO: this needs actually implemented instead of returning zero
+        Collections.sort(moveFileNames);
 
-        return 0;
+        for(String s : moveFileNames){
+            System.out.println(s);
+        }
+        System.out.println();
+
+        String fileName  = moveFileNames.get(moveFileNames.size() - 1);
+        int gameNumber = FileNameParser.getGameNumber(fileName); // the highest game number currently saved on disk
+
+        return gameNumber + 1; // return the next game number in the sequence
     }
 
     @Override

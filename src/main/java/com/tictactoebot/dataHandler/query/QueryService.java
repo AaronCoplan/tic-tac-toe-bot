@@ -8,6 +8,6 @@ import java.util.List;
  */
 public interface QueryService {
 
-    int getGameCount();
+    int getNextGameNumber();
     List<File> getMoveFileList();
 }

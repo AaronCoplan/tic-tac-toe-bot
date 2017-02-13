@@ -9,4 +9,5 @@ import java.util.List;
 public interface DataReader {
 
     List<File> getMoveFileList();
+    List<String> getMoveFileNames();
 }

@@ -45,4 +45,16 @@ public class DataReaderImpl implements DataReader {
         File[] moveFiles = storageDirectory.listFiles(hiddenFileFilter);
         return new ArrayList<File>(Arrays.asList(moveFiles));
     }
+
+    @Override
+    public List<String> getMoveFileNames(){
+        List<File> moveFiles = this.getMoveFileList();
+
+        List<String> names = new ArrayList<String>();
+        for(File f : moveFiles){
+            names.add(f.getName());
+        }
+
+        return names;
+    }
 }

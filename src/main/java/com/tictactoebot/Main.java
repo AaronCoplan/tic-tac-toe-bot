@@ -52,5 +52,7 @@ public class Main {
         }else{
             System.out.println("An error occurred when saving the game!");
         }
+
+        Game game2 = new Game(dataHandler);
     }
 }
