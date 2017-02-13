@@ -44,7 +44,8 @@ public class DataWriterImpl implements DataWriter {
 
         // TODO: how should we handle the case where a move from a game fails to save?
         // should we have it delete all of the successful moves since the game is missing some moves?
-        if(successCount != game.getNumMoves()) System.out.println("ERROR: failed to save all moves!");
+        // nummoves + 1 because of the zeroeth move with the empty board state
+        if(successCount != game.getNumMoves() + 1) System.out.println("ERROR: failed to save all moves!");
 
     }
 
@@ -64,8 +65,10 @@ public class DataWriterImpl implements DataWriter {
         boolean success;
 
         try{
-            success = moveFile.createNewFile();
+            moveFile.createNewFile();
+            success = true;
         }catch(IOException error){
+            System.out.println("Error saving move!");
             success = false;
         }
 
@@ -73,6 +76,6 @@ public class DataWriterImpl implements DataWriter {
     }
 
     private String generateFileName(int gameNumber, int moveNumber, String boardHash){
-        return "g" + gameNumber + "_m" + moveNumber + "_" + boardHash;
+        return "g" + gameNumber + "_m" + moveNumber + "_" + boardHash + DataHandler.FILE_EXTENSION;
     }
 }

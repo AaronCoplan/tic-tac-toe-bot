@@ -24,14 +24,19 @@ public class Game {
         // first board position in any given game is an empty board
         this.moves.add(Move.emptyBoard());
 
-        this.moveNumber = 2;
+        // since we have already added a blank board as move 0, this is move 1
+        this.moveNumber =1;
     }
 
-    public void addMove(String boardHash, int indexPlayed){
-        Move nextMove = new Move(moveNumber, boardHash, indexPlayed);
+    public void addMove(Board currentBoardState, int indexPlayed){
+        Move nextMove = new Move(moveNumber, currentBoardState.toString(), indexPlayed);
         moves.add(nextMove);
 
         ++moveNumber;
+    }
+
+    public void addMove(Board currentBoardState, int rowPlayed, int colPlayed){
+        this.addMove(currentBoardState, Board.convert2DIndexTo1D(rowPlayed, colPlayed));
     }
 
     public List<Move> getMoves(){

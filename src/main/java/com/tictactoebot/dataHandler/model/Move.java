@@ -29,6 +29,6 @@ public class Move {
     }
 
     public static Move emptyBoard(){
-        return new Move(1, new Board().toString(), -1);
+        return new Move(0, new Board().toString(), -1);
     }
 }

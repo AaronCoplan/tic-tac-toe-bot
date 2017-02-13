@@ -1,6 +1,7 @@
 package com.tictactoebot.dataHandler;
 
 import com.tictactoebot.dataHandler.error.StorageAccessException;
+import com.tictactoebot.dataHandler.model.Game;
 
 /**
  * Created by afcoplan on 2/12/17.
@@ -24,6 +25,11 @@ public interface DataHandler {
      *  This method will determine the next game number in sequence and assign it to the requesting game
      */
     int assignGameNumber();
+
+    /*
+     *  This method will save a game to the data storage
+     */
+    boolean saveGame(Game game);
 
 
 }

@@ -29,4 +29,9 @@ public class QueryServiceImpl implements QueryService {
 
         return 0;
     }
+
+    @Override
+    public List<File> getMoveFileList(){
+        return dataReader.getMoveFileList();
+    }
 }

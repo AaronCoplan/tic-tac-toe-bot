@@ -1,6 +1,7 @@
 package com.tictactoebot.dataHandler;
 
 import com.tictactoebot.dataHandler.error.StorageAccessException;
+import com.tictactoebot.dataHandler.model.Game;
 import com.tictactoebot.dataHandler.query.QueryService;
 import com.tictactoebot.dataHandler.query.QueryServiceImpl;
 import com.tictactoebot.dataHandler.write.DataWriter;
@@ -20,5 +21,19 @@ public class DataHandlerImpl implements DataHandler {
     public int assignGameNumber(){
         int numGames = queryService.getGameCount();
         return numGames + 1;
+    }
+
+    @Override
+    public boolean saveGame(Game game){
+        boolean success;
+
+        try{
+            dataWriter.writeGame(game, queryService.getMoveFileList());
+            success = true;
+        }catch(Exception e){
+            success = false;
+        }
+
+        return success;
     }
 }
