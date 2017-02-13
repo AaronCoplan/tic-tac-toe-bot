@@ -9,3 +9,7 @@ bin/
 *.ipr
 *.iws
 *.idea
+
+# Move and Game Data
+*.move
+*.result
