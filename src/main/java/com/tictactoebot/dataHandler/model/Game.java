@@ -22,7 +22,7 @@ public class Game {
         this.moves.add(Move.emptyBoard());
 
         // since we have already added a blank board as move 0, this is move 1
-        this.moveNumber =1;
+        this.moveNumber = 1;
     }
 
     public void addMove(Board currentBoardState, int indexPlayed){

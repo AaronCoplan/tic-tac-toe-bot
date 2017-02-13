@@ -9,7 +9,7 @@ public class Board {
 
     private final int BOARD_SIZE = 9;
 
-    private char[] board;
+    private final char[] board;
 
     public Board(){
         this.board = new char[BOARD_SIZE];

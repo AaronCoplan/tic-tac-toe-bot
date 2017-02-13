@@ -28,6 +28,7 @@ public class Move {
         return this.spotPlayedIndex;
     }
 
+    // returns the initial empty board - this method is simply for the sake of saving time
     public static Move emptyBoard(){
         return new Move(0, new Board().toString(), -1);
     }

@@ -1,5 +1,6 @@
 package com.tictactoebot.dataHandler;
 
+import com.tictactoebot.dataHandler.error.SingletonCreationException;
 import com.tictactoebot.dataHandler.error.StorageAccessException;
 import com.tictactoebot.dataHandler.model.Game;
 
@@ -10,15 +11,20 @@ import java.util.List;
  */
 public interface DataHandler {
 
-    static final String DIRECTORY_PATH = "storage/";
-    static final String FILE_EXTENSION = ".move";
+    String DIRECTORY_PATH = "storage/";
+    String FILE_EXTENSION = ".move";
 
-    // singleton initialization practice
-    // TODO: ensure there is only one instance of DataHandler
+    /*
+     *  DataHandler follows a singleton initialization paradigm. This ensures that
+     *  there is only ever one instance of DataHandler.  By having only one instance,
+     *  we prevent issues with concurrent access and thus avoid corrupting our data.
+     */
     static DataHandler getInstance() {
         try{
             return new DataHandlerImpl();
         }catch(StorageAccessException error){
+            return null;
+        }catch(SingletonCreationException error){
             return null;
         }
     }

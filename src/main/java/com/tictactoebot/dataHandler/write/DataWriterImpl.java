@@ -18,8 +18,6 @@ public class DataWriterImpl implements DataWriter {
     private final File storageDirectory;
 
     public DataWriterImpl() throws StorageAccessException{
-        // TODO: ensure you can access the storage directory!
-
         this.storageDirectory = new File(DataHandler.DIRECTORY_PATH);
 
         if(storageDirectory == null || !storageDirectory.exists()){

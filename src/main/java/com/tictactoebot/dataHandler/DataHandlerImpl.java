@@ -1,5 +1,6 @@
 package com.tictactoebot.dataHandler;
 
+import com.tictactoebot.dataHandler.error.SingletonCreationException;
 import com.tictactoebot.dataHandler.error.StorageAccessException;
 import com.tictactoebot.dataHandler.model.Game;
 import com.tictactoebot.dataHandler.query.QueryService;
@@ -11,12 +12,18 @@ import java.util.List;
 
 public class DataHandlerImpl implements DataHandler {
 
+    private static boolean instanceCreated = false;
+
     private final DataWriter dataWriter;
     private final QueryService queryService;
 
-    protected DataHandlerImpl() throws StorageAccessException {
+    protected DataHandlerImpl() throws StorageAccessException, SingletonCreationException {
+        if(instanceCreated) throw new SingletonCreationException();
+
         this.dataWriter = new DataWriterImpl();
         this.queryService = new QueryServiceImpl();
+
+        instanceCreated = true;
     }
 
     @Override
