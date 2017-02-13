@@ -27,6 +27,9 @@ public class DataHandlerImpl implements DataHandler {
         boolean success;
 
         try{
+            int gameNumber = queryService.getNextGameNumber();
+            game.setGameNumber(gameNumber);
+
             dataWriter.writeGame(game, queryService.getMoveFileList());
             success = true;
         }catch(Exception e){
@@ -34,5 +37,10 @@ public class DataHandlerImpl implements DataHandler {
         }
 
         return success;
+    }
+
+    @Override
+    public Game findGameByGameNumber(int gameNumber){
+        return queryService.findGameByGameNumber(gameNumber);
     }
 }

@@ -1,6 +1,7 @@
 package com.tictactoebot.dataHandler.query;
 
 import com.tictactoebot.dataHandler.error.StorageAccessException;
+import com.tictactoebot.dataHandler.model.Game;
 import com.tictactoebot.dataHandler.read.DataReader;
 import com.tictactoebot.dataHandler.read.DataReaderImpl;
 
@@ -46,5 +47,17 @@ public class QueryServiceImpl implements QueryService {
     @Override
     public List<File> getMoveFileList(){
         return dataReader.getMoveFileList();
+    }
+
+    @Override
+    public Game findGameByGameNumber(int gameNumber){
+        final String searchString = "g" + gameNumber + "_";
+
+        List<String> fileNames = dataReader.getMoveFileNames();
+        fileNames.removeIf(s -> !s.contains(searchString));
+
+        Collections.sort(fileNames);
+
+        return FileNameParser.parseGameFromMoveList(fileNames);
     }
 }

@@ -21,7 +21,7 @@ public class Main {
             System.exit(-1);
         }
 
-        Game game = new Game(dataHandler);
+        Game game = new Game();
 
         Board board = new Board();
 
@@ -53,6 +53,13 @@ public class Main {
             System.out.println("An error occurred when saving the game!");
         }
 
-        Game game2 = new Game(dataHandler);
+        Game game2 = new Game();
+
+        Game g = dataHandler.findGameByGameNumber(1);
+
+        Game g2 = dataHandler.findGameByGameNumber(5);
+
+        System.out.println(g);
+        System.out.println(g2);
     }
 }

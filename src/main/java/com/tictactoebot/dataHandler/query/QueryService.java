@@ -1,5 +1,7 @@
 package com.tictactoebot.dataHandler.query;
 
+import com.tictactoebot.dataHandler.model.Game;
+
 import java.io.File;
 import java.util.List;
 
@@ -10,4 +12,6 @@ public interface QueryService {
 
     int getNextGameNumber();
     List<File> getMoveFileList();
+
+    Game findGameByGameNumber(int gameNumber);
 }

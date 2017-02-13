@@ -1,7 +1,5 @@
 package com.tictactoebot.dataHandler.model;
 
-import com.tictactoebot.dataHandler.DataHandler;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,13 +8,12 @@ import java.util.List;
  */
 public class Game {
 
-    private final int gameNumber;
+    private int gameNumber;
 
     private List<Move> moves;
     private int moveNumber;
 
-    public Game(DataHandler dataHandler){
-        this.gameNumber = dataHandler.assignGameNumber();
+    public Game(){
 
         // initialize the list of moves
         this.moves = new ArrayList<Move>();
@@ -49,5 +46,9 @@ public class Game {
 
     public int getGameNumber(){
         return this.gameNumber;
+    }
+
+    public void setGameNumber(int gameNumber){
+        this.gameNumber = gameNumber;
     }
 }

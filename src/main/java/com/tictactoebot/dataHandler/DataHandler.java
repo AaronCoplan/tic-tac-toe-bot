@@ -31,5 +31,7 @@ public interface DataHandler {
      */
     boolean saveGame(Game game);
 
+    Game findGameByGameNumber(int gameNumber);
+
 
 }

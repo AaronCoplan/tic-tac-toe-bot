@@ -54,7 +54,7 @@ public class DataWriterImpl implements DataWriter {
      */
 
     private boolean writeMove(int gameNumber, Move move, List<File> existingFiles) throws MoveAlreadyWrittenException {
-        final String fileName = generateFileName(gameNumber, move.getMoveNumber(), move.getBoardHash());
+        final String fileName = generateFileName(gameNumber, move.getMoveNumber(), move.getSpotPlayedIndex(), move.getBoardHash());
 
         if(existingFiles.contains(fileName)){
             throw new MoveAlreadyWrittenException(gameNumber, move.getMoveNumber());
@@ -75,7 +75,7 @@ public class DataWriterImpl implements DataWriter {
         return success;
     }
 
-    private String generateFileName(int gameNumber, int moveNumber, String boardHash){
-        return "g" + gameNumber + "_m" + moveNumber + "_" + boardHash + DataHandler.FILE_EXTENSION;
+    private String generateFileName(int gameNumber, int moveNumber, int spotPlayedIndex, String boardHash){
+        return "g" + gameNumber + "_m" + moveNumber + "_sp" + spotPlayedIndex + "_" + boardHash + DataHandler.FILE_EXTENSION;
     }
 }
