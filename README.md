@@ -35,22 +35,3 @@ This project is built using **Gradle**.  To build and run, follow these instruct
 * UI (for a human to play the bot) - Devin
 * Move Selection Engine (the bot itself)
 * Prediction Engine (predicting the game) - Andrew
-
-## JUnit Tests
-
-JUnit Tests allow us to ensure our code is working correctly.  For instance, we might write a method called `int power(int base, int power)`, which returns the base to the power.  However, how do we know that this code is actually working correctly?
-
-The way that we do this is by writing a JUnit test, all of which get executed during the `./gradlew clean build` phase.  If **any** JUnit tests fail, the software will fail to build, and you will not have a jar file to run.
-
-To write a JUnit test for our method (`int power(int base, int power)`), we will add a method to a test class, found in the `src/main/test` directory.  Our method will look something like this:
-
-```
-@Test
-public void testPower(){
-    assertEquals(4, power(2,2));
-    assertEquals(9, power(3,2));
-    assertEquals(27, power(2,3));
-}
-```
-
-Note how all test methods must contain the `@Test` annotation.  The `assertEquals()` method takes two parameters, the first is the expected value (aka what the method should return), and the second is the result of the method call.  If any of our assertions fail, our test will fail, and as described above, this will cause our build to fail as well.
