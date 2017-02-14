@@ -2,6 +2,7 @@ package com.tictactoebot.gameEngine.gameTypes;
 
 import com.tictactoebot.UI.Frame;
 import com.tictactoebot.gameEngine.handlers.GameStateHandler;
+import com.tictactoebot.trainer.RandomTrainer;
 
 /**
  * Created by afcoplan on 2/13/17.
@@ -27,7 +28,7 @@ public class HumanVsBotEngine {
         while(!GameStateHandler.isGameOver()){
             if(!GameStateHandler.isPlayerTurn()){
                 // TODO: get the move from the compute engine
-                doComputerMove();
+                RandomTrainer.move();
                 GameStateHandler.setPlayerTurn();
             }
 
@@ -38,17 +39,7 @@ public class HumanVsBotEngine {
 
     }
 
-    public void doComputerMove(){
 
-        boolean moveSuccess = false;
-
-        while(!moveSuccess){
-
-            int location = (int)(Math.random() * 9);
-
-            moveSuccess = GameStateHandler.doComputerMove(location);
-        }
-    }
 
 
 }
