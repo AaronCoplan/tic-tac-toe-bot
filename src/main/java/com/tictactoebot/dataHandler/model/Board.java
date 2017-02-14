@@ -56,13 +56,13 @@ public class Board {
     }
 
     //Checks if the board tile at the index is empty
-    public boolean isNotOccupied(int index){
-        return board[index] == '-';
+    public boolean isOccupied(int index){
+        return board[index] != '-';
     }
 
     //Checks if the board tile at the row and column is empty
-    public boolean isNotOccupied(int row, int col){
-        return board[convert2DIndexTo1D(row, col)] == '-';
+    public boolean isOccupied(int row, int col){
+        return board[convert2DIndexTo1D(row, col)] != '-';
     }
 
     // method to get the character at the specified row and column

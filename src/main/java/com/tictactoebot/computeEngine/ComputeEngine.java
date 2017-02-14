@@ -11,9 +11,9 @@ public class ComputeEngine {
     public Move move(Board board){
         int location = (int)(Math.random() * 9);
 
-        while(board.isNotOccupied(location)){
+        while(board.isOccupied(location)){
             location = (int)(Math.random() * 9);
         }
-        return new Move(GameStateHandler.getNumMoves(), board.toString(),location);
+        return new Move(GameStateHandler.getNumMoves(), board.toString(), location);
     }
 }
