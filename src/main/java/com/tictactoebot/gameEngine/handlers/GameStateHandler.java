@@ -44,6 +44,8 @@ public class GameStateHandler {
         board = new Board();
         game = new Game();
 
+        gameOver = false;
+
         numMoves = 0;
 
         playerNumber = Frame.askXO();

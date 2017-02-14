@@ -1,5 +1,6 @@
 package com.tictactoebot.gameEngine;
 
+import com.tictactoebot.UI.Frame;
 import com.tictactoebot.gameEngine.gameTypes.HumanVsBotEngine;
 import com.tictactoebot.gameEngine.gameTypes.TrainingEngine;
 
@@ -35,6 +36,21 @@ public class GameEngine {
     }
 
     private void playHumanVsBot(boolean continuousPlay){
-        new HumanVsBotEngine().playGame();
+
+        HumanVsBotEngine humanVsBotEngine = new HumanVsBotEngine();
+
+        // this while loop allows the user to play games until they
+        // press the close button on the JFrame
+        while(true){
+            humanVsBotEngine.playGame();
+            // wait 5 seconds so the user can see the result
+            try{
+                Thread.sleep(options.getMillisBetweenGames());
+            }catch(InterruptedException e){
+                e.printStackTrace();
+            }
+            //close the window
+            Frame.close();
+        }
     }
 }

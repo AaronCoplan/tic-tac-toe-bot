@@ -9,12 +9,19 @@ public class Options {
     private boolean isContinuousPlay;
 
     private int numTrainingGames;
+    private long millisBetweenGames;
 
-    public Options(){}
+    public Options(){
+        // default option
+        this.millisBetweenGames = 5000;
+    }
 
     public Options(boolean randomTrainerOn, boolean isContinuousPlay){
         this.randomTrainerOn = randomTrainerOn;
         this.isContinuousPlay = isContinuousPlay;
+
+        // default option
+        this.millisBetweenGames = 5000;
 
     }
 
@@ -22,6 +29,9 @@ public class Options {
         this.randomTrainerOn = randomTrainerOn;
         this.isContinuousPlay = isContinuousPlay;
         this.numTrainingGames = numTrainingGames;
+
+        // default option
+        this.millisBetweenGames = 5000;
     }
 
     public boolean isRandomTrainerOn(){
@@ -46,5 +56,14 @@ public class Options {
 
     public void setNumTrainingGames(int numTrainingGames){
         this.numTrainingGames = numTrainingGames;
+    }
+
+    public long getMillisBetweenGames(){
+
+        return millisBetweenGames;
+    }
+
+    public void setMillisBetweenGames(long millisBetweenGames){
+        this.millisBetweenGames = millisBetweenGames;
     }
 }

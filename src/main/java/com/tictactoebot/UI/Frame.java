@@ -53,6 +53,11 @@ public class Frame {
         frame.repaint(0,0,WIDTH, HEIGHT);
     }
 
+    public static void close(){
+        frame.setVisible(false);
+        frame.dispose();
+    }
+
     public static void recreatePanel(){
         frame.remove(panel);
         panel = new JPanel();

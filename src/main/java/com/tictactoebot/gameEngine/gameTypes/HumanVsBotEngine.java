@@ -1,7 +1,6 @@
 package com.tictactoebot.gameEngine.gameTypes;
 
 import com.tictactoebot.UI.Frame;
-import com.tictactoebot.gameEngine.handlers.GameOverHandler;
 import com.tictactoebot.gameEngine.handlers.GameStateHandler;
 
 /**
@@ -9,11 +8,8 @@ import com.tictactoebot.gameEngine.handlers.GameStateHandler;
  */
 public class HumanVsBotEngine {
 
-    private boolean gameLoopReturned;
-
     // TODO: this should take a constructor of the compute engine
     public HumanVsBotEngine(){
-        this.gameLoopReturned = false;
     }
 
     public void playGame(){
@@ -22,9 +18,9 @@ public class HumanVsBotEngine {
 
         Frame.createFrame();
 
-        new Thread(new GameOverHandler()).start();
-
         gameLoop();
+
+        System.out.println("Game over");
     }
 
     private void gameLoop(){
@@ -40,9 +36,6 @@ public class HumanVsBotEngine {
             }catch(Exception e){}
         }
 
-        gameLoopReturned = true;
-
-        System.out.println("GAME LOOP ENDED");
     }
 
     public void doComputerMove(){
