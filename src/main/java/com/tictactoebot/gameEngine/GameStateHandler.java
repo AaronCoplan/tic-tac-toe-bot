@@ -1,5 +1,8 @@
-package com.tictactoebot.UI;
+package com.tictactoebot.gameEngine;
 
+import com.tictactoebot.UI.DrawMove;
+import com.tictactoebot.UI.Frame;
+import com.tictactoebot.UI.Position;
 import com.tictactoebot.dataHandler.DataHandler;
 import com.tictactoebot.dataHandler.error.IllegalMoveException;
 import com.tictactoebot.dataHandler.model.Board;
@@ -11,8 +14,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import static com.tictactoebot.UI.Frame.*;
-import static com.tictactoebot.UI.GameStateHandler.*;
-import static com.tictactoebot.UI.Utils.*;
+import static com.tictactoebot.UI.Utils.smallSleep;
 
 /**
  * Created by Devin on 2/11/2017.
@@ -162,7 +164,7 @@ public class GameStateHandler {
             }
             if(!noGUI) {
                 try {
-                    new DrawMove('X', moveLocations.get(location));
+                    new DrawMove('x', moveLocations.get(location));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -175,7 +177,7 @@ public class GameStateHandler {
             }
             if(!noGUI) {
                 try {
-                    new DrawMove('O', moveLocations.get(location));
+                    new DrawMove('o', moveLocations.get(location));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -333,17 +335,3 @@ public class GameStateHandler {
     }
 }
 
-class GameOverHandler implements Runnable{
-    public void run(){
-        while(!((gameOver && resetOnGameEnd)|| restartGame)) {
-            smallSleep();
-        }
-        gameOver = true;
-        while(!gameLoopReturned){
-            smallSleep();
-        }
-        restartGame = false;
-        gameLoopReturned = false;
-        restartGame();
-    }
-}

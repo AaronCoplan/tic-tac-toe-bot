@@ -8,7 +8,7 @@ import com.tictactoebot.dataHandler.model.Game;
 
 import java.util.List;
 
-import static com.tictactoebot.UI.GameStateHandler.createGame;
+import static com.tictactoebot.gameEngine.GameStateHandler.createGame;
 
 public class Main {
 
