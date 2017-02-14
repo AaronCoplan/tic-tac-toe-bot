@@ -5,21 +5,27 @@ import com.tictactoebot.dataHandler.DataHandler;
 import com.tictactoebot.dataHandler.error.IllegalMoveException;
 import com.tictactoebot.dataHandler.model.Board;
 import com.tictactoebot.dataHandler.model.Game;
+import com.tictactoebot.gameEngine.GameEngine;
+import com.tictactoebot.gameEngine.Options;
 
 import java.util.List;
-
-import static com.tictactoebot.UI.GameStateHandler.createGame;
 
 public class Main {
 
     public static void main(String[] args){
 
-        testDataHandler();
+        Options options = new Options();
+        options.setRandomTrainerOn(false);
+        options.setContinuousPlay(false);
 
-        createGame(false, false, false);
-
+        GameEngine gameEngine = new GameEngine(options);
+        gameEngine.run();
     }
 
+    /*
+     * This method is not called, and exists simply as an example of how to use the DataHandler.
+     * Once a full understanding of usage is in place, this method can be deleted.
+     */
     public static void testDataHandler(){
         DataHandler dataHandler = DataHandler.getInstance();
         if(dataHandler == null){

@@ -1,12 +1,7 @@
 package com.tictactoebot.UI;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-
-import static com.tictactoebot.UI.Frame.MARGIN;
 
 /**
  * Created by Devin on 2/11/2017.
@@ -28,6 +23,8 @@ public class Frame {
 
     private Frame(){
     }
+
+
 
     public static void createFrame(){
         frame = new JFrame();
@@ -56,6 +53,11 @@ public class Frame {
         frame.repaint(0,0,WIDTH, HEIGHT);
     }
 
+    public static void close(){
+        frame.setVisible(false);
+        frame.dispose();
+    }
+
     public static void recreatePanel(){
         frame.remove(panel);
         panel = new JPanel();
@@ -70,40 +72,30 @@ public class Frame {
         frame.repaint(0,0,WIDTH, HEIGHT);
     }
 
+    public static void repaint(){
+        panel.repaint(0,0, WIDTH, HEIGHT);
+    }
+
     public static void add(JComponent c){
         panel.add(c);
     }
-}
 
-class DrawBoard extends JComponent{
-    int margin = MARGIN;
+    public static int askXO(){
+        Object[] possibleValues = {"X", "O"};
+        Object selectedValue = JOptionPane.showInputDialog(null,
+                "Do you want to be X or O?", "Tic-tac-toe",
+                JOptionPane.INFORMATION_MESSAGE, null,
+                possibleValues, possibleValues[0]);
 
-    public Dimension getPreferredSize(){
-        return new Dimension(Frame.WIDTH, Frame.HEIGHT);
-    }
-
-    public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        g.setColor(Color.black);
-        g.fillRect(Frame.cornerCoords[0].x, margin, 10, Frame.HEIGHT - 2 * margin);
-        g.fillRect(Frame.cornerCoords[1].x, margin, 10, Frame.HEIGHT - 2 * margin);
-        g.fillRect(margin, Frame.cornerCoords[0].y, Frame.WIDTH - 2 * margin, 10);
-        g.fillRect(margin, Frame.cornerCoords[2].y, Frame.WIDTH - 2 * margin, 10);
-        if(GameStateHandler.gameOver) {
-            if(GameStateHandler.winnerNum == -1){
-                g.drawString("Tie!",Frame.WIDTH/2 - 10, margin);
-            } else {
-                g.drawString((GameStateHandler.winnerNum == 0 ? 'X' : 'O') + " wins", Frame.WIDTH / 2 - 10, margin);
-            }
+        if (selectedValue.equals(possibleValues[0])) {
+            return 0;
+        } else {
+            return 1;
         }
     }
-}
 
-class DrawMove extends JLabel {
-    public DrawMove(char XorY, Position p) throws IOException {
-        super(new ImageIcon(ImageIO.read(new File("./assets/" + XorY + ".png"))));
-        setSize(getIcon().getIconWidth(), getIcon().getIconHeight());
-        Frame.add(this);
-        setLocation(p.x - getWidth() / 2, p.y - getHeight() / 2);
+    public static Position[] getCornerCoords(){
+        return cornerCoords;
     }
 }
+
