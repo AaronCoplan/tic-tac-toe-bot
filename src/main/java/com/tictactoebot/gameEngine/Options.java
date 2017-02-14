@@ -6,15 +6,22 @@ package com.tictactoebot.gameEngine;
 public class Options {
 
     private boolean randomTrainerOn;
-    private boolean resetOnGameEnd;
-    private boolean usesTerminalOutput;
+    private boolean isContinuousPlay;
+
+    private int numTrainingGames;
 
     public Options(){}
 
-    public Options(boolean randomTrainerOn, boolean resetOnGameEnd, boolean usesTerminalOutput){
+    public Options(boolean randomTrainerOn, boolean isContinuousPlay){
         this.randomTrainerOn = randomTrainerOn;
-        this.resetOnGameEnd = resetOnGameEnd;
-        this.usesTerminalOutput = usesTerminalOutput;
+        this.isContinuousPlay = isContinuousPlay;
+
+    }
+
+    public Options(boolean randomTrainerOn, boolean isContinuousPlay, int numTrainingGames){
+        this.randomTrainerOn = randomTrainerOn;
+        this.isContinuousPlay = isContinuousPlay;
+        this.numTrainingGames = numTrainingGames;
     }
 
     public boolean isRandomTrainerOn(){
@@ -25,19 +32,19 @@ public class Options {
         this.randomTrainerOn = randomTrainerOn;
     }
 
-    public boolean isResetOnGameEnd(){
-        return resetOnGameEnd;
+    public boolean isContinuousPlay(){
+        return isContinuousPlay;
     }
 
-    public void setResetOnGameEnd(boolean resetOnGameEnd){
-        this.resetOnGameEnd = resetOnGameEnd;
+    public void setContinuousPlay(boolean continuousPlay){
+        this.isContinuousPlay = continuousPlay;
     }
 
-    public boolean isUsesTerminalOutput(){
-        return usesTerminalOutput;
+    public int getNumTrainingGames(){
+        return numTrainingGames;
     }
 
-    public void setUsesTerminalOutput(boolean usesTerminalOutput){
-        this.usesTerminalOutput = usesTerminalOutput;
+    public void setNumTrainingGames(int numTrainingGames){
+        this.numTrainingGames = numTrainingGames;
     }
 }

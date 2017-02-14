@@ -14,12 +14,9 @@ public class Main {
 
     public static void main(String[] args){
 
-        testDataHandler();
-
         Options options = new Options();
         options.setRandomTrainerOn(false);
-        options.setResetOnGameEnd(false);
-        options.setUsesTerminalOutput(false);
+        options.setContinuousPlay(false);
 
         GameEngine gameEngine = new GameEngine(options);
         gameEngine.run();

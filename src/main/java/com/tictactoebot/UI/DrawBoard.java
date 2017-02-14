@@ -1,6 +1,6 @@
 package com.tictactoebot.UI;
 
-import com.tictactoebot.gameEngine.GameStateHandler;
+import com.tictactoebot.gameEngine.handlers.GameStateHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,11 +24,11 @@ public class DrawBoard extends JComponent {
         g.fillRect(Frame.cornerCoords[1].x, margin, 10, Frame.HEIGHT - 2 * margin);
         g.fillRect(margin, Frame.cornerCoords[0].y, Frame.WIDTH - 2 * margin, 10);
         g.fillRect(margin, Frame.cornerCoords[2].y, Frame.WIDTH - 2 * margin, 10);
-        if(GameStateHandler.gameOver) {
-            if(GameStateHandler.winnerNum == -1){
+        if(GameStateHandler.isGameOver()) {
+            if(GameStateHandler.getWinnerNum() == -1){
                 g.drawString("Tie!",Frame.WIDTH/2 - 10, margin);
             } else {
-                g.drawString((GameStateHandler.winnerNum == 0 ? 'X' : 'O') + " wins", Frame.WIDTH / 2 - 10, margin);
+                g.drawString((GameStateHandler.getWinnerNum() == 0 ? 'X' : 'O') + " wins", Frame.WIDTH / 2 - 10, margin);
             }
         }
     }

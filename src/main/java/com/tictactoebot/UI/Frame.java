@@ -24,6 +24,8 @@ public class Frame {
     private Frame(){
     }
 
+
+
     public static void createFrame(){
         frame = new JFrame();
         frame.setSize(WIDTH, HEIGHT);
@@ -65,8 +67,30 @@ public class Frame {
         frame.repaint(0,0,WIDTH, HEIGHT);
     }
 
+    public static void repaint(){
+        panel.repaint(0,0, WIDTH, HEIGHT);
+    }
+
     public static void add(JComponent c){
         panel.add(c);
+    }
+
+    public static int askXO(){
+        Object[] possibleValues = {"X", "O"};
+        Object selectedValue = JOptionPane.showInputDialog(null,
+                "Do you want to be X or O?", "Tic-tac-toe",
+                JOptionPane.INFORMATION_MESSAGE, null,
+                possibleValues, possibleValues[0]);
+
+        if (selectedValue.equals(possibleValues[0])) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
+    public static Position[] getCornerCoords(){
+        return cornerCoords;
     }
 }
 
