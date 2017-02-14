@@ -1,6 +1,7 @@
 package com.tictactoebot.gameEngine;
 
 import com.tictactoebot.UI.Frame;
+import com.tictactoebot.computeEngine.ComputeEngine;
 import com.tictactoebot.gameEngine.gameTypes.HumanVsBotEngine;
 import com.tictactoebot.gameEngine.gameTypes.TrainingEngine;
 
@@ -37,7 +38,7 @@ public class GameEngine {
 
     private void playHumanVsBot(boolean continuousPlay){
 
-        HumanVsBotEngine humanVsBotEngine = new HumanVsBotEngine();
+        HumanVsBotEngine humanVsBotEngine = new HumanVsBotEngine(new ComputeEngine());
 
         // this while loop allows the user to play games until they
         // press the close button on the JFrame

@@ -13,13 +13,6 @@ public class Utils {
         }
     }
 
-    public static void join (Thread t){
-        try {
-            t.join();
-        } catch (InterruptedException e){
-            e.printStackTrace();
-        }
-    }
 
     public static void smallSleep(){
         dummy = 0;
