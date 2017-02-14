@@ -9,11 +9,12 @@ import com.tictactoebot.gameEngine.handlers.GameStateHandler;
  */
 public class ComputeEngine {
     public Move move(Board board){
-        int location = (int)(Math.random() * 9);
+        int location;
 
-        while(board.isOccupied(location)){
+        do {
             location = (int)(Math.random() * 9);
-        }
+        } while(board.isOccupied(location));
+
         return new Move(GameStateHandler.getNumMoves(), board.toString(), location);
     }
 }
