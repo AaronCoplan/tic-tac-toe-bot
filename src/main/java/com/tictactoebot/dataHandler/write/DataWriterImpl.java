@@ -81,6 +81,8 @@ public class DataWriterImpl implements DataWriter {
             resultFile.createNewFile();
             success = true;
         }catch(IOException error){
+            System.out.println(new File("").getAbsolutePath());
+            System.out.println(DataHandler.DIRECTORY_PATH + fileName);
             error.printStackTrace();
             System.out.println("Error saving result.");
             success = false;

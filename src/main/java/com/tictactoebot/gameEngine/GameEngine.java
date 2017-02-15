@@ -1,6 +1,7 @@
 package com.tictactoebot.gameEngine;
 
 import com.tictactoebot.UI.Frame;
+import com.tictactoebot.dataHandler.DataHandler;
 import com.tictactoebot.gameEngine.gameTypes.HumanVsBotEngine;
 import com.tictactoebot.gameEngine.gameTypes.TrainingEngine;
 
@@ -10,8 +11,10 @@ import com.tictactoebot.gameEngine.gameTypes.TrainingEngine;
 public class GameEngine {
 
     private final Options options;
+    private final DataHandler dataHandler;
 
     public GameEngine(Options options){
+        this.dataHandler = DataHandler.getInstance();
         this.options = options;
     }
 
@@ -30,7 +33,7 @@ public class GameEngine {
             Thread.sleep(1000);
         }catch(InterruptedException e){}
 
-        TrainingEngine.train(numGames);
+        TrainingEngine.train(numGames, dataHandler);
     }
 
     private void playHumanVsBot(boolean continuousPlay){

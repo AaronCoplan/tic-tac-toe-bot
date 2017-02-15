@@ -13,6 +13,10 @@ public class ComputeEngine {
         this.letter = letter;
     }
 
+    public char getLetter(){
+        return this.letter;
+    }
+
     public int getMove(Board board){
         int location;
 

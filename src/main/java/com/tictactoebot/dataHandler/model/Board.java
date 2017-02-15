@@ -11,6 +11,12 @@ public class Board {
     private final int ROW_SIZE = 3;
     private final int COL_SIZE = 3;
 
+    public static final int X_WINS = 0;
+    public static final int O_WINS = 1;
+    public static final int TIE = -1;
+    public static final int NOT_OVER = -3;
+
+
     private final char[] board;
 
     public Board(){
@@ -32,7 +38,7 @@ public class Board {
             throw new IndexOutOfBoundsException();
         }
 
-        if(board[index] != '-') throw new IllegalMoveException();
+        if(board[index] != '-') throw new IllegalMoveException(index);
 
         board[index] = value;
     }
@@ -43,7 +49,7 @@ public class Board {
             throw new IndexOutOfBoundsException();
         }
 
-        if(board[index] != '-') throw new IllegalMoveException();
+        if(board[index] != '-') throw new IllegalMoveException(index);
 
         board[index] = value;
     }
@@ -98,5 +104,51 @@ public class Board {
             }
             System.out.println();
         }
+    }
+
+    public boolean isFull(){
+        for(char c : board){
+            if(c == '-') return false;
+        }
+
+        return true;
+    }
+
+    public int checkResult(){
+
+        int result;
+
+        for (int i = 0; i < 3; i++){
+            result = isEqual(3*i, 3*i+1, 3*i+2);
+            if(result != Board.NOT_OVER) return result;
+        }
+
+        for (int j = 0; j < 3; j++){
+            result = isEqual(j, j+3, j+6);
+            if(result != Board.NOT_OVER) return result;
+        }
+
+        if ((result = isEqual(0, 4, 8)) != Board.NOT_OVER){
+            return result;
+        } else if ((result = isEqual(2, 4, 6)) != Board.NOT_OVER){
+            return result;
+        }
+
+        if(isFull()){
+            return Board.TIE;
+        }
+
+        return -3; // game is not over, continue
+    }
+
+    private int isEqual(int i1, int i2, int i3){
+        if (this.getChar(i1) == this.getChar(i2) && this.getChar(i2) == this.getChar(i3)){
+            if(this.getChar(i1) == 'X'){
+                return Board.X_WINS;
+            } else if (this.getChar(i1) == 'O'){
+                return Board.O_WINS;
+            }
+        }
+        return Board.NOT_OVER;
     }
 }

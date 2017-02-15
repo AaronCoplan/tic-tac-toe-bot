@@ -1,6 +1,5 @@
 package com.tictactoebot.trainer;
 
-import com.tictactoebot.dataHandler.error.IllegalMoveException;
 import com.tictactoebot.dataHandler.model.Board;
 
 /**
@@ -14,23 +13,17 @@ public class RandomTrainer {
         this.letter = letter;
     }
 
+    public char getLetter(){
+        return this.letter;
+    }
+
     public int getMove(Board board){
 
-        int location = -1;
+        int location;
 
-        boolean moveSuccess = false;
-
-        while(!moveSuccess){
-
+        do {
             location = (int)(Math.random() * 9);
-
-            try{
-                board.setChar(location, letter);
-                moveSuccess = true;
-            }catch(IllegalMoveException e){
-                moveSuccess = false;
-            }
-        }
+        } while(board.isOccupied(location));
 
         return location;
     }

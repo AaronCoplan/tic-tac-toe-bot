@@ -17,23 +17,35 @@ public class QueryServiceImpl implements QueryService {
 
     private final DataReader dataReader;
 
+    private int gameNumber;
+
     public QueryServiceImpl() throws StorageAccessException {
 
         this.dataReader = new DataReaderImpl();
+        this.gameNumber = -1;
     }
 
     @Override
     public int getNextGameNumber(){
-        List<String> moveFileNames = dataReader.getMoveFileNames();
+        if(gameNumber == -1){
+            List<String> moveFileNames = dataReader.getMoveFileNames();
 
-        if(moveFileNames.size() == 0) return 1;
+            if (moveFileNames.size() == 0) return 1;
 
-        Collections.sort(moveFileNames);
-
-        String fileName  = moveFileNames.get(moveFileNames.size() - 1);
-        int gameNumber = FileNameParser.getGameNumber(fileName); // the highest game number currently saved on disk
-
-        return gameNumber + 1; // return the next game number in the sequence
+            int i = 0;
+            while(true){
+                Game g = findGameByGameNumber(i);
+                if (g == null){
+                    System.out.println("GAME ID: " + i);
+                    gameNumber = i; // caching - saves an outrageous amount of computing
+                    return i;
+                }
+                ++i;
+            }
+        }else{
+            ++gameNumber;
+            return gameNumber;
+        }
     }
 
     @Override
@@ -63,6 +75,8 @@ public class QueryServiceImpl implements QueryService {
 
         List<String> fileNames = dataReader.getMoveFileNames();
         fileNames.removeIf(s -> !s.contains(searchString));
+
+        if(fileNames.size() == 0) return null;
 
         Collections.sort(fileNames);
 
