@@ -16,7 +16,6 @@ public class Main {
 
         Options options = new Options();
         options.setRandomTrainerOn(false);
-        options.setContinuousPlay(true);
         options.setMillisBetweenGames(4000); // 4 second delay between games
 
         GameEngine gameEngine = new GameEngine(options);

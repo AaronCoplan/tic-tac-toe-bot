@@ -20,6 +20,7 @@ public class GameEngine {
         if(options.isRandomTrainerOn()){
             train(options.getNumTrainingGames());
         }else{
+            options.setContinuousPlay(Frame.askContinuous());
             playHumanVsBot(options.isContinuousPlay());
         }
     }

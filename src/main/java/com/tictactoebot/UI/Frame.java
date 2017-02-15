@@ -101,6 +101,24 @@ public class Frame {
 
     }
 
+    public static boolean askContinuous(){
+        Object[] possibleValues = {"Continuous", "Single-play"};
+        Object selectedValue = JOptionPane.showInputDialog(null,
+                "Do you want to play continuously?", "Tic-tac-toe",
+                JOptionPane.INFORMATION_MESSAGE, null,
+                possibleValues, possibleValues[0]);
+
+        if(selectedValue == null) {
+            System.exit(1);
+        }
+
+        if (selectedValue.equals(possibleValues[0])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static Position[] getCornerCoords(){
         return cornerCoords;
     }
