@@ -49,14 +49,12 @@ public class GameStateHandler {
         gameOver = false;
 
         playerNumber = Frame.askXO();
-        if(playerNumber == 0){
-            computerNumber = 1;
-        }else{
-            computerNumber = 0;
+        if(playerNumber == -1){
+            onGameOver(-1);
         }
 
-        if(playerNumber == 0) playerTurn = true;
-        else playerTurn = false;
+        computerNumber  = playerNumber == 0? 1 : 0;
+        playerTurn = (playerNumber == 0);
 
         GameStateHandler.playerNumber = playerNumber;
 
@@ -226,16 +224,11 @@ public class GameStateHandler {
             System.out.println("Player: " + result + " wins!");
         }
 
-        //dataHandler.saveGame();
-
         winnerNum = playerNum;
         gameOver = true;
 
+        //dataHandler.saveGame();
         Frame.repaint();
     }
-
-
-
-
 }
 

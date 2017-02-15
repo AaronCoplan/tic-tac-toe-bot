@@ -1,5 +1,7 @@
 package com.tictactoebot.UI;
 
+import com.tictactoebot.gameEngine.handlers.GameStateHandler;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -87,11 +89,16 @@ public class Frame {
                 JOptionPane.INFORMATION_MESSAGE, null,
                 possibleValues, possibleValues[0]);
 
+        if(selectedValue == null) {
+            System.exit(1);
+        }
+
         if (selectedValue.equals(possibleValues[0])) {
             return 0;
         } else {
             return 1;
         }
+
     }
 
     public static Position[] getCornerCoords(){
