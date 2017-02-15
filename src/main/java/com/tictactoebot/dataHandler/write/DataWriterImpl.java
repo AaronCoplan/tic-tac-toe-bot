@@ -22,7 +22,7 @@ public class DataWriterImpl implements DataWriter {
         this.storageDirectory = new File(DataHandler.DIRECTORY_PATH);
 
         if(storageDirectory == null || !storageDirectory.exists()){
-            throw new StorageAccessException("Error accessing move data files!");
+            throw new StorageAccessException("Error accessing getMove data files!");
         }
     }
 
@@ -44,9 +44,9 @@ public class DataWriterImpl implements DataWriter {
         boolean success = writeResult(gameNumber, game.getResult(), existingFiles);
         if(!success) System.out.println("ERROR: failed to save game result!");
 
-        // TODO: how should we handle the case where a move from a game fails to save?
+        // TODO: how should we handle the case where a getMove from a game fails to save?
         // should we have it delete all of the successful moves since the game is missing some moves?
-        // nummoves + 1 because of the zeroeth move with the empty board state
+        // nummoves + 1 because of the zeroeth getMove with the empty board state
         if(successCount != game.getNumMoves() + 1) System.out.println("ERROR: failed to save all moves!");
 
     }
@@ -81,6 +81,8 @@ public class DataWriterImpl implements DataWriter {
             resultFile.createNewFile();
             success = true;
         }catch(IOException error){
+            System.out.println(new File("").getAbsolutePath());
+            System.out.println(DataHandler.DIRECTORY_PATH + fileName);
             error.printStackTrace();
             System.out.println("Error saving result.");
             success = false;
@@ -104,7 +106,7 @@ public class DataWriterImpl implements DataWriter {
             moveFile.createNewFile();
             success = true;
         }catch(IOException error){
-            System.out.println("Error saving move!");
+            System.out.println("Error saving getMove!");
             success = false;
         }
 

@@ -37,6 +37,7 @@ public class DataHandlerImpl implements DataHandler {
             dataWriter.writeGame(game, queryService.getMoveFileList());
             success = true;
         }catch(Exception e){
+            e.printStackTrace();
             success = false;
         }
 

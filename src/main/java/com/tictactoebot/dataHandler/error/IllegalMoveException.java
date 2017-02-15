@@ -5,7 +5,7 @@ package com.tictactoebot.dataHandler.error;
  */
 public class IllegalMoveException extends Exception {
 
-    public IllegalMoveException(){
-        super("Cannot go there!  Spot already in play.");
+    public IllegalMoveException(int index){
+        super("Cannot go there!  Spot already in play: " + index);
     }
 }

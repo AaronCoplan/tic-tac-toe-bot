@@ -22,7 +22,7 @@ public class Game {
         // first board position in any given game is an empty board
         this.moves.add(Move.emptyBoard());
 
-        // since we have already added a blank board as move 0, this is move 1
+        // since we have already added a blank board as getMove 0, this is getMove 1
         this.moveNumber = 1;
     }
 
@@ -62,4 +62,6 @@ public class Game {
     public void setGameNumber(int gameNumber){
         this.gameNumber = gameNumber;
     }
+
+
 }
