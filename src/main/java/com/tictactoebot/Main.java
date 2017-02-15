@@ -63,7 +63,7 @@ public class Main {
             game.addMove(board, 0, 2);
 
         }catch(IllegalMoveException error){
-            System.out.println("Error making a move. Test failed.");
+            System.out.println("Error making a getMove. Test failed.");
         }
 
         game.setResult('x');

@@ -4,7 +4,6 @@ import com.tictactoebot.UI.Frame;
 import com.tictactoebot.UI.Utils;
 import com.tictactoebot.computeEngine.ComputeEngine;
 import com.tictactoebot.gameEngine.handlers.GameStateHandler;
-import com.tictactoebot.trainer.RandomTrainer;
 
 /**
  * Created by afcoplan on 2/13/17.
@@ -12,14 +11,13 @@ import com.tictactoebot.trainer.RandomTrainer;
 public class HumanVsBotEngine {
     private ComputeEngine computeEngine;
 
-    // TODO: this should take a constructor of the compute engine
-    public HumanVsBotEngine(ComputeEngine engine){
-        computeEngine = engine;
-    }
+    public HumanVsBotEngine(){}
 
     public void playGame(){
 
         GameStateHandler.init();
+
+        this.computeEngine = initComputeEngine();
 
         Frame.createFrame();
 
@@ -30,12 +28,19 @@ public class HumanVsBotEngine {
         System.out.println("Game over");
     }
 
+    private ComputeEngine initComputeEngine(){
+        if(GameStateHandler.getComputerNumber() == 0){
+            return new ComputeEngine('X');
+        }else{
+            return new ComputeEngine('O');
+        }
+    }
+
     private void gameLoop(){
         while(!GameStateHandler.isGameOver()){
             if(!GameStateHandler.isPlayerTurn()){
-                // TODO: get the move from the compute engine
-                //computeEngine.move(GameStateHandler.get
-                RandomTrainer.move();
+                int location = computeEngine.getMove(GameStateHandler.getBoard());
+                boolean botMoveSuccess = GameStateHandler.doComputerMove(location);
                 GameStateHandler.setPlayerTurn();
             }
 

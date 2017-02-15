@@ -6,7 +6,6 @@ import com.tictactoebot.UI.Position;
 import com.tictactoebot.dataHandler.error.IllegalMoveException;
 import com.tictactoebot.dataHandler.model.Board;
 import com.tictactoebot.dataHandler.model.Game;
-import com.tictactoebot.dataHandler.model.Move;
 
 import java.io.IOException;
 import java.util.Hashtable;
@@ -61,6 +60,10 @@ public class GameStateHandler {
         moveLocations = GameStateHandler.createMoveLocations();
     }
 
+    public static int getComputerNumber(){
+        return computerNumber;
+    }
+
     public static void onUserInput(int x, int y){
 
         if (x < Frame.cornerCoords[0].x && y < Frame.cornerCoords[0].y){
@@ -82,6 +85,10 @@ public class GameStateHandler {
         } else {
             doMove(8, playerNumber);
         }
+    }
+
+    public static Board getBoard(){
+        return board;
     }
 
     public static Hashtable<Integer, Position> createMoveLocations(){

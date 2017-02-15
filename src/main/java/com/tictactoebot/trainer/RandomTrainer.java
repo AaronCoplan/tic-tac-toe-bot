@@ -1,21 +1,37 @@
 package com.tictactoebot.trainer;
 
-import com.tictactoebot.gameEngine.handlers.GameStateHandler;
+import com.tictactoebot.dataHandler.error.IllegalMoveException;
+import com.tictactoebot.dataHandler.model.Board;
 
 /**
  * Created by afcoplan on 2/14/17.
  */
 public class RandomTrainer {
 
-    public static void move(){
+    private final char letter;
+
+    public RandomTrainer(char letter){
+        this.letter = letter;
+    }
+
+    public int getMove(Board board){
+
+        int location = -1;
 
         boolean moveSuccess = false;
 
         while(!moveSuccess){
 
-            int location = (int)(Math.random() * 9);
+            location = (int)(Math.random() * 9);
 
-            moveSuccess = GameStateHandler.doComputerMove(location);
+            try{
+                board.setChar(location, letter);
+                moveSuccess = true;
+            }catch(IllegalMoveException e){
+                moveSuccess = false;
+            }
         }
+
+        return location;
     }
 }
