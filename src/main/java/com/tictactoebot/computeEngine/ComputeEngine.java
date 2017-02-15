@@ -8,13 +8,13 @@ import com.tictactoebot.gameEngine.handlers.GameStateHandler;
  * Created by Devin on 2/14/2017.
  */
 public class ComputeEngine {
-    public Move move(Board board){
+    public int move(Board board){
         int location;
 
         do {
             location = (int)(Math.random() * 9);
         } while(board.isOccupied(location));
 
-        return new Move(GameStateHandler.getNumMoves(), board.toString(), location);
+        return location;
     }
 }

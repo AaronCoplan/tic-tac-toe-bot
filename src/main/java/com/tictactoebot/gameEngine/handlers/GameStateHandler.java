@@ -6,6 +6,7 @@ import com.tictactoebot.UI.Position;
 import com.tictactoebot.dataHandler.error.IllegalMoveException;
 import com.tictactoebot.dataHandler.model.Board;
 import com.tictactoebot.dataHandler.model.Game;
+import com.tictactoebot.dataHandler.model.Move;
 
 import java.io.IOException;
 import java.util.Hashtable;
