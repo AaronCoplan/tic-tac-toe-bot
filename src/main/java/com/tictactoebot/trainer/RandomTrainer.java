@@ -1,21 +1,30 @@
 package com.tictactoebot.trainer;
 
-import com.tictactoebot.gameEngine.handlers.GameStateHandler;
+import com.tictactoebot.dataHandler.model.Board;
 
 /**
  * Created by afcoplan on 2/14/17.
  */
 public class RandomTrainer {
 
-    public static void move(){
+    private final char letter;
 
-        boolean moveSuccess = false;
+    public RandomTrainer(char letter){
+        this.letter = letter;
+    }
 
-        while(!moveSuccess){
+    public char getLetter(){
+        return this.letter;
+    }
 
-            int location = (int)(Math.random() * 9);
+    public int getMove(Board board){
 
-            moveSuccess = GameStateHandler.doComputerMove(location);
-        }
+        int location;
+
+        do {
+            location = (int)(Math.random() * 9);
+        } while(board.isOccupied(location));
+
+        return location;
     }
 }

@@ -41,7 +41,7 @@ public class DataReaderImpl implements DataReader {
 
         // check to ensure it can access the data, if not, throw an exception
         if(storageDirectory == null || !storageDirectory.exists()){
-            throw new StorageAccessException("Error accessing move data files!");
+            throw new StorageAccessException("Error accessing getMove data files!");
         }
     }
 
