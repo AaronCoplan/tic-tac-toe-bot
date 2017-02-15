@@ -8,6 +8,8 @@ import com.tictactoebot.dataHandler.error.IllegalMoveException;
 public class Board {
 
     private final int BOARD_SIZE = 9;
+    private final int ROW_SIZE = 3;
+    private final int COL_SIZE = 3;
 
     private final char[] board;
 
@@ -86,5 +88,15 @@ public class Board {
         }
 
         return str;
+    }
+
+    public void prettyPrint(){
+        for(int row = 0; row < ROW_SIZE; ++row){
+            for(int col = 0; col < COL_SIZE; ++col){
+                System.out.print(this.getChar(row,col));
+                if(col < COL_SIZE - 1) System.out.print('|');
+            }
+            System.out.println();
+        }
     }
 }

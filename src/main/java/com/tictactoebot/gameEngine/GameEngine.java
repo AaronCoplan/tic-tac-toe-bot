@@ -1,7 +1,6 @@
 package com.tictactoebot.gameEngine;
 
 import com.tictactoebot.UI.Frame;
-import com.tictactoebot.computeEngine.ComputeEngine;
 import com.tictactoebot.gameEngine.gameTypes.HumanVsBotEngine;
 import com.tictactoebot.gameEngine.gameTypes.TrainingEngine;
 
@@ -26,12 +25,10 @@ public class GameEngine {
     }
 
     public void train(int numGames){
-        System.out.println("TRAINING MODE");
+        System.out.println("TRAINING MODE: " + numGames + " games");
         try{
-            Thread.sleep(5000);
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }
+            Thread.sleep(1000);
+        }catch(InterruptedException e){}
 
         TrainingEngine.train(numGames);
     }

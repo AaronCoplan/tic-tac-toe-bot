@@ -9,6 +9,7 @@ public class TrainingEngine {
 
     public static void train(int numGames){
         Board board = new Board();
+        board.prettyPrint();
 
         char[] letters = {'X', 'O'};
 
