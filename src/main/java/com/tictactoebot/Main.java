@@ -14,8 +14,14 @@ public class Main {
 
     public static void main(String[] args){
 
+        boolean randomTrainer = false; // defaults to false
+
+        if(args.length > 0 && args[0].equals("train")){
+            randomTrainer = true;
+        }
+
         Options options = new Options();
-        options.setRandomTrainerOn(false);
+        options.setRandomTrainerOn(randomTrainer);
         options.setMillisBetweenGames(4000); // 4 second delay between games
 
         GameEngine gameEngine = new GameEngine(options);

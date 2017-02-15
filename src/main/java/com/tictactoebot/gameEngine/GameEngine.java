@@ -33,7 +33,6 @@ public class GameEngine {
             e.printStackTrace();
         }
 
-        // TODO: training code goes here
         TrainingEngine.train(numGames);
     }
 
