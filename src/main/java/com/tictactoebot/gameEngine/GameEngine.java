@@ -42,9 +42,10 @@ public class GameEngine {
 
         // this while loop allows the user to play games until they
         // press the close button on the JFrame
-        while(true){
+        do {
             humanVsBotEngine.playGame();
             // wait 5 seconds so the user can see the result
+
             try{
                 Thread.sleep(options.getMillisBetweenGames());
             }catch(InterruptedException e){
@@ -52,6 +53,6 @@ public class GameEngine {
             }
             //close the window
             Frame.close();
-        }
+        } while (continuousPlay);
     }
 }
