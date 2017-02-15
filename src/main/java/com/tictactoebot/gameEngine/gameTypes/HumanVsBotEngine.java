@@ -49,9 +49,8 @@ public class HumanVsBotEngine {
             }catch(Exception e){}
         }
 
+        Frame.repaint();
+        Utils.sleep(10);
+
     }
-
-
-
-
 }
