@@ -26,15 +26,17 @@ public class Game {
         this.moveNumber = 1;
     }
 
-    public void addMove(Board currentBoardState, int indexPlayed){
-        Move nextMove = new Move(moveNumber, currentBoardState.toString(), indexPlayed);
-        moves.add(nextMove);
+    public void addMove(Move move){
+        moves.add(move);
+        moveNumber++;
+    }
 
-        ++moveNumber;
+    public void addMove(Board currentBoardState, int indexPlayed){
+       this.addMove(new Move(moveNumber, currentBoardState.toString(), indexPlayed));
     }
 
     public void addMove(Board currentBoardState, int rowPlayed, int colPlayed){
-        this.addMove(currentBoardState, Board.convert2DIndexTo1D(rowPlayed, colPlayed));
+        this.addMove(new Move(moveNumber, currentBoardState.toString(), Board.convert2DIndexTo1D(rowPlayed, colPlayed)));
     }
 
     public char getResult(){
