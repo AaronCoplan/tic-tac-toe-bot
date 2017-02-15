@@ -1,6 +1,7 @@
 package com.tictactoebot.gameEngine.gameTypes;
 
 import com.tictactoebot.UI.Frame;
+import com.tictactoebot.UI.Utils;
 import com.tictactoebot.computeEngine.ComputeEngine;
 import com.tictactoebot.gameEngine.handlers.GameStateHandler;
 import com.tictactoebot.trainer.RandomTrainer;
@@ -21,6 +22,8 @@ public class HumanVsBotEngine {
         GameStateHandler.init();
 
         Frame.createFrame();
+
+        Utils.sleep(10);
 
         gameLoop();
 
