@@ -38,7 +38,7 @@ public class GameEngine {
 
     private void playHumanVsBot(boolean continuousPlay){
 
-        HumanVsBotEngine humanVsBotEngine = new HumanVsBotEngine();
+        HumanVsBotEngine humanVsBotEngine = new HumanVsBotEngine(dataHandler);
 
         // this while loop allows the user to play games until they
         // press the close button on the JFrame

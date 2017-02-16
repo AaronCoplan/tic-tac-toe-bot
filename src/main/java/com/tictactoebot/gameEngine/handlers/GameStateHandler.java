@@ -234,8 +234,11 @@ public class GameStateHandler {
         winnerNum = playerNum;
         gameOver = true;
 
-        //dataHandler.saveGame();
+        //dataHandler.saveGame(game);
         Frame.repaint();
     }
-}
 
+    public static Game getGame(){
+        return game;
+    }
+}
