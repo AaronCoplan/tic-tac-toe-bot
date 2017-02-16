@@ -48,6 +48,15 @@ public class Main {
 
                 //TODO: WRITE GAME NUM TO FILE
 
+                /*
+                 *  Pseudocode:
+                 *
+                 *  delete stats file (method call to data handler)
+                 *  create a new stats file (another call to data handler)
+                 *
+                 *  THE PROBLEM: no access to datahandler from here
+                 */
+
                 System.out.println("Shutdown Hook Executed Successfully.");
             }
         }));
