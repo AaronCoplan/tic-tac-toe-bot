@@ -84,6 +84,21 @@ public class DataWriterImpl implements DataWriter {
         f.delete();
     }
 
+    @Override
+    public boolean writeStats(String fileName){
+        File statsFile = new File(DataHandler.DIRECTORY_PATH + fileName + DataHandler.STATS_EXTENSION);
+        boolean success;
+        try{
+            statsFile.createNewFile();
+            success = true;
+        }catch(IOException error){
+            error.printStackTrace();
+            success = false;
+        }
+
+        return success;
+    }
+
     /*
      *  Helper Methods
      */

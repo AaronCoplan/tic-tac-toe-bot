@@ -1,6 +1,7 @@
 package com.tictactoebot;
 
 
+import com.tictactoebot.dataHandler.DataHandler;
 import com.tictactoebot.gameEngine.GameEngine;
 import com.tictactoebot.gameEngine.Options;
 
@@ -8,11 +9,13 @@ public class Main {
 
     public static void main(String[] args){
 
-        addShutdownHook();
+        DataHandler dataHandler = DataHandler.getInstance();
+
+        addShutdownHook(dataHandler);
 
         Options options = getOptions(args);
 
-        GameEngine gameEngine = new GameEngine(options);
+        GameEngine gameEngine = new GameEngine(dataHandler, options);
         gameEngine.run();
     }
 
@@ -37,7 +40,7 @@ public class Main {
     }
 
 
-    public static void addShutdownHook(){
+    public static void addShutdownHook(DataHandler dataHandler){
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 
             public void run() {
@@ -53,9 +56,9 @@ public class Main {
                  *
                  *  delete stats file (method call to data handler)
                  *  create a new stats file (another call to data handler)
-                 *
-                 *  THE PROBLEM: no access to datahandler from here
                  */
+                dataHandler.resetStats(); // this deletes the existing (if any) stats file
+                dataHandler.writeStats(); // resaves the stats
 
                 System.out.println("Shutdown Hook Executed Successfully.");
             }

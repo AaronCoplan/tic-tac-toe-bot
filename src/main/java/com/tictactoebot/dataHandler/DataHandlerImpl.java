@@ -94,6 +94,11 @@ public class DataHandlerImpl implements DataHandler {
         dataWriter.deleteStats(queryService.fetchStatsData());
     }
 
+    @Override
+    public boolean writeStats(){
+        return dataWriter.writeStats(statsService.getData());
+    }
+
     private void updateStats(Game game, final char computerLetter){
         char result = game.getResult();
 

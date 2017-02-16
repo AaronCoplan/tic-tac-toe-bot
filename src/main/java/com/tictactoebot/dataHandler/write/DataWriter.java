@@ -24,4 +24,6 @@ public interface DataWriter {
     void deleteStats(String fileName);
 
     boolean initStatsFile();
+
+    boolean writeStats(String fileName);
 }

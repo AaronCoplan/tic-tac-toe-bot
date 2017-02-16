@@ -62,4 +62,10 @@ public interface DataHandler {
      *  Deletes stats data file
      */
     void resetStats();
+
+
+    /*
+     *  Writes stats file to disk
+     */
+    boolean writeStats();
 }
