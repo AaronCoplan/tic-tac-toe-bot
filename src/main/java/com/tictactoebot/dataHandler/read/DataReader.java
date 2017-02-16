@@ -12,6 +12,9 @@ public interface DataReader {
     List<String> getMoveFileNames();
     List<String> getResultFileNames();
     List<File> getResultFileList();
+
     List<String> getResultFilesFromSearchTerm(String searchTerm);
     List<String> getMoveFilesFromSearchTerm(String searchTerm);
+
+    String getStatsFileName();
 }

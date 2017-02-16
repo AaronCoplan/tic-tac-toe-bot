@@ -111,4 +111,10 @@ public class QueryServiceImpl implements QueryService {
 
         return matchingGames;
     }
+
+    @Override
+    public String fetchStatsData(){
+        return dataReader.getStatsFileName();
+    }
+
 }

@@ -18,6 +18,7 @@ public class DataReaderImpl implements DataReader {
 
     private final FileFilter moveFileFilter;
     private final FileFilter resultFileFilter;
+    private final FileFilter statsFileFilter;
 
     public DataReaderImpl() throws StorageAccessException{
 
@@ -34,6 +35,13 @@ public class DataReaderImpl implements DataReader {
             @Override
             public boolean accept(File file){
                 return file.getName().endsWith(DataHandler.RESULT_EXTENSION) && !file.isHidden();
+            }
+        };
+
+        this.statsFileFilter = new FileFilter() {
+            @Override
+            public boolean accept(File file){
+                return !file.isHidden() && file.getName().endsWith(DataHandler.STATS_EXTENSION);
             }
         };
 
@@ -120,5 +128,20 @@ public class DataReaderImpl implements DataReader {
         }
 
         return strings;
+    }
+
+    @Override
+    public String getStatsFileName(){
+        File[] files = storageDirectory.listFiles(statsFileFilter);
+
+        if(files.length == 0){
+            return null;
+        }else if(files.length == 1){
+            return files[0].getName();
+        }else{
+            System.out.println("INVALID NUMBER OF STATS FILES!");
+            System.exit(-1);
+            return null;
+        }
     }
 }

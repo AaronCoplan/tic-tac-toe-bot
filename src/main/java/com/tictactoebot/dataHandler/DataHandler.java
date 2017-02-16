@@ -14,6 +14,7 @@ public interface DataHandler {
     String DIRECTORY_PATH = "storage/";
     String FILE_EXTENSION = ".move";
     String RESULT_EXTENSION = ".result";
+    String STATS_EXTENSION = ".stats";
 
     /*
      *  DataHandler follows a singleton initialization paradigm. This ensures that
@@ -32,8 +33,10 @@ public interface DataHandler {
 
     /*
      *  This method will save a game to the data storage
+     *  Takes two params: game object to save, and the letter
+     *  the computer played as for stat tracking purposes
      */
-    boolean saveGame(Game game);
+    boolean saveGame(Game game, char computerLetter);
 
     /*
      *  Returns the game with the corresponding game number, or null if none
@@ -59,4 +62,15 @@ public interface DataHandler {
      *  Deletes all stored results
      */
     void deleteAllResults();
+
+    /*
+     *  Deletes stats data file
+     */
+    void resetStats();
+
+
+    /*
+     *  Writes stats file to disk
+     */
+    boolean writeStats();
 }
