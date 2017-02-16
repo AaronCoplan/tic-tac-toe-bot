@@ -17,8 +17,6 @@ public class HumanVsBotEngine {
     private ComputeEngine computeEngine;
     private DataHandler dataHandler;
 
-    private DataHandler dataHandler;
-
     public HumanVsBotEngine(DataHandler dataHandler){
         this.dataHandler = dataHandler;
     }
