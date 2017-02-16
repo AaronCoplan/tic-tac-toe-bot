@@ -9,14 +9,10 @@ public class StatsServiceImpl implements StatsService {
     private int lossCount;
     private int tieCount;
 
-    private int avgMoveCount;
-
     public StatsServiceImpl(){
         this.winCount = 0;
         this.lossCount = 0;
         this.tieCount = 0;
-
-        this.avgMoveCount = 0;
     }
 
     @Override
@@ -32,8 +28,6 @@ public class StatsServiceImpl implements StatsService {
         this.lossCount = Integer.parseInt(pieces[2].substring(1));
         this.tieCount = Integer.parseInt(pieces[3].substring(1));
 
-        this.avgMoveCount = Integer.parseInt(pieces[4].substring(3, pieces[4].indexOf('.')));
-
         this.displayStats();
     }
 
@@ -42,7 +36,25 @@ public class StatsServiceImpl implements StatsService {
         System.out.println("Number of wins: " + winCount);
         System.out.println("Number of losses: " + lossCount);
         System.out.println("Number of ties: " + tieCount);
-        System.out.println("Average Move Count: " + avgMoveCount);
     }
 
+    @Override
+    public void addWin(){
+        ++winCount;
+    }
+
+    @Override
+    public void addLoss(){
+        ++lossCount;
+    }
+
+    @Override
+    public void addTie(){
+        ++tieCount;
+    }
+
+    @Override
+    public String getData(){
+        return "stats_w" + this.winCount + "_l" + this.lossCount + "_t" + this.tieCount;
+    }
 }

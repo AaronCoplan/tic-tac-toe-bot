@@ -7,4 +7,10 @@ public interface StatsService {
 
     void init(String data);
     void displayStats();
+
+    void addWin();
+    void addLoss();
+    void addTie();
+
+    String getData();
 }

@@ -64,7 +64,7 @@ public class DataWriterImpl implements DataWriter {
 
     @Override
     public boolean initStatsFile(){
-        File statsFile = new File(DataHandler.DIRECTORY_PATH + "stats_w0_l0_t0_amc0" + DataHandler.STATS_EXTENSION);
+        File statsFile = new File(DataHandler.DIRECTORY_PATH + "stats_w0_l0_t0" + DataHandler.STATS_EXTENSION);
 
         boolean success;
         try{
