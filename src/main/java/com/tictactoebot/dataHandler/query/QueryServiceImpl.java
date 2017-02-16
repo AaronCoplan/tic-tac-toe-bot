@@ -62,20 +62,17 @@ public class QueryServiceImpl implements QueryService {
     private char findResultByGameNumber(int gameNumber){
         final String searchTerm = "result_g" + gameNumber + "_r";
 
-        List<String> resultFileNames = dataReader.getResultFileNames();
-        resultFileNames.removeIf(s -> !s.contains(searchTerm));
+        List<String> resultFileNames = dataReader.getResultFilesFromSearchTerm(searchTerm);
+        String GameResultFileName = resultFileNames.get(0);
 
-        String fileName = resultFileNames.get(0);
-
-        return FileNameParser.parseResult(fileName);
+        return FileNameParser.parseResult(GameResultFileName);
     }
 
     @Override
     public Game findGameByGameNumber(int gameNumber){
         final String searchString = "g" + gameNumber + "_";
 
-        List<String> fileNames = dataReader.getMoveFileNames();
-        fileNames.removeIf(s -> !s.contains(searchString));
+        List<String> fileNames = dataReader.getMoveFilesFromSearchTerm(searchString);
 
         if(fileNames.size() == 0) return null;
 
@@ -91,8 +88,7 @@ public class QueryServiceImpl implements QueryService {
     public List<Game> findGamesByBoardHash(String boardHash){
         final String searchString = "_" + boardHash;
 
-        List<String> fileNames = dataReader.getMoveFileNames();
-        fileNames.removeIf(s -> !s.contains(searchString));
+        List<String> fileNames = dataReader.getMoveFilesFromSearchTerm(searchString);
 
         List<Game> games = new ArrayList<Game>();
 
@@ -108,6 +104,7 @@ public class QueryServiceImpl implements QueryService {
     }
 
     @Override
+    //TODO: could be optimized by having a separate method in DataReader that takes 2 search terms, instead of creating the boardhash list and removing the items.
     public List<Game> findWinningGamesByBoardHash(String boardHash, char letter){
         List<Game> matchingGames = this.findGamesByBoardHash(boardHash);
         matchingGames.removeIf(s -> s.getResult() != letter);
