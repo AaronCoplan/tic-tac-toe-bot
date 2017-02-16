@@ -25,7 +25,9 @@ This project is built using **Gradle**.  To build and run, follow these instruct
 2. Build the software into a runnable jar file:
   * On **Mac** or **Linux**, run the following command: `./gradlew clean build`
   * On **Windows**, run the following command: `gradlew.bat clean build`
-3. Run the jar file we've just created: `java -jar build/libs/tictactoebot-v0.0.1.jar`
+3. Run the jar file we've just created: 
+  * To play against the computer with a GUI: `java -jar build/libs/tictactoebot-v0.0.1.jar`
+  * To train the bot with N games: `java -jar build/libs/tictactoebot-v0.0.1.jar train <num games>`
 
 ## Major Components
 

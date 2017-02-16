@@ -49,6 +49,11 @@ public interface DataHandler {
     List<Game> findGamesByBoardHash(String boardHash);
 
     /*
+     *  Returns a list of full game objects that contain the designated hash and result in a win
+     */
+    List<Game> findWinningGamesByBoardHash(String boardHash, char letter);
+
+    /*
      *  Deletes all stored moves
      */
     void deleteAllMoves();

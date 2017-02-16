@@ -32,6 +32,7 @@ public class QueryServiceImpl implements QueryService {
 
             if (moveFileNames.size() == 0) return 1;
 
+            System.out.println("Locating next GAME ID in sequence...");
             int i = 0;
             while(true){
                 Game g = findGameByGameNumber(i);
@@ -118,4 +119,5 @@ public class QueryServiceImpl implements QueryService {
     public String fetchStatsData(){
         return dataReader.getStatsFileName();
     }
+
 }

@@ -4,8 +4,10 @@ import com.tictactoebot.UI.Frame;
 import com.tictactoebot.UI.Utils;
 import com.tictactoebot.computeEngine.ComputeEngine;
 import com.tictactoebot.dataHandler.DataHandler;
+
 import com.tictactoebot.dataHandler.model.Board;
 import com.tictactoebot.dataHandler.model.Game;
+
 import com.tictactoebot.gameEngine.handlers.GameStateHandler;
 
 /**
@@ -13,6 +15,8 @@ import com.tictactoebot.gameEngine.handlers.GameStateHandler;
  */
 public class HumanVsBotEngine {
     private ComputeEngine computeEngine;
+    private DataHandler dataHandler;
+
     private DataHandler dataHandler;
 
     public HumanVsBotEngine(DataHandler dataHandler){
@@ -71,5 +75,9 @@ public class HumanVsBotEngine {
         }
 
         dataHandler.saveGame(game, computeEngine.getLetter());
+
+        Frame.repaint();
+        Utils.sleep(10);
+
     }
 }
