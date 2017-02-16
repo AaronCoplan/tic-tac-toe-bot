@@ -8,6 +8,9 @@ import com.tictactoebot.computeEngine.ComputeEngine;
 import com.tictactoebot.dataHandler.DataHandler;
 import com.tictactoebot.dataHandler.model.Board;
 import com.tictactoebot.dataHandler.model.Game;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 import com.tictactoebot.gameEngine.handlers.GameStateHandler;
 
@@ -56,10 +59,13 @@ public class HumanVsBotEngine {
         }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     }
 
 
 =======
+=======
+>>>>>>> Stashed changes
         Game game = GameStateHandler.getGame();
 
         switch(GameStateHandler.getBoard().checkResult())
@@ -73,6 +79,9 @@ public class HumanVsBotEngine {
         }
 
         dataHandler.saveGame(game, computeEngine.getLetter());
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 

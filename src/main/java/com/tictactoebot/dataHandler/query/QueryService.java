@@ -23,5 +23,8 @@ public interface QueryService {
     List<Game> findWinningGamesByBoardHash(String boardHash, char letter);
 
     String fetchStatsData();
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 }

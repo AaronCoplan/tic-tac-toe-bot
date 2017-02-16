@@ -120,5 +120,8 @@ public class QueryServiceImpl implements QueryService {
     public String fetchStatsData(){
         return dataReader.getStatsFileName();
     }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 }

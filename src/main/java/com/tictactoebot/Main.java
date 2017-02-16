@@ -9,7 +9,10 @@ public class Main {
     public static void main(String[] args){
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
         addShutdownHook();
 
         Options options = getOptions(args);
@@ -38,6 +41,22 @@ public class Main {
 
         GameEngine gameEngine = new GameEngine(options);
         gameEngine.run();
+    }
+
+    public static void addShutdownHook(){
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+
+            public void run() {
+                // this code executes on system exit
+                System.out.println("\nShutdown Hook Activated...");
+
+                // do some things here
+
+                //TODO: WRITE GAME NUM TO FILE
+
+                System.out.println("Shutdown Hook Executed Successfully.");
+            }
+        }));
     }
 
     public static void addShutdownHook(){
