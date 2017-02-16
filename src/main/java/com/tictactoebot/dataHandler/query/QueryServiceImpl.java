@@ -106,4 +106,12 @@ public class QueryServiceImpl implements QueryService {
 
         return games;
     }
+
+    @Override
+    public List<Game> findWinningGamesByBoardHash(String boardHash, char letter){
+        List<Game> matchingGames = this.findGamesByBoardHash(boardHash);
+        matchingGames.removeIf(s -> s.getResult() != letter);
+
+        return matchingGames;
+    }
 }
