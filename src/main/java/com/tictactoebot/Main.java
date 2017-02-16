@@ -10,8 +10,10 @@ public class Main {
 
         Options options = getOptions(args);
 
+        long startTime = System.nanoTime();
         GameEngine gameEngine = new GameEngine(options);
         gameEngine.run();
+        System.out.println((System.nanoTime() - startTime)/1000000000.0);
     }
 
     public static Options getOptions(String[] args){
@@ -27,7 +29,7 @@ public class Main {
             System.exit(0);
         }
 
-        // activates trainimg mode
+        // activates training mode
         if(args.length == 2 && args[0].equals("train")){
             randomTrainer = true;
             numTrainingGames = Integer.parseInt(args[1]);
