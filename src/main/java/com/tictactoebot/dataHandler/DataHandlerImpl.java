@@ -29,6 +29,8 @@ public class DataHandlerImpl implements DataHandler {
 
         instantiateStats();
 
+        this.resetStats();
+
         instanceCreated = true;
     }
 
@@ -85,6 +87,11 @@ public class DataHandlerImpl implements DataHandler {
     @Override
     public void deleteAllResults(){
         dataWriter.deleteAllMoves(queryService.getResultFileList());
+    }
+
+    @Override
+    public void resetStats(){
+        dataWriter.deleteStats(queryService.fetchStatsData());
     }
 
     private void updateStats(Game game, final char computerLetter){

@@ -78,6 +78,12 @@ public class DataWriterImpl implements DataWriter {
         return success;
     }
 
+    @Override
+    public void deleteStats(String fileName){
+        File f = new File(DataHandler.DIRECTORY_PATH + fileName);
+        f.delete();
+    }
+
     /*
      *  Helper Methods
      */

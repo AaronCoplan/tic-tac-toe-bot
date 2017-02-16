@@ -57,4 +57,9 @@ public interface DataHandler {
      *  Deletes all stored results
      */
     void deleteAllResults();
+
+    /*
+     *  Deletes stats data file
+     */
+    void resetStats();
 }

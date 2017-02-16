@@ -21,5 +21,7 @@ public interface DataWriter {
 
     void deleteAllMoves(List<File> existingFiles);
 
+    void deleteStats(String fileName);
+
     boolean initStatsFile();
 }
