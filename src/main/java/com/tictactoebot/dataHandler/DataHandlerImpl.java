@@ -55,6 +55,11 @@ public class DataHandlerImpl implements DataHandler {
     }
 
     @Override
+    public List<Game> findWinningGamesByBoardHash(String boardHash, char letter){
+        return queryService.findWinningGamesByBoardHash(boardHash, letter);
+    }
+
+    @Override
     public void deleteAllMoves(){
         dataWriter.deleteAllMoves(queryService.getMoveFileList());
     }

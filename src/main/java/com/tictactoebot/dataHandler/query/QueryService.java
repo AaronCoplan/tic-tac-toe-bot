@@ -18,4 +18,5 @@ public interface QueryService {
 
     List<Game> findGamesByBoardHash(String boardHash);
 
+    List<Game> findWinningGamesByBoardHash(String boardHash, char letter);
 }
