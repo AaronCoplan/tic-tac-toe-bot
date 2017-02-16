@@ -60,6 +60,10 @@ public class DataHandlerImpl implements DataHandler {
             success = false;
         }
 
+        if(success){
+            updateStats(game, computerLetter);
+        }
+
         return success;
     }
 
@@ -81,5 +85,19 @@ public class DataHandlerImpl implements DataHandler {
     @Override
     public void deleteAllResults(){
         dataWriter.deleteAllMoves(queryService.getResultFileList());
+    }
+
+    private void updateStats(Game game, final char computerLetter){
+        char result = game.getResult();
+
+        if(result == 'T'){
+            statsService.addTie();
+        }else if(result == computerLetter){
+            statsService.addWin();
+        }else{
+            statsService.addLoss();
+        }
+
+        statsService.displayStats();
     }
 }

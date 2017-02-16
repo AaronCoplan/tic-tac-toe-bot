@@ -26,7 +26,7 @@ public class StatsServiceImpl implements StatsService {
         String[] pieces = data.split("_");
         this.winCount = Integer.parseInt(pieces[1].substring(1));
         this.lossCount = Integer.parseInt(pieces[2].substring(1));
-        this.tieCount = Integer.parseInt(pieces[3].substring(1));
+        this.tieCount = Integer.parseInt(pieces[3].substring(1, pieces[3].indexOf('.')));
 
         this.displayStats();
     }
