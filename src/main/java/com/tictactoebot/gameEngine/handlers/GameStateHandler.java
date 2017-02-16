@@ -178,6 +178,10 @@ public class GameStateHandler {
         startNewGame();
     }*/
 
+    public static Game getGame(){
+        return game;
+    }
+
     public static void checkForWin(){
         int result;
 
