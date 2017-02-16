@@ -18,4 +18,10 @@ public interface QueryService {
 
     List<Game> findGamesByBoardHash(String boardHash);
 
+<<<<<<< Updated upstream
+=======
+    List<Game> findWinningGamesByBoardHash(String boardHash, char letter);
+
+    String fetchStatsData();
+>>>>>>> Stashed changes
 }

@@ -100,7 +100,7 @@ public class TrainingEngine {
 
             // save the game
             game.setResult(result);
-            dataHandler.saveGame(game);
+            dataHandler.saveGame(game, computeEngine.getLetter());
 
         }
 

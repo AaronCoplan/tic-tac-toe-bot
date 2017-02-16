@@ -3,6 +3,12 @@ package com.tictactoebot.gameEngine.gameTypes;
 import com.tictactoebot.UI.Frame;
 import com.tictactoebot.UI.Utils;
 import com.tictactoebot.computeEngine.ComputeEngine;
+<<<<<<< Updated upstream
+=======
+import com.tictactoebot.dataHandler.DataHandler;
+import com.tictactoebot.dataHandler.model.Board;
+import com.tictactoebot.dataHandler.model.Game;
+>>>>>>> Stashed changes
 import com.tictactoebot.gameEngine.handlers.GameStateHandler;
 
 /**
@@ -49,9 +55,25 @@ public class HumanVsBotEngine {
             }catch(Exception e){}
         }
 
+<<<<<<< Updated upstream
     }
 
 
+=======
+        Game game = GameStateHandler.getGame();
+
+        switch(GameStateHandler.getBoard().checkResult())
+        {
+            case Board.O_WINS:  game.setResult('O');
+                                break;
+            case Board.X_WINS:  game.setResult('X');
+                                break;
+            case Board.TIE:     game.setResult('T');
+                                break;
+        }
+
+        dataHandler.saveGame(game, computeEngine.getLetter());
+>>>>>>> Stashed changes
 
 
 }

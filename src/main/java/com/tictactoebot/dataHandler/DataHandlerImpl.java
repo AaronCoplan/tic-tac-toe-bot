@@ -5,6 +5,8 @@ import com.tictactoebot.dataHandler.error.StorageAccessException;
 import com.tictactoebot.dataHandler.model.Game;
 import com.tictactoebot.dataHandler.query.QueryService;
 import com.tictactoebot.dataHandler.query.QueryServiceImpl;
+import com.tictactoebot.dataHandler.stats.StatsService;
+import com.tictactoebot.dataHandler.stats.StatsServiceImpl;
 import com.tictactoebot.dataHandler.write.DataWriter;
 import com.tictactoebot.dataHandler.write.DataWriterImpl;
 
@@ -16,18 +18,35 @@ public class DataHandlerImpl implements DataHandler {
 
     private final DataWriter dataWriter;
     private final QueryService queryService;
+    private final StatsService statsService;
 
     protected DataHandlerImpl() throws StorageAccessException, SingletonCreationException {
         if(instanceCreated) throw new SingletonCreationException();
 
         this.dataWriter = new DataWriterImpl();
         this.queryService = new QueryServiceImpl();
+        this.statsService = new StatsServiceImpl();
+
+        instantiateStats();
 
         instanceCreated = true;
     }
 
+    private void instantiateStats(){
+        String statsData = queryService.fetchStatsData();
+
+        if(statsData == null){
+
+            dataWriter.initStatsFile();
+            statsData = queryService.fetchStatsData();
+
+        }
+
+        statsService.init(statsData);
+    }
+
     @Override
-    public boolean saveGame(Game game){
+    public boolean saveGame(Game game, char computerLetter){
         boolean success;
 
         try{

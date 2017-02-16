@@ -12,4 +12,5 @@ public interface DataReader {
     List<String> getMoveFileNames();
     List<String> getResultFileNames();
     List<File> getResultFileList();
+    String getStatsFileName();
 }

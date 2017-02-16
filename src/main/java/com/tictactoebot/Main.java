@@ -8,6 +8,19 @@ public class Main {
 
     public static void main(String[] args){
 
+<<<<<<< Updated upstream
+=======
+        addShutdownHook();
+
+        Options options = getOptions(args);
+
+        GameEngine gameEngine = new GameEngine(options);
+        gameEngine.run();
+    }
+
+    public static Options getOptions(String[] args){
+
+>>>>>>> Stashed changes
         boolean randomTrainer = false; // defaults to false
         int numTrainingGames = -1;
 
@@ -25,5 +38,21 @@ public class Main {
 
         GameEngine gameEngine = new GameEngine(options);
         gameEngine.run();
+    }
+
+    public static void addShutdownHook(){
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+
+            public void run() {
+                // this code executes on system exit
+                System.out.println("\nShutdown Hook Activated...");
+
+                // do some things here
+
+                //TODO: WRITE GAME NUM TO FILE
+
+                System.out.println("Shutdown Hook Executed Successfully.");
+            }
+        }));
     }
 }

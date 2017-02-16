@@ -20,4 +20,6 @@ public interface DataWriter {
     void writeGame(Game game, List<File> existingFiles) throws MoveAlreadyWrittenException, ResultAlreadyWrittenException;
 
     void deleteAllMoves(List<File> existingFiles);
+
+    boolean initStatsFile();
 }
