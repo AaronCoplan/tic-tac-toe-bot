@@ -36,14 +36,14 @@ public class ComputeEngine {
         nextMoveInt.clear();
         generateNextMoveBoards(board);
 
-        if(nextMoveBoards.size() == 0){
+        if(nextMoveBoards.size() == 0 || nextMoveInt.size() == 0){
             int location;
 
             do {
                 location = (int)(Math.random() * 9);
             } while(board.isOccupied(location));
 
-            System.out.println("returning random location");
+            //System.out.println("returning random location");
             return location;
         }
 
@@ -52,16 +52,16 @@ public class ComputeEngine {
             if(nextMoveBoards.size() == 1 || calculateBoardWinRate(nextMoveBoards.get(currentIndex+1)) > largest){
                 largest = calculateBoardWinRate(nextMoveBoards.get(currentIndex+1));
                 currentIndex = currentIndex + 1;
-                System.out.println("if loop");
+                //System.out.println("if loop");
             }else{
                 currentIndex = currentIndex + 1;
-                System.out.println("Else loop");
+                //System.out.println("Else loop");
             }
         }
 
-        System.out.println(nextMoveBoards.size());
-        System.out.println(nextMoveInt.size());
-        return nextMoveInt.get(currentIndex -1);
+        //System.out.println(nextMoveBoards.size());
+        //System.out.println(nextMoveInt.size());
+        return nextMoveInt.get(currentIndex);
     }
 
     //Copy one board to another
@@ -81,7 +81,7 @@ public class ComputeEngine {
 
     //Generate a list of boards that contain all possible next moves
     private void generateNextMoveBoards(Board board){
-        System.out.println("made it loop");
+        //System.out.println("made it loop");
         for (int i = 0; i < 9; i++) {
             if (board.getChar(i) == '-') {
                 Board nextMoveBoard = copyBoard(board);
@@ -89,7 +89,7 @@ public class ComputeEngine {
                     nextMoveBoard.setChar(i, getLetter());
                     nextMoveBoards.add(nextMoveBoard);
                     nextMoveInt.add(i);
-                    System.out.println("added board and index to list");
+                    //System.out.println("added board and index to list");
                 }catch(Exception e){
                     e.printStackTrace();
                 }
@@ -101,9 +101,9 @@ public class ComputeEngine {
     private double calculateBoardWinRate (Board board){
         double winRate;
 
-        System.out.println("getting winning games");
+        //System.out.println("getting winning games");
         List<Game> winningGames = dataHandler.findWinningGamesByBoardHash(board.toString(), getLetter());
-        System.out.println("getting all games");
+        //System.out.println("getting all games");
         List<Game> allGames = dataHandler.findGamesByBoardHash(board.toString());
 
         if(allGames.size() == 0){
