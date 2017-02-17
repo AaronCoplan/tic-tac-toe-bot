@@ -19,6 +19,9 @@ public class TrainingEngine {
         int computerWinCount = 0;
         int computerTieCount = 0;
 
+        int numRandomMoves = 0;
+        int numSmartMoves = 0;
+
         int errorCount = 0;
 
         // play half the games as X and half as O
@@ -75,7 +78,8 @@ public class TrainingEngine {
 
             System.out.print("Game " + i + " played, RESULT = ");
 
-
+            numRandomMoves += computeEngine.getNumRandomMovesChosen();
+            numSmartMoves += computeEngine.getNumSmartMovesChosen();
 
             char result = '-'; // default val
 
@@ -120,6 +124,9 @@ public class TrainingEngine {
         System.out.println("Percent Games Won or Tied: " + ((tieRate + winRate) * 100));
 
         System.out.println("\nError Count: " + errorCount);
+
+        System.out.println("\nNum Smart Moves Chosen: " + numSmartMoves);
+        System.out.println("Num Random Moves Chosen: " + numRandomMoves);
 
         /*
          *  Would also be cool to track computer wins and/or ties as a function of number of games played.
