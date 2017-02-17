@@ -46,17 +46,6 @@ public class ComputeEngine {
         List<Integer> nextMoveInt = new ArrayList<Integer>(); // list of index played for each of those boards
         generateNextMoveBoards(board, nextMoveBoards, nextMoveInt);
 
-        //QUESTION: won't this if statement only get activated if the board is full? in which case the GameStateHandler will have taken care of things anyways?
-        /*if(nextMoveBoards.size() == 0 || nextMoveInt.size() == 0){
-            int location;
-
-            do {
-                location = (int)(Math.random() * 9);
-            } while(board.isOccupied(location));
-
-            return location;
-        }*/
-
         double largest = -1;
         int nextMoveIndex = -1;
         for(int i = 0; i < nextMoveBoards.size(); ++i){
@@ -82,20 +71,6 @@ public class ComputeEngine {
             return nextMoveIndex;
         }
 
-        /*while(currentIndex != nextMoveBoards.size() - 1){
-            double largest = calculateBoardWinRate(nextMoveBoards.get(currentIndex));
-            if(nextMoveBoards.size() == 1 || calculateBoardWinRate(nextMoveBoards.get(currentIndex+1)) > largest){
-                largest = calculateBoardWinRate(nextMoveBoards.get(currentIndex+1));
-                currentIndex = currentIndex + 1;
-                //System.out.println("if loop");
-            }else{
-                currentIndex = currentIndex + 1;
-                //System.out.println("Else loop");
-            }
-        }*/
-
-        //System.out.println(nextMoveBoards.size());
-        //System.out.println(nextMoveInt.size());
         ++numSmartMovesChosen;
         return nextMoveInt.get(nextMoveIndex);
     }
