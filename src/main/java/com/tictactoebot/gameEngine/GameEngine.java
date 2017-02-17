@@ -2,6 +2,7 @@ package com.tictactoebot.gameEngine;
 
 import com.tictactoebot.UI.Frame;
 import com.tictactoebot.dataHandler.DataHandler;
+import com.tictactoebot.dataHandler.model.Game;
 import com.tictactoebot.gameEngine.gameTypes.HumanVsBotEngine;
 import com.tictactoebot.gameEngine.gameTypes.TrainingEngine;
 
@@ -12,6 +13,7 @@ public class GameEngine {
 
     private final Options options;
     private final DataHandler dataHandler;
+    //private final Game game;
 
     public GameEngine(DataHandler dataHandler, Options options){
         this.dataHandler = dataHandler;

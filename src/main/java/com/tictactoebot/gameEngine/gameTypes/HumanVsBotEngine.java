@@ -38,9 +38,9 @@ public class HumanVsBotEngine {
 
     private ComputeEngine initComputeEngine(){
         if(GameStateHandler.getComputerNumber() == 0){
-            return new ComputeEngine('X');
+            return new ComputeEngine('X', dataHandler);
         }else{
-            return new ComputeEngine('O');
+            return new ComputeEngine('O', dataHandler);
         }
     }
 
