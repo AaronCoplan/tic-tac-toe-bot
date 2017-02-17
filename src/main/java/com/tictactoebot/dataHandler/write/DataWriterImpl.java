@@ -62,6 +62,43 @@ public class DataWriterImpl implements DataWriter {
         if(successCount != existingFiles.size()) System.out.println("ERROR DELETING ALL MOVES!");
     }
 
+    @Override
+    public boolean initStatsFile(){
+        File statsFile = new File(DataHandler.DIRECTORY_PATH + "stats_w0_l0_t0" + DataHandler.STATS_EXTENSION);
+
+        boolean success;
+        try{
+            statsFile.createNewFile();
+            success = true;
+        }catch(IOException error){
+            error.printStackTrace();
+            success = false;
+        }
+
+        return success;
+    }
+
+    @Override
+    public void deleteStats(String fileName){
+        File f = new File(DataHandler.DIRECTORY_PATH + fileName);
+        f.delete();
+    }
+
+    @Override
+    public boolean writeStats(String fileName){
+        File statsFile = new File(DataHandler.DIRECTORY_PATH + fileName + DataHandler.STATS_EXTENSION);
+        boolean success;
+        try{
+            statsFile.createNewFile();
+            success = true;
+        }catch(IOException error){
+            error.printStackTrace();
+            success = false;
+        }
+
+        return success;
+    }
+
     /*
      *  Helper Methods
      */

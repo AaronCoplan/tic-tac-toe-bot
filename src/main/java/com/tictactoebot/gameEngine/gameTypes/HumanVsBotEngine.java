@@ -4,7 +4,10 @@ import com.tictactoebot.UI.Frame;
 import com.tictactoebot.UI.Utils;
 import com.tictactoebot.computeEngine.ComputeEngine;
 import com.tictactoebot.dataHandler.DataHandler;
+
+import com.tictactoebot.dataHandler.model.Board;
 import com.tictactoebot.dataHandler.model.Game;
+
 import com.tictactoebot.gameEngine.handlers.GameStateHandler;
 
 /**
@@ -12,7 +15,6 @@ import com.tictactoebot.gameEngine.handlers.GameStateHandler;
  */
 public class HumanVsBotEngine {
     private ComputeEngine computeEngine;
-
     private DataHandler dataHandler;
 
     public HumanVsBotEngine(DataHandler dataHandler){
@@ -44,7 +46,7 @@ public class HumanVsBotEngine {
 
     private void gameLoop(){
         while(!GameStateHandler.isGameOver()){
-            if(!GameStateHandler.isPlayerTurn()){
+            if (!GameStateHandler.isPlayerTurn()){
                 int location = computeEngine.getMove(GameStateHandler.getBoard());
                 boolean botMoveSuccess = GameStateHandler.doComputerMove(location);
                 GameStateHandler.setPlayerTurn();
@@ -52,10 +54,25 @@ public class HumanVsBotEngine {
 
             try{
                 Thread.sleep(10);
-            }catch(Exception e){}
+            }catch(Exception e){
+            }
         }
 
-        dataHandler.saveGame(GameStateHandler.getGame());
+        Game game = GameStateHandler.getGame();
+
+        switch(GameStateHandler.getBoard().checkResult()){
+            case Board.O_WINS:
+                game.setResult('O');
+                break;
+            case Board.X_WINS:
+                game.setResult('X');
+                break;
+            case Board.TIE:
+                game.setResult('T');
+                break;
+        }
+
+        dataHandler.saveGame(game, computeEngine.getLetter());
 
         Frame.repaint();
         Utils.sleep(10);

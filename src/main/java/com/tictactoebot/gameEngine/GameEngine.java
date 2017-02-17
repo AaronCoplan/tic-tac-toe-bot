@@ -15,8 +15,8 @@ public class GameEngine {
     private final DataHandler dataHandler;
     //private final Game game;
 
-    public GameEngine(Options options){
-        this.dataHandler = DataHandler.getInstance();
+    public GameEngine(DataHandler dataHandler, Options options){
+        this.dataHandler = dataHandler;
         this.options = options;
     }
 

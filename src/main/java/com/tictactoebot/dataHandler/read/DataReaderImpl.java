@@ -18,6 +18,7 @@ public class DataReaderImpl implements DataReader {
 
     private final FileFilter moveFileFilter;
     private final FileFilter resultFileFilter;
+    private final FileFilter statsFileFilter;
 
     public DataReaderImpl() throws StorageAccessException{
 
@@ -26,14 +27,21 @@ public class DataReaderImpl implements DataReader {
             @Override
             public boolean accept(File file){
                 // both of these conditions are necessary because a hidden file could end with this extension
-                return !file.isHidden() && file.getName().endsWith(DataHandler.FILE_EXTENSION);
+                return file.getName().endsWith(DataHandler.FILE_EXTENSION) && !file.isHidden();
             }
         };
 
         this.resultFileFilter = new FileFilter() {
             @Override
             public boolean accept(File file){
-                return !file.isHidden() && file.getName().endsWith(DataHandler.RESULT_EXTENSION);
+                return file.getName().endsWith(DataHandler.RESULT_EXTENSION) && !file.isHidden();
+            }
+        };
+
+        this.statsFileFilter = new FileFilter() {
+            @Override
+            public boolean accept(File file){
+                return !file.isHidden() && file.getName().endsWith(DataHandler.STATS_EXTENSION);
             }
         };
 
@@ -53,6 +61,12 @@ public class DataReaderImpl implements DataReader {
     public List<File> getMoveFileList(){
         File[] moveFiles = storageDirectory.listFiles(moveFileFilter);
         return new ArrayList<File>(Arrays.asList(moveFiles));
+    }
+
+    @Override
+    public List<File> getResultFileList(){
+        File[] resultFiles = storageDirectory.listFiles(resultFileFilter);
+        return new ArrayList<File>(Arrays.asList(resultFiles));
     }
 
     @Override
@@ -79,9 +93,55 @@ public class DataReaderImpl implements DataReader {
         return names;
     }
 
+
     @Override
-    public List<File> getResultFileList(){
-        File[] resultFiles = storageDirectory.listFiles(resultFileFilter);
-        return new ArrayList<File>(Arrays.asList(resultFiles));
+    public List<String> getResultFilesFromSearchTerm(String searchTerm){
+        FileFilter searchTermFilter = new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+                return  file.getName().contains(searchTerm) && file.getName().endsWith(DataHandler.RESULT_EXTENSION) && !file.isHidden();
+            }
+        };
+
+        File[] resultFiles = storageDirectory.listFiles(searchTermFilter);
+        return fileListToStringList(resultFiles);
+    }
+
+    @Override
+    public List<String> getMoveFilesFromSearchTerm(String searchTerm){
+        FileFilter searchTermFilter = new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+                return  file.getName().contains(searchTerm) && file.getName().endsWith(DataHandler.FILE_EXTENSION) && !file.isHidden();
+            }
+        };
+
+        File[] resultFiles = storageDirectory.listFiles(searchTermFilter);
+        return fileListToStringList(resultFiles);
+    }
+
+    private List<String> fileListToStringList (File[] files){
+        ArrayList<String> strings = new ArrayList<>();
+
+        for (File i : files){
+            strings.add(i.getName());
+        }
+
+        return strings;
+    }
+
+    @Override
+    public String getStatsFileName(){
+        File[] files = storageDirectory.listFiles(statsFileFilter);
+
+        if(files.length == 0){
+            return null;
+        }else if(files.length == 1){
+            return files[0].getName();
+        }else{
+            System.out.println("INVALID NUMBER OF STATS FILES!");
+            System.exit(-1);
+            return null;
+        }
     }
 }

@@ -46,8 +46,9 @@ public class TrainingEngine {
 
             // randomly determine who goes first so it's a good mix in data
             boolean computerTurn = ((int)(Math.random() * 2)) == 0;
+            int gameIsOver = Board.NOT_OVER;
 
-            while(board.checkResult() == Board.NOT_OVER){
+            while(gameIsOver == Board.NOT_OVER){
                 if(computerTurn){
                     //computer goes
                     int moveIndex = computeEngine.getMove(board);
@@ -67,6 +68,14 @@ public class TrainingEngine {
                         game.addMove(board, moveIndex);
                     }catch(IllegalMoveException e){
                         e.printStackTrace();
+                    }
+                }
+
+                if(game.getNumMoves() >= 5){
+                    if(game.getNumMoves() == 9){
+                        gameIsOver = Board.TIE;
+                    } else {
+                        gameIsOver = board.checkResult();
                     }
                 }
 
@@ -107,7 +116,7 @@ public class TrainingEngine {
 
             // save the game
             game.setResult(result);
-            dataHandler.saveGame(game);
+            dataHandler.saveGame(game, computeEngine.getLetter());
 
         }
 
