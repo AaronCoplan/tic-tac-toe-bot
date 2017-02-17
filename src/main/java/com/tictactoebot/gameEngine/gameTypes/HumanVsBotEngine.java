@@ -4,6 +4,7 @@ import com.tictactoebot.UI.Frame;
 import com.tictactoebot.UI.Utils;
 import com.tictactoebot.computeEngine.ComputeEngine;
 import com.tictactoebot.dataHandler.DataHandler;
+import com.tictactoebot.dataHandler.model.Game;
 import com.tictactoebot.gameEngine.handlers.GameStateHandler;
 
 /**
@@ -35,9 +36,9 @@ public class HumanVsBotEngine {
 
     private ComputeEngine initComputeEngine(){
         if(GameStateHandler.getComputerNumber() == 0){
-            return new ComputeEngine('X');
+            return new ComputeEngine('X', dataHandler);
         }else{
-            return new ComputeEngine('O');
+            return new ComputeEngine('O', dataHandler);
         }
     }
 
