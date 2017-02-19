@@ -102,25 +102,8 @@ public class QueryServiceImpl implements QueryService {
     }
 
     public int findNumGamesByBoardHash(String boardHash){
-        final String searchString = "_" + boardHash;
-        int totalGames = 0;
-
-        List<String> fileNames = dataReader.getMoveFilesFromSearchTerm(searchString);
-        Hashtable<Integer, Boolean> gameResultAlreadyFound = new Hashtable<>();
-
-        //find the result files that match the current game's game number- > will be only 1 result file per game
-        int currentGameNumber;
-
-        for (int i = 0; i < fileNames.size(); i++){
-            currentGameNumber = FileNameParser.getGameNumber(fileNames.get(i));
-
-            if(gameResultAlreadyFound.get(currentGameNumber) == null) {
-                gameResultAlreadyFound.put(currentGameNumber, true);
-                totalGames++;
-            }
-        }
-
-        return totalGames;
+        HashMap<Integer, Boolean> uniqueGames = dataReader.getHashMapGamesFromBoardHash(boardHash);
+        return uniqueGames.size();
     }
 
 
@@ -134,28 +117,23 @@ public class QueryServiceImpl implements QueryService {
     }
 
     public int findNumWinningGamesByBoardHash(String boardHash, char letter){
-        final String searchString = "_" + boardHash;
-        int winningGames = 0;
+        HashMap<Integer, Boolean> uniqueGames = dataReader.getHashMapGamesFromBoardHash(boardHash);
+        int totalWinningGames = 0;
 
-        List<String> fileNames = dataReader.getMoveFilesFromSearchTerm(searchString);
-        Hashtable<Integer, Character> gameResultAlreadyFound = new Hashtable<>();
+        Iterator it = uniqueGames.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
 
-        //find the result files that match the current game's game number- > will be only 1 result file per game
-        int currentGameNumber;
-        char result;
-        for (int i = 0; i < fileNames.size(); i++){
-            currentGameNumber = FileNameParser.getGameNumber(fileNames.get(i));
-
-            if(gameResultAlreadyFound.get(currentGameNumber) == null) {
-                result = this.findResultByGameNumber(currentGameNumber);
-                gameResultAlreadyFound.put(currentGameNumber, result);
-
-                if(result == letter) winningGames++;
+            if(this.findResultByGameNumber((Integer)pair.getKey()) == letter){
+                totalWinningGames++;
             }
+            it.remove(); // avoids a ConcurrentModificationException
         }
 
-        return winningGames;
+        return totalWinningGames;
     }
+
+
 
     @Override
     public String fetchStatsData(){

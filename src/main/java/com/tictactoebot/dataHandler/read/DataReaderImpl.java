@@ -2,12 +2,11 @@ package com.tictactoebot.dataHandler.read;
 
 import com.tictactoebot.dataHandler.DataHandler;
 import com.tictactoebot.dataHandler.error.StorageAccessException;
+import com.tictactoebot.dataHandler.query.FileNameParser;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by afcoplan on 2/12/17.
@@ -129,6 +128,63 @@ public class DataReaderImpl implements DataReader {
 
         return strings;
     }
+
+
+    @Override
+    public HashMap<Integer, Boolean> getHashMapGamesFromBoardHash(String boardHash){
+        final String searchString = "_" + boardHash;
+        FileFilter searchTermFilter = new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+                return  file.getName().contains(searchString) && file.getName().endsWith(DataHandler.FILE_EXTENSION) && !file.isHidden();
+            }
+        };
+
+        HashMap<Integer, Boolean> alreadyFoundGames = new HashMap<>();
+        File[] resultFiles = storageDirectory.listFiles(searchTermFilter);
+
+        int currentGameNumber;
+        if(resultFiles != null) {
+            for (int i = 0; i < resultFiles.length; i++) {
+                currentGameNumber = FileNameParser.getGameNumber(resultFiles[i].getName());
+
+                alreadyFoundGames.putIfAbsent(currentGameNumber, true);
+            }
+
+            return alreadyFoundGames;
+        } else {
+            return null;
+        }
+    }
+
+    /*public int getNumGamesFromBoardHash(String boardHash){
+        final String searchString = "_" + boardHash;
+        FileFilter searchTermFilter = new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+                return  file.getName().contains(searchString) && file.getName().endsWith(DataHandler.FILE_EXTENSION) && !file.isHidden();
+            }
+        };
+
+        HashMap<Integer, Boolean> alreadyFoundGames = new HashMap<>();
+        File[] resultFiles = storageDirectory.listFiles(searchTermFilter);
+
+        int currentGameNumber;
+        if(resultFiles != null) {
+            for (int i = 0; i < resultFiles.length; i++) {
+                currentGameNumber = FileNameParser.getGameNumber(resultFiles[i].getName());
+
+                if(alreadyFoundGames.get(currentGameNumber) == null){
+                    alreadyFoundGames.put(currentGameNumber, true);
+                    this.getResultFilesFromSearchTerm();
+                }
+            }
+
+            return alreadyFoundGames;
+        } else {
+            return null;
+        }
+    }*/
 
     @Override
     public String getStatsFileName(){

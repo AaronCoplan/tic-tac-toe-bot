@@ -1,6 +1,7 @@
 package com.tictactoebot.dataHandler.read;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -15,6 +16,8 @@ public interface DataReader {
 
     List<String> getResultFilesFromSearchTerm(String searchTerm);
     List<String> getMoveFilesFromSearchTerm(String searchTerm);
+
+    HashMap<Integer, Boolean> getHashMapGamesFromBoardHash(String boardHash);
 
     String getStatsFileName();
 }
