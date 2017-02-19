@@ -22,6 +22,8 @@ public interface QueryService {
 
     int findNumWinningGamesByBoardHash(String boardHash, char letter);
 
+    int findNumWinningTieGamesByBoardHash(String boardHash, char letter);
+
     List<Game> findWinningGamesByBoardHash(String boardHash, char letter);
 
     String fetchStatsData();

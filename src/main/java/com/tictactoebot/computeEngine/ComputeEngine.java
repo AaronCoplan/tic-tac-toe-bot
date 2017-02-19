@@ -61,7 +61,7 @@ public class ComputeEngine {
         System.out.println("Next Move Index: " + nextMoveIndex);
 
         //if we have little to no data, or if we somehow get some sort of error, pick randomly
-        if(nextMoveIndex == -1 || largest == -1 || largest <= 0.0001){
+        if(nextMoveIndex == -1 || largest <= 0.0001){
             do {
                 nextMoveIndex = (int)(Math.random() * 9);
             } while(board.isOccupied(nextMoveIndex));
@@ -114,7 +114,7 @@ public class ComputeEngine {
         double winRate;
 
         //System.out.println("getting winning games");
-        int numWinningGames = dataHandler.findNumWinningGamesByBoardHash(board.toString(), getLetter());
+        int numWinningGames = dataHandler.findNumWinningTieGamesByBoardHash(board.toString(), getLetter());
         int allGames = dataHandler.findNumGamesByBoardHash(board.toString());
 
         List<Board> symmetricBoards = createSymmetricBoards(board);
@@ -123,7 +123,7 @@ public class ComputeEngine {
         for(int i = 0; i < symmetricBoards.size(); i++){
             currentBoardHash = symmetricBoards.get(i).toString();
 
-            numWinningGames += dataHandler.findNumWinningGamesByBoardHash(currentBoardHash, getLetter());
+            numWinningGames += dataHandler.findNumWinningTieGamesByBoardHash(currentBoardHash, getLetter());
             allGames += dataHandler.findNumGamesByBoardHash(currentBoardHash);
         }
 

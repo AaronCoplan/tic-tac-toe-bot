@@ -86,6 +86,11 @@ public class DataHandlerImpl implements DataHandler {
     }
 
     @Override
+    public int findNumWinningTieGamesByBoardHash(String boardHash, char letter){
+        return queryService.findNumWinningTieGamesByBoardHash(boardHash, letter);
+    }
+
+    @Override
     public  List<Game> findGamesByBoardHash(String boardHash){
         return queryService.findGamesByBoardHash(boardHash);
     }

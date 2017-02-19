@@ -72,6 +72,9 @@ public class HumanVsBotEngine {
                 break;
         }
 
+        System.out.println("\nNum Smart Moves Chosen: " + computeEngine.getNumSmartMovesChosen());
+        System.out.println("Num Random Moves Chosen: " + computeEngine.getNumRandomMovesChosen());
+
         dataHandler.saveGame(game, computeEngine.getLetter());
 
         Frame.repaint();

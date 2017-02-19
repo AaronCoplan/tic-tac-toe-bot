@@ -115,15 +115,39 @@ public class QueryServiceImpl implements QueryService {
         return matchingGames;
     }
 
+    @Override
     public int findNumWinningGamesByBoardHash(String boardHash, char letter){
         HashMap<Integer, Boolean> uniqueGames = dataReader.getHashMapGamesFromBoardHash(boardHash);
         int totalWinningGames = 0;
 
+        char result;
         Iterator it = uniqueGames.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
 
-            if(this.findResultByGameNumber((Integer)pair.getKey()) == letter){
+            result = this.findResultByGameNumber((Integer)pair.getKey());
+            if(result == letter /*|| result == 'T'*/){  //Uncomment this to get how many wins/ ties.
+                totalWinningGames++;
+            }
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+
+        return totalWinningGames;
+    }
+
+
+    @Override
+    public int findNumWinningTieGamesByBoardHash(String boardHash, char letter){
+        HashMap<Integer, Boolean> uniqueGames = dataReader.getHashMapGamesFromBoardHash(boardHash);
+        int totalWinningGames = 0;
+
+        char result;
+        Iterator it = uniqueGames.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+
+            result = this.findResultByGameNumber((Integer)pair.getKey());
+            if(result == letter || result == 'T'){
                 totalWinningGames++;
             }
             it.remove(); // avoids a ConcurrentModificationException

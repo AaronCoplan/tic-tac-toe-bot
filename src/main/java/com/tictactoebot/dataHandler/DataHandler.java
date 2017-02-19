@@ -51,6 +51,8 @@ public interface DataHandler {
 
     int findNumWinningGamesByBoardHash(String boardHash, char letter);
 
+    int findNumWinningTieGamesByBoardHash(String boardHash, char letter);
+
     List<Game> findGamesByBoardHash(String boardHash);
 
     /*
