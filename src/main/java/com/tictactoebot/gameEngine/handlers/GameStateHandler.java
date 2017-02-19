@@ -126,6 +126,8 @@ public class GameStateHandler {
         playerTurn = true;
     }
 
+    public static void setComputerTurn() { playerTurn = false;}
+
     private static boolean doMove(int location, int playerNum){ //player num is 0 if X, 1 if O
         if (board.getChar(location) != '-')
             return false;

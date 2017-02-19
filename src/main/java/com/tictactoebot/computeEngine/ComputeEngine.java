@@ -61,7 +61,7 @@ public class ComputeEngine {
         System.out.println("Next Move Index: " + nextMoveIndex);
 
         //if we have little to no data, or if we somehow get some sort of error, pick randomly
-        if(nextMoveIndex == -1 || largest == -1 || largest == 0){
+        if(nextMoveIndex == -1 || largest == -1 || largest <= 0.0001){
             do {
                 nextMoveIndex = (int)(Math.random() * 9);
             } while(board.isOccupied(nextMoveIndex));

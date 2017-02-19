@@ -102,8 +102,7 @@ public class QueryServiceImpl implements QueryService {
     }
 
     public int findNumGamesByBoardHash(String boardHash){
-        HashMap<Integer, Boolean> uniqueGames = dataReader.getHashMapGamesFromBoardHash(boardHash);
-        return uniqueGames.size();
+       return dataReader.getNumGamesFromBoardHash(boardHash);
     }
 
 

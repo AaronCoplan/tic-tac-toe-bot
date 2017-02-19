@@ -36,7 +36,9 @@ public class TrainingEngine {
             System.out.println("Computer Letter: " + letters[computerLetterIndex]);
             System.out.println("Trainer Letter: " + letters[trainerLetterIndex]);
 
-            RandomTrainer randomTrainer = new RandomTrainer(letters[trainerLetterIndex]);
+            //RandomTrainer randomTrainer = new RandomTrainer(letters[trainerLetterIndex]);
+
+            ComputeEngine randomTrainer = new ComputeEngine(letters[trainerLetterIndex], dataHandler);
             ComputeEngine computeEngine = new ComputeEngine(letters[computerLetterIndex], dataHandler);
 
             Game game = new Game();

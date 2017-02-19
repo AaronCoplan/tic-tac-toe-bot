@@ -131,6 +131,38 @@ public class DataReaderImpl implements DataReader {
 
 
     @Override
+    public int getNumGamesFromBoardHash(String boardHash){
+        final String searchString = "_" + boardHash;
+        int totalGames = 0;
+        FileFilter searchTermFilter = new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+                return  file.getName().contains(searchString) && file.getName().endsWith(DataHandler.FILE_EXTENSION) && !file.isHidden();
+            }
+        };
+
+        HashMap<Integer, Boolean> alreadyFoundGames = new HashMap<>();
+        File[] resultFiles = storageDirectory.listFiles(searchTermFilter);
+
+        int currentGameNumber;
+        if(resultFiles != null) {
+            for (int i = 0; i < resultFiles.length; i++) {
+                currentGameNumber = FileNameParser.getGameNumber(resultFiles[i].getName());
+
+                if(alreadyFoundGames.get(currentGameNumber) == null){
+                    alreadyFoundGames.put(currentGameNumber, true);
+
+                    totalGames++;
+                }
+            }
+
+            return totalGames;
+        } else {
+            return 0;
+        }
+    }
+
+    @Override
     public HashMap<Integer, Boolean> getHashMapGamesFromBoardHash(String boardHash){
         final String searchString = "_" + boardHash;
         FileFilter searchTermFilter = new FileFilter() {
