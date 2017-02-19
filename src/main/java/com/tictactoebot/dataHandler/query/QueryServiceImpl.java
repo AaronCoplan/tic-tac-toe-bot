@@ -6,9 +6,7 @@ import com.tictactoebot.dataHandler.read.DataReader;
 import com.tictactoebot.dataHandler.read.DataReaderImpl;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by afcoplan on 2/12/17.
@@ -103,6 +101,11 @@ public class QueryServiceImpl implements QueryService {
         return games;
     }
 
+    public int findNumGamesByBoardHash(String boardHash){
+       return dataReader.getNumGamesFromBoardHash(boardHash);
+    }
+
+
     @Override
     //TODO: could be optimized by having a separate method in DataReader that takes 2 search terms, instead of creating the boardhash list and removing the items.
     public List<Game> findWinningGamesByBoardHash(String boardHash, char letter){
@@ -111,6 +114,49 @@ public class QueryServiceImpl implements QueryService {
 
         return matchingGames;
     }
+
+    @Override
+    public int findNumWinningGamesByBoardHash(String boardHash, char letter){
+        HashMap<Integer, Boolean> uniqueGames = dataReader.getHashMapGamesFromBoardHash(boardHash);
+        int totalWinningGames = 0;
+
+        char result;
+        Iterator it = uniqueGames.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+
+            result = this.findResultByGameNumber((Integer)pair.getKey());
+            if(result == letter /*|| result == 'T'*/){  //Uncomment this to get how many wins/ ties.
+                totalWinningGames++;
+            }
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+
+        return totalWinningGames;
+    }
+
+
+    @Override
+    public int findNumWinningTieGamesByBoardHash(String boardHash, char letter){
+        HashMap<Integer, Boolean> uniqueGames = dataReader.getHashMapGamesFromBoardHash(boardHash);
+        int totalWinningGames = 0;
+
+        char result;
+        Iterator it = uniqueGames.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+
+            result = this.findResultByGameNumber((Integer)pair.getKey());
+            if(result == letter || result == 'T'){
+                totalWinningGames++;
+            }
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+
+        return totalWinningGames;
+    }
+
+
 
     @Override
     public String fetchStatsData(){

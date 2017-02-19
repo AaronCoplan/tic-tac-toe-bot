@@ -1,6 +1,7 @@
 package com.tictactoebot.computeEngine;
 
 import com.tictactoebot.dataHandler.DataHandler;
+import com.tictactoebot.dataHandler.error.IllegalMoveException;
 import com.tictactoebot.dataHandler.model.Board;
 import com.tictactoebot.dataHandler.model.Game;
 
@@ -60,7 +61,7 @@ public class ComputeEngine {
         System.out.println("Next Move Index: " + nextMoveIndex);
 
         //if we have little to no data, or if we somehow get some sort of error, pick randomly
-        if(nextMoveIndex == -1 || largest == -1 || largest == 0){
+        if(nextMoveIndex == -1 || largest <= 0.0001){
             do {
                 nextMoveIndex = (int)(Math.random() * 9);
             } while(board.isOccupied(nextMoveIndex));
@@ -113,17 +114,88 @@ public class ComputeEngine {
         double winRate;
 
         //System.out.println("getting winning games");
-        List<Game> winningGames = dataHandler.findWinningGamesByBoardHash(board.toString(), getLetter());
-        //System.out.println("getting all games");
-        List<Game> allGames = dataHandler.findGamesByBoardHash(board.toString());
+        int numWinningGames = dataHandler.findNumWinningTieGamesByBoardHash(board.toString(), getLetter());
+        int allGames = dataHandler.findNumGamesByBoardHash(board.toString());
 
-        if(allGames.size() == 0){
+        List<Board> symmetricBoards = createSymmetricBoards(board);
+
+        String currentBoardHash;
+        for(int i = 0; i < symmetricBoards.size(); i++){
+            currentBoardHash = symmetricBoards.get(i).toString();
+
+            numWinningGames += dataHandler.findNumWinningTieGamesByBoardHash(currentBoardHash, getLetter());
+            allGames += dataHandler.findNumGamesByBoardHash(currentBoardHash);
+        }
+
+        if(allGames == 0){
             return -1;
         }
         else{
-            winRate = (((double)winningGames.size()) / ((double)allGames.size()));
+
+            winRate = ((double)numWinningGames) / ((double)allGames);
             return winRate;
         }
     }
 
+    private List<Board> createSymmetricBoards(Board board){
+        ArrayList<Board> newBoards = new ArrayList<>();
+
+
+        for (int i = 0; i < 3; i++) {
+            board = rotateBoardClockWise(board); //"board" variable becomes a rotated version of itself
+
+            if(board == null){
+                break;
+            }
+
+            newBoards.add(board);//Add this board to the new boards, and repeat, this time you rotate board, it will rotate the already rotated version, thus rotatin it again.
+        }
+
+        return newBoards;
+    }
+
+    private Board rotateBoardClockWise(Board board){ //Rotates the board clockwise.
+        Board resultBoard = new Board();
+
+        char currentSymbol;
+        for(int i = 0; i < 3; i++){
+            if((currentSymbol = board.getChar(i)) != '-') {
+                try {
+                    //0 -> 2
+                    //1 -> 5
+                    //2 -> 8
+                    resultBoard.setChar(3 * i + 2, currentSymbol);
+                } catch (IllegalMoveException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        for(int i = 3; i < 6; i++){
+            if((currentSymbol = board.getChar(i)) != '-') {
+                try {
+                    //3 -> 1
+                    //4 -> 4
+                    //5 -> 7
+                    resultBoard.setChar(3 * i - 8, currentSymbol);
+                } catch (IllegalMoveException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        for(int i = 6; i < 9; i++){
+            if((currentSymbol = board.getChar(i)) != '-') {
+                try {
+                    //6 -> 0
+                    //7 -> 3
+                    //8 -> 6
+                    resultBoard.setChar(3 * i - 18, currentSymbol);
+                } catch (IllegalMoveException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        return resultBoard;
+    }
 }

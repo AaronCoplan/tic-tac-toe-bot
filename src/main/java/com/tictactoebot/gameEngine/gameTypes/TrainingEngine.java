@@ -36,6 +36,11 @@ public class TrainingEngine {
             System.out.println("Computer Letter: " + letters[computerLetterIndex]);
             System.out.println("Trainer Letter: " + letters[trainerLetterIndex]);
 
+            //RandomTrainer randomTrainer = new RandomTrainer(letters[trainerLetterIndex]);
+
+            //ComputeEngine randomTrainer = new ComputeEngine(letters[trainerLetterIndex], dataHandler);
+            //^ uncomment this line and comment out line below to get ComputeEngine VS. ComputeEngine.
+
             RandomTrainer randomTrainer = new RandomTrainer(letters[trainerLetterIndex]);
             ComputeEngine computeEngine = new ComputeEngine(letters[computerLetterIndex], dataHandler);
 
@@ -45,7 +50,12 @@ public class TrainingEngine {
             // now that the game is setup, play it
 
             // randomly determine who goes first so it's a good mix in data
-            boolean computerTurn = ((int)(Math.random() * 2)) == 0;
+
+            boolean computerTurn = computerLetterIndex == 0;
+            //^ recomment this line and uncomment out line below to switch who goes first.
+
+            //boolean computerTurn = ((int)(Math.random() * 2)) == 0;
+
             int gameIsOver = Board.NOT_OVER;
 
             while(gameIsOver == Board.NOT_OVER){

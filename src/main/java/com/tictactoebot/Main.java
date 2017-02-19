@@ -48,7 +48,7 @@ public class Main {
         if(randomTrainer){
             options.setNumTrainingGames(numTrainingGames);
         }
-        options.setMillisBetweenGames(4000); // 4 second delay between games
+        options.setMillisBetweenGames(3000); // 4 second delay between games
 
         return options;
     }
@@ -60,6 +60,8 @@ public class Main {
             public void run() {
                 // this code executes on system exit
                 System.out.println("\nShutdown Hook Activated...");
+
+
 
                 // do some things here
 
