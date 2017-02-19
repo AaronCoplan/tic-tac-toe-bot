@@ -121,7 +121,7 @@ public class DataReaderImpl implements DataReader {
     }
 
     private List<String> fileListToStringList (File[] files){
-        ArrayList<String> strings = new ArrayList<>();
+        List<String> strings = new ArrayList<>();
 
         for (File i : files){
             strings.add(i.getName());

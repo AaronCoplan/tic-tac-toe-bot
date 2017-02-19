@@ -1,13 +1,11 @@
 package com.tictactoebot.dataHandler.query;
 
-import com.tictactoebot.dataHandler.DataHandler;
 import com.tictactoebot.dataHandler.error.StorageAccessException;
 import com.tictactoebot.dataHandler.model.Game;
 import com.tictactoebot.dataHandler.read.DataReader;
 import com.tictactoebot.dataHandler.read.DataReaderImpl;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.util.*;
 
 /**

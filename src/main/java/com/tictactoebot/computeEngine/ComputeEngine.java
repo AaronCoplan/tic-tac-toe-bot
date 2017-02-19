@@ -115,29 +115,24 @@ public class ComputeEngine {
 
         //System.out.println("getting winning games");
         int numWinningGames = dataHandler.findNumWinningGamesByBoardHash(board.toString(), getLetter());
-        System.out.println("Symmetry of this board: ");
-        board.prettyPrint();
-        System.out.println("Wins of this board : " + numWinningGames);
-        System.out.println("");
-        List<Board> symmetricBoards = createSymmetricBoards(board);
-        for(int i = 0; i < symmetricBoards.size(); i++){
-            numWinningGames += dataHandler.findNumWinningGamesByBoardHash(symmetricBoards.get(i).toString(), getLetter());
+        int allGames = dataHandler.findNumGamesByBoardHash(board.toString());
 
-            symmetricBoards.get(i).prettyPrint();
-            System.out.println("Wins of this board = " + dataHandler.findNumWinningGamesByBoardHash(symmetricBoards.get(i).toString(), getLetter()));
-            System.out.println("");
+        List<Board> symmetricBoards = createSymmetricBoards(board);
+
+        String currentBoardHash;
+        for(int i = 0; i < symmetricBoards.size(); i++){
+            currentBoardHash = symmetricBoards.get(i).toString();
+
+            numWinningGames += dataHandler.findNumWinningGamesByBoardHash(currentBoardHash, getLetter());
+            allGames += dataHandler.findNumGamesByBoardHash(currentBoardHash);
         }
-        //System.out.println("getting all games");
-        int allGames = dataHandler.findNumGamesByBoardHash(board.toString()) * 4;
 
         if(allGames == 0){
             return -1;
         }
         else{
-            System.out.println("NumTotalWinningGames: " + (double)numWinningGames);
-            System.out.println("TotalGames: " + (double)allGames);
+
             winRate = ((double)numWinningGames) / ((double)allGames);
-            System.out.println("winrate: " + winRate);
             return winRate;
         }
     }
