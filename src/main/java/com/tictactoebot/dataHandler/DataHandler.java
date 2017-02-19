@@ -46,6 +46,11 @@ public interface DataHandler {
     /*
      *  Returns a list of full game objects containing the designated hash
      */
+
+    int findNumGamesByBoardHash(String boardHash);
+
+    int findNumWinningGamesByBoardHash(String boardHash, char letter);
+
     List<Game> findGamesByBoardHash(String boardHash);
 
     /*

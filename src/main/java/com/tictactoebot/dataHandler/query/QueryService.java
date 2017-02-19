@@ -16,7 +16,11 @@ public interface QueryService {
 
     Game findGameByGameNumber(int gameNumber);
 
+    int findNumGamesByBoardHash(String boardHash);
+
     List<Game> findGamesByBoardHash(String boardHash);
+
+    int findNumWinningGamesByBoardHash(String boardHash, char letter);
 
     List<Game> findWinningGamesByBoardHash(String boardHash, char letter);
 

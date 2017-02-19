@@ -75,12 +75,23 @@ public class DataHandlerImpl implements DataHandler {
     }
 
     @Override
-    public List<Game> findGamesByBoardHash(String boardHash){
+
+    public int findNumGamesByBoardHash(String boardHash){
+        return queryService.findNumGamesByBoardHash(boardHash);
+    }
+
+    @Override
+    public int findNumWinningGamesByBoardHash(String boardHash, char letter){
+        return queryService.findNumWinningGamesByBoardHash(boardHash, letter);
+    }
+
+    @Override
+    public  List<Game> findGamesByBoardHash(String boardHash){
         return queryService.findGamesByBoardHash(boardHash);
     }
 
     @Override
-    public List<Game> findWinningGamesByBoardHash(String boardHash, char letter){
+    public  List<Game> findWinningGamesByBoardHash(String boardHash, char letter){
         return queryService.findWinningGamesByBoardHash(boardHash, letter);
     }
 

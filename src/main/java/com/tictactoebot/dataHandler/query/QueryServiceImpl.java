@@ -1,14 +1,14 @@
 package com.tictactoebot.dataHandler.query;
 
+import com.tictactoebot.dataHandler.DataHandler;
 import com.tictactoebot.dataHandler.error.StorageAccessException;
 import com.tictactoebot.dataHandler.model.Game;
 import com.tictactoebot.dataHandler.read.DataReader;
 import com.tictactoebot.dataHandler.read.DataReaderImpl;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.io.FileFilter;
+import java.util.*;
 
 /**
  * Created by afcoplan on 2/12/17.
@@ -103,6 +103,29 @@ public class QueryServiceImpl implements QueryService {
         return games;
     }
 
+    public int findNumGamesByBoardHash(String boardHash){
+        final String searchString = "_" + boardHash;
+        int totalGames = 0;
+
+        List<String> fileNames = dataReader.getMoveFilesFromSearchTerm(searchString);
+        Hashtable<Integer, Boolean> gameResultAlreadyFound = new Hashtable<>();
+
+        //find the result files that match the current game's game number- > will be only 1 result file per game
+        int currentGameNumber;
+
+        for (int i = 0; i < fileNames.size(); i++){
+            currentGameNumber = FileNameParser.getGameNumber(fileNames.get(i));
+
+            if(gameResultAlreadyFound.get(currentGameNumber) == null) {
+                gameResultAlreadyFound.put(currentGameNumber, true);
+                totalGames++;
+            }
+        }
+
+        return totalGames;
+    }
+
+
     @Override
     //TODO: could be optimized by having a separate method in DataReader that takes 2 search terms, instead of creating the boardhash list and removing the items.
     public List<Game> findWinningGamesByBoardHash(String boardHash, char letter){
@@ -110,6 +133,30 @@ public class QueryServiceImpl implements QueryService {
         matchingGames.removeIf(s -> s.getResult() != letter);
 
         return matchingGames;
+    }
+
+    public int findNumWinningGamesByBoardHash(String boardHash, char letter){
+        final String searchString = "_" + boardHash;
+        int winningGames = 0;
+
+        List<String> fileNames = dataReader.getMoveFilesFromSearchTerm(searchString);
+        Hashtable<Integer, Character> gameResultAlreadyFound = new Hashtable<>();
+
+        //find the result files that match the current game's game number- > will be only 1 result file per game
+        int currentGameNumber;
+        char result;
+        for (int i = 0; i < fileNames.size(); i++){
+            currentGameNumber = FileNameParser.getGameNumber(fileNames.get(i));
+
+            if(gameResultAlreadyFound.get(currentGameNumber) == null) {
+                result = this.findResultByGameNumber(currentGameNumber);
+                gameResultAlreadyFound.put(currentGameNumber, result);
+
+                if(result == letter) winningGames++;
+            }
+        }
+
+        return winningGames;
     }
 
     @Override
