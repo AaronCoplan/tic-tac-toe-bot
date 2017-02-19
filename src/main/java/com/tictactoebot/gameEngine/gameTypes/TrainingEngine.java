@@ -40,7 +40,7 @@ public class TrainingEngine {
 
             //ComputeEngine randomTrainer = new ComputeEngine(letters[trainerLetterIndex], dataHandler);
             //^ uncomment this line and comment out line below to get ComputeEngine VS. ComputeEngine.
-1
+
             RandomTrainer randomTrainer = new RandomTrainer(letters[trainerLetterIndex]);
             ComputeEngine computeEngine = new ComputeEngine(letters[computerLetterIndex], dataHandler);
 
