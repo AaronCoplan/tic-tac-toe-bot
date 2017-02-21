@@ -102,7 +102,7 @@ public class TrainingEngine {
 
             char result = '-'; // default val
 
-            switch(board.checkResult())
+            switch(gameIsOver)  //Changed from board.checkResult()
             {
                 case Board.TIE:     System.out.println("TIE");
                                     result = 'T';
