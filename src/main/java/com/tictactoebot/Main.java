@@ -36,7 +36,7 @@ public class Main {
             System.out.println("Usage information:");
             System.out.println("To play against the computer: java -jar build/libs/tictactoebot-v0.0.1.jar");
             System.out.println("To train the bot: java -jar build/libs/tictactoebot-v0.0.1.jar train <num games>");
-            System.out.println("To host BotVsBot training: java -jar build/libs/tictactoebot-v0.0.1.jar host <port> <num games>");
+            System.out.println("To host BotVsBot training: java -jar build/libs/tictactoebot-v0.0.1.jar host <port>");
             System.out.println("To be a client in BotVsBot training: java -jar build/libs/tictactoebot-v0.0.1.jar client <ip> <port> <num games>");
             System.exit(0);
         }
@@ -48,7 +48,7 @@ public class Main {
         }
 
         //activates bot vs bot training mode
-        if(args.length == 3 && args[0].equals("host")){
+        if(args.length == 2 && args[0].equals("host")){
             options.connectionInfo = new ConnectionInfo(Integer.parseInt(args[1]));
         }
 
