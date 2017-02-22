@@ -169,6 +169,5 @@ public class HostEngine {
       System.out.println("\nNum Smart Moves Chosen: " + numSmartMoves);
       System.out.println("Num Random Moves Chosen: " + numRandomMoves);
       
-      }
    }
 }
