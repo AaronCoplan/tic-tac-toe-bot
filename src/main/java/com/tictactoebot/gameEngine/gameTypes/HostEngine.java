@@ -52,6 +52,8 @@ public class HostEngine {
       BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
       PrintWriter out = new PrintWriter(client.getOutputStream(), true);
 
+      System.out.println("Streams created");
+
       //Sleep to make sure writers and readers are set up before reading/writing
       Utils.sleep(250);
 
@@ -66,7 +68,7 @@ public class HostEngine {
       int numGames = 0;
 
       //Clears first continue.
-      in.readLine();
+      System.out.println(in.readLine());
 
       while(true){
          numGames++;  //Counts how many games have been played

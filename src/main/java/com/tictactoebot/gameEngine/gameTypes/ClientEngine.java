@@ -62,6 +62,7 @@ public class ClientEngine {
 
             //read in which letter the client will be
             int thisLetterIndex = Integer.parseInt(in.readLine());
+            System.out.println("this letter index: " + thisLetterIndex);
 
 
             ComputeEngine computeEngine = new ComputeEngine(letters[thisLetterIndex], dataHandler);
