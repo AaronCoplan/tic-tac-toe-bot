@@ -29,6 +29,7 @@ This project is built using **Gradle**.  To build and run, follow these instruct
   * To play against the computer with a GUI: `java -jar build/libs/tictactoebot-v0.0.1.jar`
   * To train the bot with N games: `java -jar build/libs/tictactoebot-v0.0.1.jar train <num games>`
   * To use host a BotVsBot match: `java -jar build/libs/tictactoebot-v0.0.1.jar host <port>`
+     * NOTE: To exit from host, type `exit` in console then press enter, or type `ctrl-c`
   * To be a client in a BotVsBot match: `java -jar build/libs/tictactoebot-v0.0.1.jar client <ip> <port> <num games>`
 
 ## Major Components
