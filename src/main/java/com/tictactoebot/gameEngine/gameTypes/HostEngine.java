@@ -10,6 +10,7 @@ import com.tictactoebot.dataHandler.model.Game;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class HostEngine {
    private ServerSocket srv;
@@ -22,6 +23,8 @@ public class HostEngine {
 
 
    public HostEngine(int port, DataHandler dataHandler){
+      Thread t = new Thread(new ExitHandler());
+      t.start();
 
       try {
          srv = new ServerSocket(port);
@@ -43,7 +46,7 @@ public class HostEngine {
             gameLoop();
          } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Exception: Could not create input/ output streams!");
+            System.out.println("Exception: Connection lost to client");
          }
       }
    }
@@ -185,5 +188,20 @@ public class HostEngine {
       System.out.println("\nNum Smart Moves Chosen: " + numSmartMoves);
       System.out.println("Num Random Moves Chosen: " + numRandomMoves);
 
+   }
+
+   class ExitHandler implements Runnable{
+      Scanner scnr = new Scanner(System.in);
+
+      public void run(){
+         String input;
+         while(true){
+            input = scnr.nextLine();
+
+            if(input.equals("exit")){
+               System.exit(1);
+            }
+         }
+      }
    }
 }

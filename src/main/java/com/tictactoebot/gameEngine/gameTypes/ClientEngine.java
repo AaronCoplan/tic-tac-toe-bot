@@ -34,7 +34,7 @@ public class ClientEngine {
             gameLoop(numGames);
         } catch (IOException e){
             e.printStackTrace();
-            System.out.println("Exception: Could not create input/ output streams!");
+            System.out.println("Exception: Connection lost to server");
         }
     }
 
