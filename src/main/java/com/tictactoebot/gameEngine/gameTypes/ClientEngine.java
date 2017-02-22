@@ -68,6 +68,7 @@ public class ClientEngine {
 
 
             ComputeEngine computeEngine = new ComputeEngine(letters[thisLetterIndex], dataHandler);
+            char hostLetter = letters[thisLetterIndex == 0? 1 : 0];
 
 
             Game game = new Game();
@@ -95,7 +96,7 @@ public class ClientEngine {
                     int serverMove = Integer.parseInt(in.readLine());
 
                     try {
-                        board.setChar(serverMove, letters[thisLetterIndex]);
+                        board.setChar(serverMove, hostLetter);
                         game.addMove(board, serverMove);
                     } catch (IllegalMoveException e) {
                         e.printStackTrace();
