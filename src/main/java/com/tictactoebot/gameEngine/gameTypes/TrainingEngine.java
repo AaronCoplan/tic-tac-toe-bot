@@ -82,11 +82,7 @@ public class TrainingEngine {
                 }
 
                 if(game.getNumMoves() >= 5){
-                    if(game.getNumMoves() == 9){
-                        gameIsOver = Board.TIE;
-                    } else {
-                        gameIsOver = board.checkResult();
-                    }
+                    gameIsOver = board.checkResult();
                 }
 
                 computerTurn = !computerTurn;
@@ -102,7 +98,7 @@ public class TrainingEngine {
 
             char result = '-'; // default val
 
-            switch(board.checkResult())
+            switch(gameIsOver)  //Changed from board.checkResult()
             {
                 case Board.TIE:     System.out.println("TIE");
                                     result = 'T';
