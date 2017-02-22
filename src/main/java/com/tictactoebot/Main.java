@@ -2,28 +2,44 @@ package com.tictactoebot;
 
 
 import com.tictactoebot.dataHandler.DataHandler;
+import com.tictactoebot.dataHandler.dao.TestEntityDao;
 import com.tictactoebot.gameEngine.ConnectionInfo;
 import com.tictactoebot.gameEngine.GameEngine;
 import com.tictactoebot.gameEngine.Options;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
+@SpringBootApplication
 public class Main {
 
     public static void main(String[] args){
 
+        SpringApplication.run(Main.class);
 
-        DataHandler dataHandler = DataHandler.getInstance();
 
-        addShutdownHook(dataHandler);
-
-        Options options = getOptions(args);
-
-        long startTime = System.nanoTime();
-
-        GameEngine gameEngine = new GameEngine(dataHandler, options);
-
-        gameEngine.run();
-        System.out.println((System.nanoTime() - startTime)/1000000000.0);
     }
+
+    @Bean
+    public CommandLineRunner demo(TestEntityDao repository) {
+        return (args) -> {
+            DataHandler dataHandler = DataHandler.getInstance();
+
+            addShutdownHook(dataHandler);
+
+            Options options = getOptions(args);
+
+            long startTime = System.nanoTime();
+
+            GameEngine gameEngine = new GameEngine(dataHandler, options);
+
+            gameEngine.run();
+            System.out.println((System.nanoTime() - startTime)/1000000000.0);
+
+        };
+    }
+
 
     public static Options getOptions(String[] args){
         Options options = new Options();
