@@ -25,13 +25,13 @@ public class GameEngine {
     public void run(){
         if(options.isRandomTrainerOn()){
             train(options.getNumTrainingGames());
-        } else if (options.connectionInfo.isClient()){
-            clientBotVsBot(options.getNumTrainingGames(), options.connectionInfo.getIp(), options.connectionInfo.getPort());
-        } else if (options.connectionInfo.isHost()){
-            hostBotVsBot(options.connectionInfo.getPort());
-        } else {
+        } else if (options.connectionInfo == null){
             options.setContinuousPlay(Frame.askContinuous());
             playHumanVsBot(options.isContinuousPlay());
+        } else if (options.connectionInfo.isClient()){
+            clientBotVsBot(options.getNumTrainingGames(), options.connectionInfo.getIp(), options.connectionInfo.getPort());
+        } else if (options.connectionInfo.isHost()) {
+            hostBotVsBot(options.connectionInfo.getPort());
         }
     }
 
