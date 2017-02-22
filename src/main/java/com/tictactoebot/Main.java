@@ -54,7 +54,7 @@ public class Main {
 
         if(args.length == 4 && args[0].equals("client")){
             options.connectionInfo = new ConnectionInfo(args[1], Integer.parseInt(args[2]));
-            numTrainingGames = Integer.parseInt(args[3]);
+            options.setNumTrainingGames(Integer.parseInt(args[3]));
         }
 
         options.setRandomTrainerOn(randomTrainer);

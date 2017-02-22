@@ -39,6 +39,8 @@ public class ClientEngine {
     }
 
     private void gameLoop(int numGames) throws IOException {
+        System.out.println("num games: " + numGames);
+
         BufferedReader in = new BufferedReader(new InputStreamReader(host.getInputStream()));
         PrintWriter out = new PrintWriter(host.getOutputStream(), true);
 
