@@ -82,11 +82,7 @@ public class TrainingEngine {
                 }
 
                 if(game.getNumMoves() >= 5){
-                    if(game.getNumMoves() == 9){
-                        gameIsOver = Board.TIE;
-                    } else {
-                        gameIsOver = board.checkResult();
-                    }
+                    gameIsOver = board.checkResult();
                 }
 
                 computerTurn = !computerTurn;

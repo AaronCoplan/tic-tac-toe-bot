@@ -116,11 +116,7 @@ public class HostEngine {
             //Check if game is over yet
 
             if (game.getNumMoves() >= 5){
-               if (game.getNumMoves() == 9){
-                  gameIsOver = Board.TIE;
-               } else {
-                  gameIsOver = board.checkResult();
-               }
+               gameIsOver = board.checkResult();
             }
 
             board.prettyPrint();
