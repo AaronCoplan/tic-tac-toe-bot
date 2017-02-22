@@ -1,5 +1,6 @@
 package com.tictactoebot.gameEngine.gameTypes;
 
+import com.tictactoebot.UI.Utils;
 import com.tictactoebot.computeEngine.ComputeEngine;
 import com.tictactoebot.dataHandler.DataHandler;
 import com.tictactoebot.dataHandler.error.IllegalMoveException;
@@ -33,6 +34,7 @@ public class HostEngine {
       while(true) {  //Continues to try to connect to clients after the game ends
          try {
             client = srv.accept(); //Wait for the client to connect and create a socket
+            System.out.println("Connected to client!");
          } catch (IOException e) {
             e.printStackTrace();
          }
@@ -49,6 +51,9 @@ public class HostEngine {
    private void gameLoop() throws IOException {
       BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
       PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+
+      //Sleep to make sure writers and readers are set up before reading/writing
+      Utils.sleep(250);
 
       int computerWinCount = 0;
       int computerTieCount = 0;

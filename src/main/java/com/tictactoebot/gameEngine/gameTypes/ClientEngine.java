@@ -1,5 +1,6 @@
 package com.tictactoebot.gameEngine.gameTypes;
 
+import com.tictactoebot.UI.Utils;
 import com.tictactoebot.computeEngine.ComputeEngine;
 import com.tictactoebot.dataHandler.DataHandler;
 import com.tictactoebot.dataHandler.error.IllegalMoveException;
@@ -7,7 +8,6 @@ import com.tictactoebot.dataHandler.model.Board;
 import com.tictactoebot.dataHandler.model.Game;
 
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ClientEngine {
@@ -41,6 +41,10 @@ public class ClientEngine {
     private void gameLoop(int numGames) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(host.getInputStream()));
         PrintWriter out = new PrintWriter(host.getOutputStream(), true);
+
+
+        //Sleep to make sure writers and readers are set up before reading/writing
+        Utils.sleep(250);
 
         int computerWinCount = 0;
         int computerTieCount = 0;
