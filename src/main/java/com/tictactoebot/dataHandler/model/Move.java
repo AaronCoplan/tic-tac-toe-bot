@@ -32,4 +32,13 @@ public class Move {
     public static Move emptyBoard(){
         return new Move(0, new Board().toString(), -1);
     }
+
+    @Override
+    public String toString(){
+        return "Move{" +
+                "moveNumber=" + moveNumber +
+                ", boardHash='" + boardHash + '\'' +
+                ", spotPlayedIndex=" + spotPlayedIndex +
+                '}';
+    }
 }

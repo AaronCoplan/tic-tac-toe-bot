@@ -13,6 +13,7 @@ public class Game {
     private List<Move> moves;
     private int moveNumber;
     private char result;
+    private String opponentType;
 
     public Game(){
 
@@ -37,6 +38,18 @@ public class Game {
 
     public void addMove(Board currentBoardState, int rowPlayed, int colPlayed){
         this.addMove(new Move(moveNumber, currentBoardState.toString(), Board.convert2DIndexTo1D(rowPlayed, colPlayed)));
+    }
+
+    public String getOpponentType(){
+        return opponentType;
+    }
+
+    public void setMoves(List<Move> moves){
+        this.moves = moves;
+    }
+
+    public void setOpponentType(String opponentType){
+        this.opponentType = opponentType;
     }
 
     public char getResult(){

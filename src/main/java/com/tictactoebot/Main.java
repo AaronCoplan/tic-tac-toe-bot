@@ -2,7 +2,9 @@ package com.tictactoebot;
 
 
 import com.tictactoebot.dataHandler.DataHandler;
-import com.tictactoebot.dataHandler.dao.TestEntityDao;
+import com.tictactoebot.dataHandler.dao.GameDao;
+import com.tictactoebot.dataHandler.model.Game;
+import com.tictactoebot.dataHandler.model.Move;
 import com.tictactoebot.gameEngine.ConnectionInfo;
 import com.tictactoebot.gameEngine.GameEngine;
 import com.tictactoebot.gameEngine.Options;
@@ -10,6 +12,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
+
+import java.util.List;
 
 @SpringBootApplication
 public class Main {
@@ -24,8 +28,16 @@ public class Main {
     }
 
     @Bean
-    public CommandLineRunner demo(TestEntityDao repository) {
+    public CommandLineRunner demo() {
         return (args) -> {
+            List<Game> games = GameDao.fetchAllGames();
+            for(Game g : games){
+                System.out.println(g.getOpponentType());
+                for(Move m : g.getMoves()){
+                    System.out.println(m);
+                }
+            }
+
             DataHandler dataHandler = DataHandler.getInstance();
 
             addShutdownHook(dataHandler);
