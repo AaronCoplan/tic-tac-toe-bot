@@ -20,7 +20,7 @@ public class HostEngine {
 
 
 
-   public HostEngine(int port, int numGames, DataHandler dataHandler){
+   public HostEngine(int port, DataHandler dataHandler){
 
       try {
          srv = new ServerSocket(port);
@@ -30,20 +30,23 @@ public class HostEngine {
 
       this.dataHandler = dataHandler;
 
-      try {
-         client = srv.accept(); //Wait for the client to connect and create a socket
-      } catch (IOException e) {
-         e.printStackTrace();
-      }
-      try {
-         gameLoop(numGames);
-      } catch (IOException e){
-         e.printStackTrace();
-         System.out.println("Exception: Could not create input/ output streams!");
+      while(true) {  //Continues to try to connect to clients after the game ends
+         try {
+            client = srv.accept(); //Wait for the client to connect and create a socket
+         } catch (IOException e) {
+            e.printStackTrace();
+         }
+
+         try {
+            gameLoop();
+         } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Exception: Could not create input/ output streams!");
+         }
       }
    }
-   
-   private void gameLoop(int numGames) throws IOException {
+
+   private void gameLoop() throws IOException {
       BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
       PrintWriter out = new PrintWriter(client.getOutputStream(), true);
 
@@ -55,14 +58,19 @@ public class HostEngine {
 
       int errorCount = 0;
 
+      int numGames = 0;
 
-      for (int i = 0; i < numGames; i++){
+      //Clears first continue.
+      in.readLine();
+
+      while(true){
+         numGames++;  //Counts how many games have been played
          //Decide who goes first
          int thisLetterIndex = ((int)(Math.random() * 2));
          int clientLetterIndex = (thisLetterIndex == 0) ? 1 : 0;
 
          //Tell the client which letter it will be.
-         out.print(clientLetterIndex);
+         out.println(clientLetterIndex);
 
          ComputeEngine computeEngine = new ComputeEngine(letters[thisLetterIndex], dataHandler);
 
@@ -82,13 +90,13 @@ public class HostEngine {
                   game.addMove(board, serverMove);
 
                   //Tell the client where the computer went.
-                  out.print(serverMove);
+                  out.println(serverMove);
                } catch (IllegalMoveException e) {
                   e.printStackTrace();
                }
             } else { //Client's turn
                //Read the client's move index.
-               int clientMove = in.read();
+               int clientMove = Integer.parseInt(in.readLine());
 
                try {
                   board.setChar(clientMove, letters[clientLetterIndex]);
@@ -113,11 +121,12 @@ public class HostEngine {
             //Switch turns
 
             serverTurn = !serverTurn;
+
          }
 
          //Game is over
 
-         System.out.print("Game " + i + " played, RESULT = ");
+         System.out.print("Game " + numGames + " played, RESULT = ");
 
          numRandomMoves += computeEngine.getNumRandomMovesChosen();
          numSmartMoves += computeEngine.getNumSmartMovesChosen();
@@ -150,6 +159,10 @@ public class HostEngine {
          game.setResult(result);
          dataHandler.saveGame(game, computeEngine.getLetter());
 
+         if (in.readLine().equals("end")){
+            break;
+         }
+
       }
 
       System.out.println("\n");
@@ -168,6 +181,6 @@ public class HostEngine {
 
       System.out.println("\nNum Smart Moves Chosen: " + numSmartMoves);
       System.out.println("Num Random Moves Chosen: " + numRandomMoves);
-      
+
    }
 }

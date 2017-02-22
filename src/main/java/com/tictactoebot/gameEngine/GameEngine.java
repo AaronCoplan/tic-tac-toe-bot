@@ -3,6 +3,8 @@ package com.tictactoebot.gameEngine;
 import com.tictactoebot.UI.Frame;
 import com.tictactoebot.dataHandler.DataHandler;
 import com.tictactoebot.dataHandler.model.Game;
+import com.tictactoebot.gameEngine.gameTypes.ClientEngine;
+import com.tictactoebot.gameEngine.gameTypes.HostEngine;
 import com.tictactoebot.gameEngine.gameTypes.HumanVsBotEngine;
 import com.tictactoebot.gameEngine.gameTypes.TrainingEngine;
 
@@ -23,7 +25,11 @@ public class GameEngine {
     public void run(){
         if(options.isRandomTrainerOn()){
             train(options.getNumTrainingGames());
-        }else{
+        } else if (options.connectionInfo.isClient()){
+            clientBotVsBot(options.getNumTrainingGames(), options.connectionInfo.getIp(), options.connectionInfo.getPort());
+        } else if (options.connectionInfo.isHost()){
+            hostBotVsBot(options.connectionInfo.getPort());
+        } else {
             options.setContinuousPlay(Frame.askContinuous());
             playHumanVsBot(options.isContinuousPlay());
         }
@@ -36,6 +42,24 @@ public class GameEngine {
         }catch(InterruptedException e){}
 
         TrainingEngine.train(numGames, dataHandler);
+    }
+
+    public void hostBotVsBot(int port){
+        System.out.println("BotVsBot HOST Training Mode:");
+        try{
+            Thread.sleep(1000);
+        }catch(InterruptedException e){}
+
+        new HostEngine(port, dataHandler);
+    }
+
+    public void clientBotVsBot(int numGames, String ip, int port){
+        System.out.println("BotVsBot CLIENT Training Mode: " + numGames + " games");
+        try{
+            Thread.sleep(1000);
+        }catch(InterruptedException e){}
+
+        new ClientEngine(ip, port, numGames, dataHandler);
     }
 
     private void playHumanVsBot(boolean continuousPlay){

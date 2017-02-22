@@ -11,6 +11,10 @@ public class Options {
     private int numTrainingGames;
     private long millisBetweenGames;
 
+    public ConnectionInfo connectionInfo;
+
+    private int port;
+
     public Options(){
         // default option
         this.millisBetweenGames = 5000;

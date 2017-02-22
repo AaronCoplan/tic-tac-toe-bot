@@ -19,12 +19,12 @@ public class ClientEngine {
 
 
 
-    public ClientEngine(int port, int numGames, DataHandler dataHandler){
+    public ClientEngine(String ip, int port, int numGames, DataHandler dataHandler){
 
         this.dataHandler = dataHandler;
 
         try {
-            host = new Socket("tic-tac-toe host", port);
+            host = new Socket(ip, port);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,10 +52,12 @@ public class ClientEngine {
 
 
         for (int i = 0; i < numGames; i++){
-            //Decide who goes first
+
+            //For the server to know when the client will disconnect (eventually prints end).
+            out.println("continue");
 
             //read in which letter the client will be
-            int thisLetterIndex = in.read();
+            int thisLetterIndex = Integer.parseInt(in.readLine());
 
 
             ComputeEngine computeEngine = new ComputeEngine(letters[thisLetterIndex], dataHandler);
@@ -77,13 +79,13 @@ public class ClientEngine {
                         game.addMove(board, clientMove);
 
                         //Tell the client where the computer went.
-                        out.print(clientMove);
+                        out.println(clientMove);
                     } catch (IllegalMoveException e) {
                         e.printStackTrace();
                     }
                 } else { //Client's turn
                     //Read the client's move index.
-                    int serverMove = in.read();
+                    int serverMove = Integer.parseInt(in.readLine());
 
                     try {
                         board.setChar(serverMove, letters[thisLetterIndex]);
@@ -108,6 +110,7 @@ public class ClientEngine {
                 //Switch turns
 
                 clientTurn = !clientTurn;
+
             }
 
             //Game is over
@@ -145,7 +148,11 @@ public class ClientEngine {
             game.setResult(result);
             dataHandler.saveGame(game, computeEngine.getLetter());
 
+            //Tell the server to continue to play games
         }
+
+        //Tells the server that the client is going to disconnect.
+        out.println("end");
 
         System.out.println("\n");
         System.out.println("Number of Games: " + numGames);

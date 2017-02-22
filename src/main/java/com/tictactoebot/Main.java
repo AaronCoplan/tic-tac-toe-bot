@@ -2,6 +2,7 @@ package com.tictactoebot;
 
 
 import com.tictactoebot.dataHandler.DataHandler;
+import com.tictactoebot.gameEngine.ConnectionInfo;
 import com.tictactoebot.gameEngine.GameEngine;
 import com.tictactoebot.gameEngine.Options;
 
@@ -25,6 +26,7 @@ public class Main {
     }
 
     public static Options getOptions(String[] args){
+        Options options = new Options();
 
         boolean randomTrainer = false; // defaults to false
         int numTrainingGames = -1;
@@ -34,6 +36,8 @@ public class Main {
             System.out.println("Usage information:");
             System.out.println("To play against the computer: java -jar build/libs/tictactoebot-v0.0.1.jar");
             System.out.println("To train the bot: java -jar build/libs/tictactoebot-v0.0.1.jar train <num games>");
+            System.out.println("To host BotVsBot training: java -jar build/libs/tictactoebot-v0.0.1.jar host <port> <num games>");
+            System.out.println("To be a client in BotVsBot training: java -jar build/libs/tictactoebot-v0.0.1.jar client <ip> <port> <num games>");
             System.exit(0);
         }
 
@@ -43,7 +47,16 @@ public class Main {
             numTrainingGames = Integer.parseInt(args[1]);
         }
 
-        Options options = new Options();
+        //activates bot vs bot training mode
+        if(args.length == 3 && args[0].equals("host")){
+            options.connectionInfo = new ConnectionInfo(Integer.parseInt(args[1]));
+        }
+
+        if(args.length == 4 && args[0].equals("client")){
+            options.connectionInfo = new ConnectionInfo(args[1], Integer.parseInt(args[2]));
+            numTrainingGames = Integer.parseInt(args[3]);
+        }
+
         options.setRandomTrainerOn(randomTrainer);
         if(randomTrainer){
             options.setNumTrainingGames(numTrainingGames);
