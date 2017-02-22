@@ -7,8 +7,8 @@ import com.tictactoebot.gameEngine.ConnectionInfo;
 import com.tictactoebot.gameEngine.GameEngine;
 import com.tictactoebot.gameEngine.Options;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
@@ -16,8 +16,10 @@ public class Main {
 
     public static void main(String[] args){
 
-        SpringApplication.run(Main.class);
+        SpringApplicationBuilder springApplicationBuilder = new SpringApplicationBuilder(Main.class);
+        springApplicationBuilder.headless(false);
 
+        springApplicationBuilder.run(args);
 
     }
 
