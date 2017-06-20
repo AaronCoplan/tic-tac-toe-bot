@@ -4,6 +4,8 @@ Project to create a **Tic Tac Toe Bot** which learns from past games and becomes
 
 Contributors: [@AaronCoplan](https://github.com/AaronCoplan), [@Arkidillo](https://github.com/Arkidillo), [@apadalian](https://github.com/apadalian)
 
+This project is licensed under the MIT License.
+
 ## Installing and Running
 
 **Dependencies:** 
